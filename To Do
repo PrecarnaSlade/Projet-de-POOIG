@@ -1,0 +1,19 @@
+# To Do
+
+
+COMMUNE
+class Tuile
+class Grille
+class Joueur
+class IA
+class Menu
+
+
+// Additionnel
+class Sauvagarde
+
+
+
+Interface Jeu?
+class Domino
+class Carcassone
