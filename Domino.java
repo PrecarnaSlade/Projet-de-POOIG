@@ -12,6 +12,11 @@ public class Domino extends Tuile {
           3         4               leftSide = {0, 0, 3}
             2  0  4
 
+            0  2  3                 upSide = {0, 2, 3}
+          0         1               rightSide = {1, 1, 4}
+          0         1               downSide = {2, 0, 4}
+          3         4               leftSide = {0, 0, 3}
+            2  0  4
      */
     private int[] upSide;       // must be int[3]
     private int[] rightSide;    // must be int[3]
@@ -81,10 +86,46 @@ public class Domino extends Tuile {
 
     @Override
     public String getGraphicalRepresentation() {
-        //need to create for terminal game uses
-        return null;
+        String up="";
+        String down="";
+        String sides="";
+
+        for(int i=0;i<3;i++){
+            up+="  "+this.upSide[i];
+            down+="  "+this.downSide[i];
+            sides+=this.leftSide[i]+"         "+this.rightSide[i]+"\n";
+        }
+
+        return up+"\n"+sides+"\n"+down;
     }
 
-//    public void rotateClockwise()
-//    public void rotateAntiClockwise()
+    public void rotateClockwise(){
+        int[] mirrorRight= new int[3];
+        int[] mirrorLeft= new int[3];
+
+        for(int i=0;i<3;i++){
+            mirrorLeft[i]= leftSide[3-i];
+            mirrorRight[i]= rightSide[3-i];
+        }
+
+        leftSide= downSide;
+        downSide= mirrorRight;
+        rightSide= upSide;
+        upSide= mirrorLeft;
+    }
+
+    public void rotateAntiClockwise(){
+        int[] mirrorUp= new int[3];
+        int[] mirrorDown= new int[3];
+
+        for(int i=0;i<3;i++){
+            mirrorUp[i]=upSide[3-i];
+            mirrorDown[i]=downSide[3-i];
+        }
+
+        upSide= rightSide;
+        rightSide= mirrorDown;
+        downSide= leftSide;
+        leftSide= mirrorUp;
+    }
 }

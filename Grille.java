@@ -7,9 +7,11 @@ public class Grille extends Object {
         grid = new Tuile[pWidth][pHeight];
     }
 
-//    public Tuile getTileByPos(Position pPos) {
-//        getTileByXY(pPos.getX(), pPos.getY());
-//    }
-//
-//    public Tuile getTileByXY(int x, int y)
+    public Tuile getTileByPos(Position pPos) {
+        return getTileByXY(pPos.getX(), pPos.getY());
+    }
+
+    public Tuile getTileByXY(int x, int y){
+        return grid[x][y];
+    }
 }
