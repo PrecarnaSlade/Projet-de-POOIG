@@ -10,9 +10,10 @@ public class Joueur extends Object {
         scanner = new Scanner(System.in);
     }
 
-//    public void draw() { invertory.add(???) }
-    public void discard(Tuile t){ inventory.remove(t); }
+//  public void draw() { invertory.add(pioche.get()) }
 
-//  public void place(Position p, Tuile t) { grille.place(p,t); }
+//    public void discard(Tuile t){ pioche.put(inventory.remove(t)); }
+
+//  public void place(Position p, Tuile t) { grille.place(p,t); inventory.remove(t);}
 }
 
