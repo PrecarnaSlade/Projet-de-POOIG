@@ -96,7 +96,7 @@ public class Domino extends Tuile {
             sides+=this.leftSide[i]+"         "+this.rightSide[i]+"\n";
         }
 
-        return up+"\n"+sides+"\n"+down;
+        return up+"\n"+sides+down;
     }
 
     public void rotateClockwise(){
@@ -104,8 +104,8 @@ public class Domino extends Tuile {
         int[] mirrorLeft= new int[3];
 
         for(int i=0;i<3;i++){
-            mirrorLeft[i]= leftSide[3-i];
-            mirrorRight[i]= rightSide[3-i];
+            mirrorLeft[i]= leftSide[2-i];
+            mirrorRight[i]= rightSide[2-i];
         }
 
         leftSide= downSide;
@@ -119,8 +119,8 @@ public class Domino extends Tuile {
         int[] mirrorDown= new int[3];
 
         for(int i=0;i<3;i++){
-            mirrorUp[i]=upSide[3-i];
-            mirrorDown[i]=downSide[3-i];
+            mirrorUp[i]=upSide[2-i];
+            mirrorDown[i]=downSide[2-i];
         }
 
         upSide= rightSide;

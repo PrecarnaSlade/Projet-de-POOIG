@@ -9,6 +9,11 @@ public class test {
             }
         };
         System.out.println(domino);
+        System.out.println(domino.getGraphicalRepresentation());
+        domino.rotateClockwise();
+        System.out.println(domino.getGraphicalRepresentation());
+        domino.rotateAntiClockwise();
+        System.out.println(domino.getGraphicalRepresentation());
         System.out.println(tuile.getId());
     }
 }
