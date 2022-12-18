@@ -19,11 +19,9 @@ public class Domino extends Tuile<int[]> {
           0         1               downSide = {2, 0, 4}
           3         4               leftSide = {0, 0, 3}
             2  0  4
+
+         !!!!   DEPRECATED !!!!
      */
-    private int[] upSide;       // must be int[3]
-    private int[] rightSide;    // must be int[3]
-    private int[] downSide;     // must be int[3]
-    private int[] leftSide;     // must be int[3]
     boolean isUsed;
 
     public Domino(int[] pUp, int[] pRight, int[] pDown, int[] pLeft, Position pPos) {
@@ -70,10 +68,10 @@ public class Domino extends Tuile<int[]> {
     @Override
     public String toString() {
         return "Domino{" +
-                "upSide=" + Arrays.toString(upSide) +
-                ", rightSide=" + Arrays.toString(rightSide) +
-                ", downSide=" + Arrays.toString(downSide) +
-                ", leftSide=" + Arrays.toString(leftSide) +
+                "upSide=" + Arrays.toString(getSides().getUpSide()) +
+                ", rightSide=" + Arrays.toString(getSides().getRightSide()) +
+                ", downSide=" + Arrays.toString(getSides().getDownSide()) +
+                ", leftSide=" + Arrays.toString(getSides().getLeftSide()) +
                 '}';
     }
 
@@ -84,9 +82,9 @@ public class Domino extends Tuile<int[]> {
         String sides="";
 
         for(int i=0;i<3;i++){
-            up+="  "+this.upSide[i];
-            down+="  "+this.downSide[i];
-            sides+=this.leftSide[i]+"         "+this.rightSide[i]+"\n";
+            up+="  "+this.getSides().getUpSide()[i];
+            down+="  "+this.getSides().getDownSide()[i];
+            sides+=this.getSides().getLeftSide()[i]+"         "+this.getSides().getRightSide()[i]+"\n";
         }
 
         return up+"\n"+sides+down;
@@ -108,20 +106,20 @@ public class Domino extends Tuile<int[]> {
     }
 
     public void rotateClockwise(){
-        int[][] aInvertedSide = invertArrays(leftSide, rightSide);
+        int[][] aInvertedSide = invertArrays(getSides().getLeftSide(), getSides().getRightSide());
 
-        leftSide= downSide;
-        downSide= aInvertedSide[1];
-        rightSide= upSide;
-        upSide= aInvertedSide[0];
+        getSides().setLeftSide(getSides().getDownSide());
+        getSides().setDownSide(aInvertedSide[1]);
+        getSides().setRightSide(getSides().getUpSide());
+        getSides().setUpSide(aInvertedSide[0]);
     }
 
     public void rotateAntiClockwise(){
-        int[][] aInvertedSide = invertArrays(upSide, downSide);
+        int[][] aInvertedSide = invertArrays(getSides().getUpSide(), getSides().getDownSide());
 
-        upSide= rightSide;
-        rightSide= aInvertedSide[1];
-        downSide= leftSide;
-        leftSide= aInvertedSide[0];
+        getSides().setUpSide(getSides().getRightSide());
+        getSides().setRightSide(aInvertedSide[1]);
+        getSides().setDownSide(getSides().getLeftSide());
+        getSides().setLeftSide(aInvertedSide[0]);
     }
 }
