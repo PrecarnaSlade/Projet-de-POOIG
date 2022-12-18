@@ -1,4 +1,5 @@
-import MathFuncAndObj.Position;
+import Common.Joueur;
+import Common.Tuile;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,6 @@ public class IA extends Joueur {
     }
 
     //  public void draw(){super.draw();}
-    // public void discard(Tuile t){super.discard(t);}
-    // public void place(Position p, Tuile t){super.place(p,t);}
+    // public void discard(Common.Tuile t){super.discard(t);}
+    // public void place(Position p, Common.Tuile t){super.place(p,t);}
 }

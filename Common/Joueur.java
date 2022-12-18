@@ -1,8 +1,10 @@
+package Common;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Joueur extends Object {
-    private Scanner scanner;
+public class Joueur {
+    private final Scanner scanner;
     private ArrayList<Tuile> inventory;
 
     public Joueur() {
@@ -12,8 +14,8 @@ public class Joueur extends Object {
 
 //  public void draw() { invertory.add(pioche.get()) }
 
-//    public void discard(Tuile t){ pioche.put(inventory.remove(t)); }
+//    public void discard(Common.Tuile t){ pioche.put(inventory.remove(t)); }
 
-//  public void place(Position p, Tuile t) { grille.place(p,t); inventory.remove(t);}
+//  public void place(Position p, Common.Tuile t) { grille.place(p,t); inventory.remove(t);}
 }
 

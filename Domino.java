@@ -1,9 +1,11 @@
+import Common.Sides;
+import Common.Tuile;
 import MathFuncAndObj.Position;
 
 import java.util.Arrays;
 import java.util.Random;
 
-public class Domino extends Tuile {
+public class Domino extends Tuile<int[]> {
     /*
     Read left to right and up to down for the numbers, using the PDF example :
             0  2  3                 upSide = {0, 2, 3}
@@ -25,52 +27,43 @@ public class Domino extends Tuile {
     boolean isUsed;
 
     public Domino(int[] pUp, int[] pRight, int[] pDown, int[] pLeft, Position pPos) {
-        super(pPos);
-        upSide = pUp;
-        rightSide = pRight;
-        downSide = pDown;
-        leftSide = pLeft;
+        super(pPos, new Sides<>(pUp, pRight, pDown, pLeft));
         isUsed = false;
     }
 
     public Domino(int[] pUp, int[] pRight, int[] pDown, int[] pLeft) {
-        super(null);
-        upSide = pUp;
-        rightSide = pRight;
-        downSide = pDown;
-        leftSide = pLeft;
+        super(null, new Sides<>(pUp, pRight, pDown, pLeft));
         isUsed = false;
     }
 
     public Domino() {
-        super(null);
+        super(null, new Sides<>(new int[0], new int[3], new int[3], new int[3]));
 
-        int max = 4;
-        int[] aTempArray1 = new int[3];
-        int[] aTempArray2 = new int[3];
-        int[] aTempArray3 = new int[3];
-        int[] aTempArray4 = new int[3];
+        int max = 2;
+        int[] aTempArray = new int[3];
         Random oRandom = new Random();
 
-        aTempArray1[0] = oRandom.nextInt(max);
-        aTempArray1[1] = oRandom.nextInt(max);
-        aTempArray1[2] = oRandom.nextInt(max);
-        upSide = aTempArray1;
+        aTempArray[0] = oRandom.nextInt(max) - 1;
+        aTempArray[1] = oRandom.nextInt(max) - 1;
+        aTempArray[2] = oRandom.nextInt(max) - 1;
+        getSides().setUpSide(aTempArray);
 
-        aTempArray2[0] = oRandom.nextInt(max);
-        aTempArray2[1] = oRandom.nextInt(max);
-        aTempArray2[2] = oRandom.nextInt(max);
-        rightSide = aTempArray2;
+        aTempArray[0] = oRandom.nextInt(max) - 1;
+        aTempArray[1] = oRandom.nextInt(max) - 1;
+        aTempArray[2] = oRandom.nextInt(max) - 1;
+        getSides().setLeftSide(aTempArray);
 
-        aTempArray3[0] = oRandom.nextInt(max);
-        aTempArray3[1] = oRandom.nextInt(max);
-        aTempArray3[2] = oRandom.nextInt(max);
-        downSide = aTempArray3;
+        aTempArray[0] = oRandom.nextInt(max) - 1;
+        aTempArray[1] = oRandom.nextInt(max) - 1;
+        aTempArray[2] = oRandom.nextInt(max) - 1;
+        getSides().setDownSide(aTempArray);
 
-        aTempArray4[0] = oRandom.nextInt(max);
-        aTempArray4[1] = oRandom.nextInt(max);
-        aTempArray4[2] = oRandom.nextInt(max);
-        leftSide = aTempArray4;
+        aTempArray[0] = oRandom.nextInt(max) - 1;
+        aTempArray[1] = oRandom.nextInt(max) - 1;
+        aTempArray[2] = oRandom.nextInt(max) - 1;
+        getSides().setRightSide(aTempArray);
+
+        isUsed = false;
 
     }
 
@@ -99,33 +92,36 @@ public class Domino extends Tuile {
         return up+"\n"+sides+down;
     }
 
-    public void rotateClockwise(){
-        int[] mirrorRight= new int[3];
-        int[] mirrorLeft= new int[3];
+    private int[][] invertArrays(int[] pArray1, int[] pArray2) {
+        int[] mirror1 = new int[3];
+        int[] mirror2 = new int[3];
+        int[][] aRtn = new int[2][3];
 
         for(int i=0;i<3;i++){
-            mirrorLeft[i]= leftSide[2-i];
-            mirrorRight[i]= rightSide[2-i];
+            mirror1[i]= pArray1[2-i];
+            mirror2[i]= pArray2[2-i];
         }
 
+        aRtn[0] = mirror1;
+        aRtn[1] = mirror2;
+        return aRtn;
+    }
+
+    public void rotateClockwise(){
+        int[][] aInvertedSide = invertArrays(leftSide, rightSide);
+
         leftSide= downSide;
-        downSide= mirrorRight;
+        downSide= aInvertedSide[1];
         rightSide= upSide;
-        upSide= mirrorLeft;
+        upSide= aInvertedSide[0];
     }
 
     public void rotateAntiClockwise(){
-        int[] mirrorUp= new int[3];
-        int[] mirrorDown= new int[3];
-
-        for(int i=0;i<3;i++){
-            mirrorUp[i]=upSide[2-i];
-            mirrorDown[i]=downSide[2-i];
-        }
+        int[][] aInvertedSide = invertArrays(upSide, downSide);
 
         upSide= rightSide;
-        rightSide= mirrorDown;
+        rightSide= aInvertedSide[1];
         downSide= leftSide;
-        leftSide= mirrorUp;
+        leftSide= aInvertedSide[0];
     }
 }

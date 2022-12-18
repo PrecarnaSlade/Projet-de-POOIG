@@ -2,11 +2,11 @@
 
 
 COMMUNE
-class Tuile
-class Grille
-class Joueur
+class Common.Tuile
+class Common.Grille
+class Common.Joueur
 class IA
-class Menu
+class Common.Menu
 
 
 // Additionnel

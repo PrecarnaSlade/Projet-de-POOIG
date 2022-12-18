@@ -1,7 +1,9 @@
+package Common;
+
 import java.util.Collection;
 
-public class Pioche {
-    Collection<Tuile> tuiles;
+public class Pioche<E> {
+    Collection<Tuile<E>> tuiles;
 
     public Pioche(){
         //doit créer la collection et y ajouter un certain nombre de tuile aléatoire
@@ -12,12 +14,12 @@ public class Pioche {
     }
 
     /*
-    public Tuile draw(){
+    public Common.Tuile draw(){
         //.get() sur un element aleatoire de la collection
     }
      */
 
-    public void put(Tuile t){
+    public void put(Tuile<E> t){
         //remet un element t dans la pioche
     }
 }
