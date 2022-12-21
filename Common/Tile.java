@@ -2,11 +2,11 @@ package Common;
 
 import MathFuncAndObj.Position;
 
-public abstract class Tuile<E> {
+public abstract class Tile<E> extends InternalObject {
     private final Position position;
     private final Sides<E> sides;
 
-    public Tuile(Position pos, Sides<E> pSides) {
+    public Tile(Position pos, Sides<E> pSides) {
         super();
         this.position = pos;
         sides = pSides;

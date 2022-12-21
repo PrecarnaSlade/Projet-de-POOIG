@@ -2,15 +2,16 @@ package Common;
 
 import java.util.Collection;
 
-public class Pioche<E> {
-    Collection<Tuile<E>> tuiles;
+public class Deck<E> extends InternalObject {
+    Collection<Tile<E>> tiles;
 
-    public Pioche(){
+    public Deck(){
+        super();
         //doit créer la collection et y ajouter un certain nombre de tuile aléatoire
     }
 
     public boolean isEmpty(){
-        return tuiles.isEmpty();
+        return tiles.isEmpty();
     }
 
     /*
@@ -19,7 +20,7 @@ public class Pioche<E> {
     }
      */
 
-    public void put(Tuile<E> t){
+    public void put(Tile<E> t){
         //remet un element t dans la pioche
     }
 }

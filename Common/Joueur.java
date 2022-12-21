@@ -3,9 +3,9 @@ package Common;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Joueur {
+public class Joueur extends InternalObject {
     private final Scanner scanner;
-    private ArrayList<Tuile> inventory;
+    private ArrayList<Tile> inventory;
 
     public Joueur() {
         inventory = new ArrayList<>();

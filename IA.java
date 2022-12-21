@@ -1,13 +1,9 @@
 import Common.Joueur;
-import Common.Tuile;
-
-import java.util.ArrayList;
 
 public class IA extends Joueur {
-    private ArrayList<Tuile> inventory;
 
     public IA() {
-        inventory = new ArrayList<>();
+        super();
     }
 
     //  public void draw(){super.draw();}

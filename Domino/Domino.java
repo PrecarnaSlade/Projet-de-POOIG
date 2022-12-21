@@ -1,11 +1,13 @@
+package Domino;
+
 import Common.Sides;
-import Common.Tuile;
+import Common.Tile;
 import MathFuncAndObj.Position;
 
 import java.util.Arrays;
 import java.util.Random;
 
-public class Domino extends Tuile<int[]> {
+public class Domino extends Tile<int[]> {
     /*
     Read left to right and up to down for the numbers, using the PDF example :
             0  2  3                 upSide = {0, 2, 3}

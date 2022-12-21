@@ -1,22 +1,24 @@
+package Common;
+
 import java.util.ArrayList;
 
-public class Object {
+public class InternalObject {
     private final int id;
     private static int internalIdIncr = 0;
-    private static final ArrayList<Object> objectList = new ArrayList<>();
+    private static final ArrayList<InternalObject> INTERNAL_OBJECT_LIST = new ArrayList<>();
 
-    public Object() {
+    public InternalObject() {
         this.id = internalIdIncr;
         internalIdIncr++;
-        objectList.add(this);
+        INTERNAL_OBJECT_LIST.add(this);
     }
 
     public int getId() {
         return id;
     }
 
-    public static ArrayList<Object> getObjectList() {
-        return objectList;
+    public static ArrayList<InternalObject> getObjectList() {
+        return INTERNAL_OBJECT_LIST;
     }
 
 //    public static Object getObjectById()

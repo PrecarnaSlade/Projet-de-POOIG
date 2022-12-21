@@ -2,7 +2,7 @@
 
 
 COMMUNE
-class Common.Tuile
+class Common.Tile
 class Common.Grille
 class Common.Joueur
 class IA
@@ -15,5 +15,5 @@ class Sauvagarde
 
 
 Interface Jeu?
-class Domino
+class Domino.Domino
 class Carcassone
