@@ -2,10 +2,10 @@ package Common;
 
 import MathFuncAndObj.Position;
 
-public class Grille<E> extends InternalObject {
+public class Grid<E> extends InternalObject {
     private Tile[][] grid;
 
-    public Grille(int pWidth, int pHeight) {
+    public Grid(int pWidth, int pHeight) {
         super();
         grid = new Tile[pWidth][pHeight];
     }
@@ -16,5 +16,9 @@ public class Grille<E> extends InternalObject {
 
     public Tile getTileByXY(int x, int y){
         return grid[x][y];
+    }
+
+    public void place(Tile t, Position p){
+        grid[p.getX()][p.hashCode()]=t;
     }
 }

@@ -1,6 +1,6 @@
-import Common.Joueur;
+import Common.Player;
 
-public class IA extends Joueur {
+public class IA extends Player {
 
     public IA() {
         super();

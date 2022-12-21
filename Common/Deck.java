@@ -2,9 +2,11 @@ package Common;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 public class Deck<E> extends InternalObject {
-    Collection<Tile<E>> tiles;
+    ArrayList<Tile<E>> tiles;
 
     public Deck(int i){
         super();
@@ -16,11 +18,11 @@ public class Deck<E> extends InternalObject {
         return tiles.isEmpty();
     }
 
-    /*
     public Common.Tile draw(){
-        //.get() sur un element aleatoire de la collection
+        Tile t=tiles.iterator().next();
+        tiles.iterator().remove();
+        return t;
     }
-     */
 
     public void put(Tile<E> t){
         tiles.add(t);

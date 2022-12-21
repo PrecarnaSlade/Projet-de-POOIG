@@ -4,7 +4,7 @@
 COMMUNE
 class Common.Tile
 class Common.Grille
-class Common.Joueur
+class Common.Player
 class IA
 class Common.Menu
 
