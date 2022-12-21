@@ -1,13 +1,15 @@
 package Common;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Deck<E> extends InternalObject {
     Collection<Tile<E>> tiles;
 
-    public Deck(){
+    public Deck(int i){
         super();
-        //doit créer la collection et y ajouter un certain nombre de tuile aléatoire
+        tiles= new ArrayList<>(i);
+        //Le deck sera rempli avec des tuiles aléatoires lors de l'initialisation des parties.
     }
 
     public boolean isEmpty(){
@@ -15,12 +17,12 @@ public class Deck<E> extends InternalObject {
     }
 
     /*
-    public Common.Tuile draw(){
+    public Common.Tile draw(){
         //.get() sur un element aleatoire de la collection
     }
      */
 
     public void put(Tile<E> t){
-        //remet un element t dans la pioche
+        tiles.add(t);
     }
 }

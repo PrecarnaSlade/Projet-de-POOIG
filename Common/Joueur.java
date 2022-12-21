@@ -14,8 +14,8 @@ public class Joueur extends InternalObject {
 
 //  public void draw() { invertory.add(pioche.get()) }
 
-//    public void discard(Common.Tuile t){ pioche.put(inventory.remove(t)); }
+//    public void discard(Common.Tile t){ pioche.put(inventory.remove(t)); }
 
-//  public void place(Position p, Common.Tuile t) { grille.place(p,t); inventory.remove(t);}
+//  public void place(Position p, Common.Tile t) { grille.place(p,t); inventory.remove(t);}
 }
 

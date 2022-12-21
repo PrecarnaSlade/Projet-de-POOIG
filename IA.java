@@ -7,6 +7,6 @@ public class IA extends Joueur {
     }
 
     //  public void draw(){super.draw();}
-    // public void discard(Common.Tuile t){super.discard(t);}
-    // public void place(Position p, Common.Tuile t){super.place(p,t);}
+    // public void discard(Common.Tile t){super.discard(t);}
+    // public void place(Position p, Common.Tile t){super.place(p,t);}
 }

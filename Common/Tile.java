@@ -22,7 +22,7 @@ public abstract class Tile<E> extends InternalObject {
 
     @Override
     public String toString() {
-        return "Common.Tuile{" +
+        return "Common.Tile{" +
                 ", position=" + position +
                 '}';
     }
