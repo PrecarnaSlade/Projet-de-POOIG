@@ -1,8 +1,8 @@
 package Common;
 
 public abstract class Game {
-    private Player player1;
-    private Player player2;
+    private final Player player1;
+    private final Player player2;
     private Deck deck;
     private Grid grid;
 

@@ -19,6 +19,10 @@ public class Grid<E> extends InternalObject {
     }
 
     public void place(Tile t, Position p){
-        grid[p.getX()][p.hashCode()]=t;
+        if(isLegalMove(t,p)) grid[p.getX()][p.hashCode()]=t;
+    }
+
+    public boolean isLegalMove(Tile t, Position p){
+        return true;
     }
 }
