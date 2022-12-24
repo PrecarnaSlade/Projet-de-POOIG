@@ -8,10 +8,12 @@ public class Player extends InternalObject {
     private final Scanner scanner;
     private ArrayList<Tile> hand;
     private Game game;
+    private int points;
 
     public Player() {
         hand = new ArrayList<>();
         scanner = new Scanner(System.in);
+        points = 0;
     }
 
     public void draw(){

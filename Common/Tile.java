@@ -28,4 +28,6 @@ public abstract class Tile<E> extends InternalObject {
     }
 
     public abstract String getGraphicalRepresentation();
+
+    public abstract Graphic.Tile getGraphic();
 }

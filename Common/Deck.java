@@ -1,9 +1,6 @@
 package Common;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 public class Deck<E> extends InternalObject {
     ArrayList<Tile<E>> tiles;
@@ -18,8 +15,8 @@ public class Deck<E> extends InternalObject {
         return tiles.isEmpty();
     }
 
-    public Common.Tile draw(){
-        Tile t=tiles.iterator().next();
+    public Common.Tile<E> draw(){
+        Tile<E> t=tiles.iterator().next();
         tiles.iterator().remove();
         return t;
     }

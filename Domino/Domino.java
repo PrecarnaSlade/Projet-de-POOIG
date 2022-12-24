@@ -24,7 +24,8 @@ public class Domino extends Tile<int[]> {
 
          !!!!   DEPRECATED !!!!
      */
-    boolean isUsed;
+    private boolean isUsed;
+    private Graphic.Tile graphic;
 
     public Domino(int[] pUp, int[] pRight, int[] pDown, int[] pLeft, Position pPos) {
         super(pPos, new Sides<>(pUp, pRight, pDown, pLeft));
@@ -65,6 +66,11 @@ public class Domino extends Tile<int[]> {
 
         isUsed = false;
 
+    }
+
+    @Override
+    public Graphic.Tile getGraphic() {
+        return graphic;
     }
 
     @Override
