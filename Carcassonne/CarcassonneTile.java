@@ -1,6 +1,7 @@
 package Carcassonne;
 
 import Common.Sides;
+import Graphic.Tile;
 
 public class CarcassonneTile extends Common.Tile{
     boolean village, abbey;
@@ -12,6 +13,11 @@ public class CarcassonneTile extends Common.Tile{
 
     @Override
     public String getGraphicalRepresentation() {
+        return null;
+    }
+
+    @Override
+    public Tile getGraphic() {
         return null;
     }
 }
