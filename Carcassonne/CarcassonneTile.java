@@ -15,9 +15,4 @@ public class CarcassonneTile extends Common.Tile{
     public String getGraphicalRepresentation() {
         return null;
     }
-
-    @Override
-    public Tile getGraphic() {
-        return null;
-    }
 }
