@@ -26,5 +26,6 @@ public class Test {
 //        win.setVisible(true);
 //        win.setDefaultCloseOperation(EXIT_ON_CLOSE);
         new MainWindow();
+
     }
 }

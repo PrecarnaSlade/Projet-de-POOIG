@@ -17,10 +17,10 @@ public class MainMenu extends JPanel implements ActionListener {
     JButton buttonOption;
     JButton buttonExit;
 
-    public MainMenu(int width, int height) {
+    public MainMenu() {
         File oFileHandler;
         String imagePath = "";
-        this.setSize(width, height);
+        this.setSize(Display.WIDTH, Display.HEIGHT);
         this.setLayout(null);
         try {
             // Image creation
@@ -34,27 +34,27 @@ public class MainMenu extends JPanel implements ActionListener {
             System.out.println("MainMenu : imagePath error");
             e.printStackTrace();
         }
-        Dimension dimensionButtons = new Dimension(Display.BUTTON_WIDTH.getValue(), Display.BUTTON_HEIGHT.getValue());
+        Dimension dimensionButtons = new Dimension(Display.BUTTON_WIDTH, Display.BUTTON_HEIGHT);
 
         buttonPlay = new JButton();
         this.add(buttonPlay);
         buttonPlay.setText("Play");
         buttonPlay.setSize(dimensionButtons);
-        buttonPlay.setLocation(Display.CENTER_X.getValue() - Display.PADDING_X.getValue(), Display.CENTER_Y.getValue() - Display.PADDING_Y.getValue() - (Display.DISTANCE_BETWEEN_BUTTONS.getValue() + Display.PADDING_Y.getValue() * 2));
+        buttonPlay.setLocation(Display.CENTER_X - Display.PADDING_X, Display.CENTER_Y - Display.PADDING_Y - (Display.DISTANCE_BETWEEN_BUTTONS + Display.PADDING_Y * 2));
         buttonPlay.addActionListener(this);
 
         buttonOption = new JButton();
         this.add(buttonOption);
         buttonOption.setText("Option");
         buttonOption.setSize(dimensionButtons);
-        buttonOption.setLocation(Display.CENTER_X.getValue() - Display.PADDING_X.getValue(), Display.CENTER_Y.getValue() - Display.PADDING_Y.getValue());
+        buttonOption.setLocation(Display.CENTER_X - Display.PADDING_X, Display.CENTER_Y - Display.PADDING_Y);
         buttonOption.addActionListener(this);
 
         buttonExit = new JButton();
         this.add(buttonExit);
         buttonExit.setText("Exit");
         buttonExit.setSize(dimensionButtons);
-        buttonExit.setLocation(Display.CENTER_X.getValue() - Display.PADDING_X.getValue(), Display.CENTER_Y.getValue() - Display.PADDING_Y.getValue() + (Display.DISTANCE_BETWEEN_BUTTONS.getValue() + Display.PADDING_Y.getValue() * 2));
+        buttonExit.setLocation(Display.CENTER_X - Display.PADDING_X, Display.CENTER_Y - Display.PADDING_Y + (Display.DISTANCE_BETWEEN_BUTTONS + Display.PADDING_Y * 2));
         buttonExit.addActionListener(this);
     }
 
@@ -73,6 +73,8 @@ public class MainMenu extends JPanel implements ActionListener {
             sIdentifier = MainWindow.PLAY_MENU;
         } else if (buttonSource == buttonExit) {
             System.exit(0);
+        } else if (buttonSource == buttonOption) {
+            sIdentifier = MainWindow.OPTION_MENU;
         }
 
         MainWindow.switchToMenu((JPanel) this.getParent(), sIdentifier);
