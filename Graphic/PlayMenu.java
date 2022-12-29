@@ -38,7 +38,6 @@ public class PlayMenu extends JPanel implements ActionListener {
         buttonReturn.setLocation(Display.WIDTH.getValue() - (Display.BUTTON_WIDTH.getValue() + Display.DISTANCE_BETWEEN_BUTTONS.getValue()), Display.HEIGHT.getValue() - (Display.BUTTON_HEIGHT.getValue() + Display.DISTANCE_BETWEEN_BUTTONS.getValue() * 2));
         buttonReturn.addActionListener(this);
 
-
     }
 
     @Override
