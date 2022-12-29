@@ -64,7 +64,6 @@ public class Domino extends Tile<int[]> {
         getSides().setRightSide(aTempArray);
 
         isUsed = false;
-
     }
 
     @Override
