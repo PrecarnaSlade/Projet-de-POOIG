@@ -1,4 +1,4 @@
-import Common.Player;
+package Common;
 
 public class IA extends Player {
 

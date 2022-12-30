@@ -1,35 +1,25 @@
 package Graphic;
 
+import Common.Display;
 import Common.Sides;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class Tile extends JPanel {
-    private int objectIDLinked;
 
-    public Tile(String tileType, int widthParentWindow, int heightParentWindow, float scale, Sides sides, int nObjectIDLinked) {
-        if (tileType.equals("domino")) {
-            Domino(widthParentWindow, heightParentWindow, scale, sides);
-        } else if (tileType.equals("carcassone")) {
+    public Tile(String tileType, Sides sides) {
+        if (tileType.equals("Domino")) {
+            Domino(sides);
+        } else if (tileType.equals("Carcassonne")) {
             System.out.println("TBD");
-        } else {
-            return;
         }
-        this.objectIDLinked = nObjectIDLinked;
     }
 
-    public int getObjectIDLinked() {
-        return objectIDLinked;
-    }
 
-    private void Domino(int widthParentWindow, int heightParentWindow, float scale, Sides<int[]> sides) {
-        int nSize;
-        if (scale == 0) {
-            nSize = 100;
-        } else {
-            nSize = (int) Math.min(widthParentWindow * scale, heightParentWindow * scale);
-        }
+    private void Domino(Sides<int[]> sides) {
+        int nSize = Display.TILE_SIZE;
+
         int nQuarter = nSize / 4;
 
         // Setting up basic size and layout to null => can apply absolute coordinates

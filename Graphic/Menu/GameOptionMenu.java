@@ -13,6 +13,7 @@ public class GameOptionMenu extends JPanel implements ActionListener {
     private JButton buttonReturn, buttonPlay;
     private JComboBox<String> comboBoxGridSize;
     private JLabel labelGamePlayed;
+    private JCheckBox checkBox2Players;
 
     public GameOptionMenu() {
         this.setSize(Display.WIDTH, Display.HEIGHT);
@@ -44,6 +45,11 @@ public class GameOptionMenu extends JPanel implements ActionListener {
         this.add(label);
         label.setSize(buttonDimension.width / 2, buttonDimension.height / 2);
         label.setLocation(Display.CENTER_X - (Display.BUTTON_WIDTH + Display.DISTANCE_BETWEEN_BUTTONS / 2), Display.CENTER_Y - Display.PADDING_Y - Display.DISTANCE_BETWEEN_BUTTONS - label.getHeight());
+
+        checkBox2Players = new JCheckBox();
+        this.add(checkBox2Players);
+        checkBox2Players.setText("vs AI");
+        checkBox2Players.setLocation(Display.CENTER_X + Display.DISTANCE_BETWEEN_BUTTONS / 2, Display.CENTER_Y - Display.PADDING_Y - Display.DISTANCE_BETWEEN_BUTTONS - checkBox2Players.getHeight());
 
         comboBoxGridSize = new JComboBox<>(aScreenSize);
         this.add(comboBoxGridSize);
@@ -92,7 +98,13 @@ public class GameOptionMenu extends JPanel implements ActionListener {
             int nHeight = Integer.parseInt(aSize[1]);
             Dimension oGridDimension = new Dimension(nWidth, nHeight);
             parent.setGridSize(oGridDimension);
-            // Need to switch to game graphic !!!!
+            if (checkBox2Players.isSelected()) {
+                parent.setTwoPlayers(false);
+            } else {
+                parent.setTwoPlayers(false);
+            }
+            parent.createGameInterface();
+            sIdentifier = MainWindow.GAME_PANEL;
         }
 
         parent.switchToMenu(sIdentifier);

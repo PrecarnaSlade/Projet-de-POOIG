@@ -5,19 +5,23 @@ import MathFuncAndObj.Position;
 public abstract class Tile<E> extends InternalObject {
     private final Position position;
     private final Sides<E> sides;
-    private Graphic.Tile graphic;
+    private final Graphic.Tile graphic;
+    private boolean isUsed;
 
-    public Tile(Position pos, Sides<E> pSides) { // !!!!!!!!!!!!! KINDA DEPRECATED, needs to be erased at the end !!!!!!!!!!!!!
+    public Tile(Position pos, Sides<E> pSides, String tileType) {
         super();
         this.position = pos;
+        this.graphic = new Graphic.Tile(tileType, pSides);
         sides = pSides;
+        isUsed = false;
     }
 
-    public Tile(Position pos, Sides<E> pSides, Graphic.Tile graphic) {
-        super();
-        this.position = pos;
-        this.graphic = graphic;
-        sides = pSides;
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
     }
 
     public Position getPosition() {

@@ -1,6 +1,12 @@
 package Debug;
 
+import Common.Deck;
 import Common.MainWindow;
+import com.sun.tools.javac.Main;
+
+import javax.swing.*;
+import java.awt.*;
+import java.lang.reflect.ParameterizedType;
 
 public class Test {
 
@@ -19,7 +25,8 @@ public class Test {
 //        win.add(menu);
 //        win.setVisible(true);
 //        win.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        new MainWindow();
+
+        EventQueue.invokeLater(MainWindow::new);
 
     }
 }

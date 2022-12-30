@@ -2,6 +2,8 @@ package Common;
 
 import MathFuncAndObj.Position;
 
+import java.awt.*;
+
 public class Grid<E> extends InternalObject {
     private Tile[][] grid;
     private int width;
@@ -14,6 +16,18 @@ public class Grid<E> extends InternalObject {
         height= pHeight;
     }
 
+    public Grid(Dimension dimension) {
+        this(dimension.width, dimension.height);
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     public Tile<E> getTileByPos(Position pPos) {
         return getTileByXY(pPos.getX(), pPos.getY());
     }
@@ -23,7 +37,10 @@ public class Grid<E> extends InternalObject {
     }
 
     public void place(Tile t, Position p){
-        if(isLegalMove(t,p)) grid[p.getX()][p.hashCode()]=t;
+        if(isLegalMove(t,p)) {
+            grid[p.getX()][p.getX()]=t;
+            t.setUsed(true);
+        }
     }
 
     public boolean isLegalMove(Tile t, Position p){
@@ -34,7 +51,7 @@ public class Grid<E> extends InternalObject {
         return matchSides(x,y);
     }
 
-    private boolean isEmpty(int x,int y){
+    public boolean isEmpty(int x,int y){
         return grid[x][y]==null;
     }
 

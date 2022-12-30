@@ -1,5 +1,6 @@
 package Common;
 
+import Graphic.GamePanel;
 import Graphic.Menu.GameOptionMenu;
 import Graphic.Menu.MainMenu;
 import Graphic.Menu.OptionMenu;
@@ -15,12 +16,15 @@ public class MainWindow extends JFrame {
     private PlayMenu graphicPlayMenu;
     private OptionMenu graphicOptionMenu;
     private GameOptionMenu graphicGameOptionMenu;
+    private GamePanel graphicGamePanel;
     private String gamePlayed;
     private Dimension gridSize;
+    private boolean twoPlayers;
     public static final String MAIN_MENU = "Main_Menu";
     public static final String PLAY_MENU = "Play_Menu";
     public static final String OPTION_MENU = "Option_Menu";
     public static final String GAME_OPTION_MENU = "Game_Option_Menu";
+    public static final String GAME_PANEL = "Game_Panel";
 
     public MainWindow() {
         // window creation
@@ -55,6 +59,20 @@ public class MainWindow extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         gamePlayed = "";
         gridSize = null;
+        twoPlayers = false;
+    }
+
+    public void createGameInterface() {
+        graphicGamePanel = new GamePanel(Game.Create(this));
+        this.add(graphicGamePanel, GAME_PANEL);
+    }
+
+    public boolean isTwoPlayers() {
+        return twoPlayers;
+    }
+
+    public void setTwoPlayers(boolean twoPlayers) {
+        this.twoPlayers = twoPlayers;
     }
 
     public void setGridSize(Dimension gridSize) {

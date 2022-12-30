@@ -39,7 +39,7 @@ public class MainFrame extends JFrame {
         try {
 
             // Load the image that will be shown in the panel
-            BufferedImage image = ImageIO.read(new File("C:\\Users\\Slade\\IdeaProjects\\Projet-de-POOIG\\Debug\\map.jpg"));
+            BufferedImage image = ImageIO.read(new File("map.jpg"));
 
             mainPanel = new MainPanel(image);
             mainPanel.setBounds(50, 50, width - 100, height - 240);

@@ -15,5 +15,5 @@ class Sauvagarde
 
 
 Interface Jeu?
-class Domino.Domino
+class Domino.DominoTile
 class Carcassone

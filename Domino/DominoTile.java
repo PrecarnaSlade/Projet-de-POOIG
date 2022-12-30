@@ -7,7 +7,7 @@ import MathFuncAndObj.Position;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Domino extends Tile<int[]> {
+public class DominoTile extends Tile<int[]> {
     /*
     Read left to right and up to down for the numbers, using the PDF example :
             0  2  3                 upSide = {0, 2, 3}
@@ -24,20 +24,18 @@ public class Domino extends Tile<int[]> {
 
          !!!!   DEPRECATED !!!!
      */
-    private boolean isUsed;
 
-    public Domino(int[] pUp, int[] pRight, int[] pDown, int[] pLeft, Position pPos) {
-        super(pPos, new Sides<>(pUp, pRight, pDown, pLeft));
-        isUsed = false;
+    public DominoTile(int[] pUp, int[] pRight, int[] pDown, int[] pLeft, Position pPos) {
+        super(pPos, new Sides<>(pUp, pRight, pDown, pLeft), "Domino");
+        Sides<int[]> sides = new Sides<>(pUp, pRight, pDown, pLeft);
     }
 
-    public Domino(int[] pUp, int[] pRight, int[] pDown, int[] pLeft) {
-        super(null, new Sides<>(pUp, pRight, pDown, pLeft));
-        isUsed = false;
+    public DominoTile(int[] pUp, int[] pRight, int[] pDown, int[] pLeft) {
+        super(null, new Sides<>(pUp, pRight, pDown, pLeft), "Domino");
     }
 
-    public Domino() {
-        super(null, new Sides<>(new int[0], new int[3], new int[3], new int[3]));
+    public DominoTile() {
+        super(null, new Sides<>(new int[3], new int[3], new int[3], new int[3]), "Domino");
 
         int max = 2;
         int[] aTempArray = new int[3];
@@ -62,8 +60,6 @@ public class Domino extends Tile<int[]> {
         aTempArray[1] = oRandom.nextInt(max) - 1;
         aTempArray[2] = oRandom.nextInt(max) - 1;
         getSides().setRightSide(aTempArray);
-
-        isUsed = false;
     }
 
     @Override
