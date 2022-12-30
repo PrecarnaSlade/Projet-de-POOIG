@@ -14,8 +14,8 @@ import java.io.IOException;
 
 public class GamePanel extends JPanel {
     private final Game game;
-    private BufferedImage content;
     private final MainWindow parent;
+    private BufferedImage content;
     private JPanel hand;
 
     private double zoomFactor = 1;
