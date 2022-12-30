@@ -16,6 +16,7 @@ public class OptionMenu extends JPanel implements ActionListener {
     public OptionMenu() {
         this.setSize(Display.WIDTH, Display.HEIGHT);
         this.setLayout(null);
+        this.setOpaque(false);
 
         Dimension buttonDimension = new Dimension(Display.BUTTON_WIDTH, Display.BUTTON_HEIGHT);
 

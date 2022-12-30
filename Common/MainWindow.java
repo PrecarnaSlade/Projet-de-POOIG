@@ -63,8 +63,19 @@ public class MainWindow extends JFrame {
     }
 
     public void createGameInterface() {
-        graphicGamePanel = new GamePanel(Game.Create(this));
+        this.remove(panelMain);
+        graphicGamePanel = new GamePanel(Game.Create(this), this);
         this.add(graphicGamePanel, GAME_PANEL);
+        graphicGamePanel.updateContent();
+        switchToMenu(GAME_PANEL);
+    }
+
+    public void updateFront() {
+        JLabel oTemp = new JLabel();
+        oTemp.setSize(this.getSize());
+        oTemp.setIcon(new ImageIcon(graphicGamePanel.getContent()));
+        this.add(oTemp);
+        oTemp.setLocation(0,0);
     }
 
     public boolean isTwoPlayers() {

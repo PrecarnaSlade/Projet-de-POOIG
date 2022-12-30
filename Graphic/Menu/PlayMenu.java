@@ -15,6 +15,7 @@ public class PlayMenu extends JPanel implements ActionListener {
     public PlayMenu() {
         this.setSize(Display.WIDTH, Display.HEIGHT);
         this.setLayout(null);
+        this.setOpaque(false);
 
         Dimension buttonDimension = new Dimension(Display.BUTTON_WIDTH, Display.BUTTON_HEIGHT);
 

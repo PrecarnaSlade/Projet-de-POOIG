@@ -1,14 +1,13 @@
 package Graphic;
 
-import Common.Display;
-import Common.Game;
-import Common.Grid;
+import Common.*;
 import MathFuncAndObj.Position;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,15 +15,37 @@ import java.io.IOException;
 public class GamePanel extends JPanel {
     private Game game;
     private BufferedImage content;
+    private MainWindow parent;
+    private JPanel hand;
 
-    public GamePanel(Game game) {
+    private double zoomFactor = 1;
+    private double prevZoomFactor = 1;
+    private boolean zoomer;
+    private boolean dragger;
+    private boolean released;
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private int xDiff;
+    private int yDiff;
+    private Point startPoint;
+
+    public GamePanel(Game game, MainWindow parent) {
         this.game = game;
         Grid grid = this.game.getGrid();
         this.setSize(Display.TILE_SIZE * grid.getWidth(), Display.TILE_SIZE * grid.getHeight());
         this.setLayout(null);
+        this.parent = parent;
 
         grid.place(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2));
-        updateContent();
+
+        hand = new JPanel();
+        hand.setSize(Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS, Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS);
+        hand.setLayout(null);
+        hand.setLocation(Display.WIDTH - hand.getWidth(), Display.HEIGHT - hand.getHeight());
+        JLabel infoLabel = new JLabel("You drew this tile :");
+        hand.add(infoLabel);
+        infoLabel.setLocation(Display.DISTANCE_BETWEEN_BUTTONS / 4, Display.DISTANCE_BETWEEN_BUTTONS / 4);
+        this.add(hand);
     }
 
     public void updateContent() {
@@ -57,7 +78,7 @@ public class GamePanel extends JPanel {
                 }
             }
             this.content = getScreenShot(this);
-            setBackgroundImage();
+            parent.updateFront();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,11 +96,51 @@ public class GamePanel extends JPanel {
         return bi;
     }
 
-    private void setBackgroundImage() {
-        JLabel oTemp = new JLabel();
-        oTemp.setSize(this.getSize());
-        oTemp.setIcon(new ImageIcon(content));
-        this.add(oTemp);
-        oTemp.setLocation(0,0);
+    public BufferedImage getContent() {
+        return content;
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        if (zoomer) {
+            AffineTransform at = new AffineTransform();
+
+            double xRel = MouseInfo.getPointerInfo().getLocation().getX() - getLocationOnScreen().getX();
+            double yRel = MouseInfo.getPointerInfo().getLocation().getY() - getLocationOnScreen().getY();
+
+            double zoomDiv = zoomFactor / prevZoomFactor;
+
+            xOffset = (zoomDiv) * (xOffset) + (1 - zoomDiv) * xRel;
+            yOffset = (zoomDiv) * (yOffset) + (1 - zoomDiv) * yRel;
+
+            at.translate(xOffset, yOffset);
+            at.scale(zoomFactor, zoomFactor);
+            prevZoomFactor = zoomFactor;
+            g2.transform(at);
+            zoomer = false;
+        }
+
+        if (dragger) {
+            AffineTransform at = new AffineTransform();
+            at.translate(xOffset + xDiff, yOffset + yDiff);
+            at.scale(zoomFactor, zoomFactor);
+            g2.transform(at);
+
+            if (released) {
+                xOffset += xDiff;
+                yOffset += yDiff;
+                dragger = false;
+            }
+
+        }
+
+        // All drawings go here
+
+        g2.drawImage(content, 0, 0, this);
+
     }
 }

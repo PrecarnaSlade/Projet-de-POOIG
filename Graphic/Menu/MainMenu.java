@@ -23,6 +23,7 @@ public class MainMenu extends JPanel implements ActionListener {
         String imagePath = "";
         this.setSize(Display.WIDTH, Display.HEIGHT);
         this.setLayout(null);
+        this.setOpaque(false);
         try {
             // Image creation
             oFileHandler = new File(imagePath);
