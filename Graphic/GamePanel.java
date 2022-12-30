@@ -13,9 +13,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class GamePanel extends JPanel {
-    private Game game;
+    private final Game game;
     private BufferedImage content;
-    private MainWindow parent;
+    private final MainWindow parent;
     private JPanel hand;
 
     private double zoomFactor = 1;
@@ -71,6 +71,7 @@ public class GamePanel extends JPanel {
 
                     } else {
                         oPanelTemp = this.game.getGrid().getTileByXY(i, j).getGraphic();
+                        WindowManagement.saveImageFromPanel(oPanelTemp, "domino" + (i+j) + ".png");
                     }
 
                     this.add(oPanelTemp);
@@ -87,12 +88,7 @@ public class GamePanel extends JPanel {
     private BufferedImage getScreenShot(JPanel panel){
         BufferedImage bi = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_ARGB);
         panel.paint(bi.getGraphics());
-        try {
-            File outputfile = new File("saved.png");
-            ImageIO.write(bi, "png", outputfile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        WindowManagement.saveImageFromPanel(panel, "grid.png");
         return bi;
     }
 
