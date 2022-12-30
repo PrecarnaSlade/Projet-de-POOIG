@@ -16,6 +16,9 @@ public class MainWindow extends JFrame {
     public static final String MAIN_MENU = "Main_Menu";
     public static final String PLAY_MENU = "Play_Menu";
     public static final String OPTION_MENU = "Option_Menu";
+    private String gamePlayed;
+    private Dimension gridSize;
+
 
     public MainWindow() {
         // window creation
@@ -23,6 +26,7 @@ public class MainWindow extends JFrame {
         this.setSize(Display.WIDTH, Display.HEIGHT);
         this.setLayout(null);
         this.add(panelMain);
+        this.setTitle("Best game 2023");
         cardLayout = new CardLayout();
         panelMain.setLayout(cardLayout);
         panelMain.setSize(Display.WIDTH, Display.HEIGHT);
@@ -43,6 +47,24 @@ public class MainWindow extends JFrame {
         cardLayout.show(panelMain, MAIN_MENU);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        gamePlayed = "";
+        gridSize = null;
+    }
+
+    public void setGridSize(Dimension gridSize) {
+        this.gridSize = gridSize;
+    }
+
+    public void setGamePlayed(String gamePlayed) {
+        this.gamePlayed = gamePlayed;
+    }
+
+    public Dimension getGridSize() {
+        return gridSize;
+    }
+
+    public String getGamePlayed() {
+        return gamePlayed;
     }
 
     public static void switchToMenu(JPanel displayPanel, String menuIdentifier) {

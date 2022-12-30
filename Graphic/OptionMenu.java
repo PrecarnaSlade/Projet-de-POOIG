@@ -44,6 +44,11 @@ public class OptionMenu extends JPanel implements ActionListener {
         buttonAutoDetect.setLocation(Display.CENTER_X - Display.PADDING_X, Display.DISTANCE_BETWEEN_BUTTONS);
         buttonAutoDetect.addActionListener(this);
 
+        JLabel label = new JLabel("Resolution : ");
+        this.add(label);
+        label.setSize(buttonDimension.width / 2, buttonDimension.height / 2);
+        label.setLocation(Display.CENTER_X - (Display.BUTTON_WIDTH + Display.DISTANCE_BETWEEN_BUTTONS / 2), Display.CENTER_Y - Display.PADDING_Y - Display.DISTANCE_BETWEEN_BUTTONS - label.getHeight());
+
         comboBoxScreenSize = new JComboBox<>(aScreenSize);
         this.add(comboBoxScreenSize);
         comboBoxScreenSize.setSize(buttonDimension);
