@@ -1,7 +1,8 @@
-package Graphic;
+package Graphic.Menu;
 
 import Common.Display;
 import Common.MainWindow;
+import Common.WindowManagement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,9 +14,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class MainMenu extends JPanel implements ActionListener {
-    JButton buttonPlay;
-    JButton buttonOption;
-    JButton buttonExit;
+    private JButton buttonPlay;
+    private JButton buttonOption;
+    private JButton buttonExit;
 
     public MainMenu() {
         File oFileHandler;
@@ -68,6 +69,7 @@ public class MainMenu extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String sIdentifier = "";
         JButton buttonSource = (JButton) e.getSource();
+        MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
 
         if (buttonSource == buttonPlay) {
             sIdentifier = MainWindow.PLAY_MENU;
@@ -77,6 +79,6 @@ public class MainMenu extends JPanel implements ActionListener {
             sIdentifier = MainWindow.OPTION_MENU;
         }
 
-        MainWindow.switchToMenu((JPanel) this.getParent(), sIdentifier);
+        parent.switchToMenu(sIdentifier);
     }
 }

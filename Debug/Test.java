@@ -1,12 +1,6 @@
 package Debug;
 
 import Common.MainWindow;
-import Common.Sides;
-import Graphic.MainMenu;
-import Graphic.Tile;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Test {
 

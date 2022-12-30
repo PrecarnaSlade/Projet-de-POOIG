@@ -1,4 +1,4 @@
-package Graphic;
+package Graphic.Menu;
 
 import Common.Display;
 import Common.MainWindow;
@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OptionMenu extends JPanel implements ActionListener {
-    JButton buttonReturn, buttonApply, buttonAutoDetect;
-    JComboBox<String> comboBoxScreenSize;
+    private JButton buttonReturn, buttonApply, buttonAutoDetect;
+    private JComboBox<String> comboBoxScreenSize;
 
     public OptionMenu() {
         this.setSize(Display.WIDTH, Display.HEIGHT);
@@ -75,11 +75,11 @@ public class OptionMenu extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String sIdentifier = "";
         JButton buttonSource = (JButton) e.getSource();
+        MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
 
         if (buttonSource == buttonReturn) {
             sIdentifier = MainWindow.MAIN_MENU;
         } else if (buttonSource == buttonApply || buttonSource == buttonAutoDetect) {
-            MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
             int nWidth, nHeight;
             if (buttonSource == buttonApply) {
                 String sComboContent = (String) comboBoxScreenSize.getSelectedItem();
@@ -108,8 +108,7 @@ public class OptionMenu extends JPanel implements ActionListener {
             parent.Resize(nWidth, nHeight);
             return;
         }
-
-        MainWindow.switchToMenu((JPanel) this.getParent(), sIdentifier);
+        parent.switchToMenu(sIdentifier);
     }
 
 }

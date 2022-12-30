@@ -1,8 +1,9 @@
 package Common;
 
-import Graphic.MainMenu;
-import Graphic.OptionMenu;
-import Graphic.PlayMenu;
+import Graphic.Menu.GameOptionMenu;
+import Graphic.Menu.MainMenu;
+import Graphic.Menu.OptionMenu;
+import Graphic.Menu.PlayMenu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,12 +14,13 @@ public class MainWindow extends JFrame {
     private MainMenu graphicMainMenu;
     private PlayMenu graphicPlayMenu;
     private OptionMenu graphicOptionMenu;
+    private GameOptionMenu graphicGameOptionMenu;
+    private String gamePlayed;
+    private Dimension gridSize;
     public static final String MAIN_MENU = "Main_Menu";
     public static final String PLAY_MENU = "Play_Menu";
     public static final String OPTION_MENU = "Option_Menu";
-    private String gamePlayed;
-    private Dimension gridSize;
-
+    public static final String GAME_OPTION_MENU = "Game_Option_Menu";
 
     public MainWindow() {
         // window creation
@@ -43,6 +45,10 @@ public class MainWindow extends JFrame {
         graphicOptionMenu = new OptionMenu();
         panelMain.add(graphicOptionMenu, OPTION_MENU);
 
+        //GameOptionMenu creation
+        graphicGameOptionMenu = new GameOptionMenu();
+        panelMain.add(graphicGameOptionMenu, GAME_OPTION_MENU);
+
         // basic operations for window
         cardLayout.show(panelMain, MAIN_MENU);
         this.setVisible(true);
@@ -57,6 +63,7 @@ public class MainWindow extends JFrame {
 
     public void setGamePlayed(String gamePlayed) {
         this.gamePlayed = gamePlayed;
+        this.graphicGameOptionMenu.setLabelGamePlayedText(gamePlayed);
     }
 
     public Dimension getGridSize() {
@@ -67,12 +74,12 @@ public class MainWindow extends JFrame {
         return gamePlayed;
     }
 
-    public static void switchToMenu(JPanel displayPanel, String menuIdentifier) {
+    public void switchToMenu(String menuIdentifier) {
         if (menuIdentifier.equals("")) {
             return;
         }
-        CardLayout cardLayout = (CardLayout) displayPanel.getLayout();
-        cardLayout.show(displayPanel, menuIdentifier);
+        CardLayout cardLayout = (CardLayout) panelMain.getLayout();
+        cardLayout.show(panelMain, menuIdentifier);
     }
 
     public void Resize(int width, int height) {
@@ -97,9 +104,11 @@ public class MainWindow extends JFrame {
         this.graphicMainMenu = new MainMenu();
         this.graphicPlayMenu = new PlayMenu();
         this.graphicOptionMenu = new OptionMenu();
+        this.graphicGameOptionMenu = new GameOptionMenu();
         this.panelMain.add(graphicMainMenu, MAIN_MENU);
         this.panelMain.add(graphicPlayMenu, PLAY_MENU);
         this.panelMain.add(graphicOptionMenu, OPTION_MENU);
+        this.panelMain.add(graphicGameOptionMenu, GAME_OPTION_MENU);
         cardLayout.show(panelMain, OPTION_MENU);
     }
 }

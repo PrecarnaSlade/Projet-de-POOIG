@@ -1,7 +1,8 @@
-package Graphic;
+package Graphic.Menu;
 
 import Common.Display;
 import Common.MainWindow;
+import Common.WindowManagement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PlayMenu extends JPanel implements ActionListener {
-    JButton buttonDomino, buttonCarcassonne, buttonReturn;
+    private JButton buttonDomino, buttonCarcassonne, buttonReturn;
 
     public PlayMenu() {
         this.setSize(Display.WIDTH, Display.HEIGHT);
@@ -44,11 +45,15 @@ public class PlayMenu extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String sIdentifier = "";
         JButton buttonSource = (JButton) e.getSource();
+        MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
 
         if (buttonSource == buttonReturn) {
             sIdentifier = MainWindow.MAIN_MENU;
+        } else if (buttonSource == buttonDomino || buttonSource == buttonCarcassonne) {
+            parent.setGamePlayed(buttonSource.getText());
+            sIdentifier = MainWindow.GAME_OPTION_MENU;
         }
 
-        MainWindow.switchToMenu((JPanel) this.getParent(), sIdentifier);
+        parent.switchToMenu(sIdentifier);
     }
 }

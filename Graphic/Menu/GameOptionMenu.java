@@ -1,4 +1,4 @@
-package Graphic;
+package Graphic.Menu;
 
 import Common.Display;
 import Common.MainWindow;
@@ -10,8 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameOptionMenu extends JPanel implements ActionListener {
-    JButton buttonReturn, buttonPlay;
-    JComboBox<String> comboBoxGridSize;
+    private JButton buttonReturn, buttonPlay;
+    private JComboBox<String> comboBoxGridSize;
+    private JLabel labelGamePlayed;
 
     public GameOptionMenu() {
         this.setSize(Display.WIDTH, Display.HEIGHT);
@@ -33,6 +34,11 @@ public class GameOptionMenu extends JPanel implements ActionListener {
             sTemp = nResolution + "x" + nResolution;
             aScreenSize[i] = sTemp;
         }
+
+        labelGamePlayed = new JLabel();
+        this.add(labelGamePlayed);
+        labelGamePlayed.setSize(buttonDimension.width / 2, buttonDimension.height / 2);
+        labelGamePlayed.setLocation(Display.CENTER_X - Display.PADDING_X, Display.DISTANCE_BETWEEN_BUTTONS);
 
         JLabel label = new JLabel("Grid size : ");
         this.add(label);
@@ -61,16 +67,20 @@ public class GameOptionMenu extends JPanel implements ActionListener {
 
     }
 
+    public void setLabelGamePlayedText(String labelGamePlayedText) {
+        this.labelGamePlayed.setText(labelGamePlayedText);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String sIdentifier = "";
         JButton buttonSource = (JButton) e.getSource();
+        MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
 
         if (buttonSource == buttonReturn) {
-            sIdentifier = MainWindow.MAIN_MENU;
+            sIdentifier = MainWindow.PLAY_MENU;
         } else if (buttonSource == buttonPlay) {
             // creation of the game
-            MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
             String sSizeSelected = (String) comboBoxGridSize.getSelectedItem();
             assert sSizeSelected != null;
             String[] aSize = sSizeSelected.split("x");
@@ -85,6 +95,6 @@ public class GameOptionMenu extends JPanel implements ActionListener {
             // Need to switch to game graphic !!!!
         }
 
-        MainWindow.switchToMenu((JPanel) this.getParent(), sIdentifier);
+        parent.switchToMenu(sIdentifier);
     }
 }
