@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     private final Game game;
     private final MainWindow parent;
     private BufferedImage content;
-    private JPanel grid;
+    private GridGraphic grid;
 
     private double zoomFactor = 1;
     private double prevZoomFactor = 1;
@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         this.grid = new GridGraphic(grid);
         this.add(this.grid);
 
-        grid.place(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2));
+        grid.place(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2), this.grid);
 
         addMouseMotionListener(this);
         addMouseListener(this);
@@ -53,12 +53,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     }
 
     public void updateContent() {
-        Common.Grid grid = this.game.getGrid();
-
-
-
         this.content = getScreenShot(this);
-        repaint();
     }
 
     private BufferedImage getScreenShot(JPanel panel){

@@ -1,5 +1,6 @@
 package Common;
 
+import Graphic.GridGraphic;
 import MathFuncAndObj.Position;
 
 import java.awt.*;
@@ -36,10 +37,11 @@ public class Grid<E> extends InternalObject {
         return grid[x][y];
     }
 
-    public void place(Tile t, Position p){
+    public void place(Tile t, Position p, GridGraphic gridGraphic){
         if(isLegalMove(t,p)) {
             grid[p.getX()][p.getX()]=t;
             t.setUsed(true);
+            gridGraphic.updateGraphic();
         }
     }
 

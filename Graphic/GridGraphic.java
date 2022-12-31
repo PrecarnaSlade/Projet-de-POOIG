@@ -21,9 +21,10 @@ public class GridGraphic extends JPanel {
         this.setSize(Display.TILE_SIZE * grid.getWidth(), Display.TILE_SIZE * grid.getHeight());
         this.setLayout(null);
 
-        // resize image
+        updateGraphic();
+    }
 
-
+    public void updateGraphic() {
         JPanel oPanelTemp;
         JLabel oLabelImage;
 
