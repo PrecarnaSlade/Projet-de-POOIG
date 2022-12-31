@@ -6,28 +6,12 @@ import java.util.Scanner;
 
 public class Player extends InternalObject {
     private final Scanner scanner;
-    private ArrayList<Tile> hand;
     private Game game;
     private int points;
 
     public Player() {
-        hand = new ArrayList<>();
         scanner = new Scanner(System.in);
         points = 0;
-    }
-
-    public void draw(){
-        hand.add(game.getDeck().draw());
-    }
-
-    public void discard(Common.Tile t){
-        hand.remove(t);
-        game.getDeck().put(t);
-    }
-
-    public void place(Common.Tile t, Position p){
-        game.getGrid().place(t,p);
-        hand.remove(t);
     }
 }
 

@@ -1,10 +1,13 @@
-package Common;
+package Common.Window;
 
+import Common.Game;
+import Common.Tile;
 import Graphic.GamePanel;
 import Graphic.Menu.GameOptionMenu;
 import Graphic.Menu.MainMenu;
 import Graphic.Menu.OptionMenu;
 import Graphic.Menu.PlayMenu;
+import Graphic.TileGraphic;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +23,7 @@ public class MainWindow extends JFrame {
     private GamePanel graphicGamePanel;
     private String gamePlayed;
     private Dimension gridSize;
+    private JPanel hand;
     private boolean twoPlayers;
     public static final String MAIN_MENU = "Main_Menu";
     public static final String PLAY_MENU = "Play_Menu";
@@ -31,7 +35,7 @@ public class MainWindow extends JFrame {
         // window creation
         panelMain = new JPanel();
         this.setSize(Display.WIDTH, Display.HEIGHT);
-        this.setLayout(null);
+        this.setLayout(new CardLayout());
         this.add(panelMain);
         this.setTitle("Best game 2023");
         cardLayout = new CardLayout();
@@ -68,19 +72,40 @@ public class MainWindow extends JFrame {
             graphicGamePanel = new GamePanel(Game.Create(this), this);
             this.remove(panelMain);
             this.add(graphicGamePanel, GAME_PANEL);
+            createHandDisplay();
+            graphicGamePanel.getGame().draw(this);
             graphicGamePanel.updateContent();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateFront() {
-        JLabel oTemp = new JLabel();
-        oTemp.setSize(this.getSize());
-        oTemp.setIcon(new ImageIcon(graphicGamePanel.getContent()));
-        this.add(oTemp);
-        oTemp.setLocation(0,0);
+    private void createHandDisplay() {
+        hand = new JPanel();
+        this.add(hand);
+        hand.setSize(Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 2, Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 2);
+        hand.setLayout(null);;
+        JLabel infoLabel = new JLabel("You drew this tile :");
+        hand.add(infoLabel);
+        infoLabel.setLocation(Display.DISTANCE_BETWEEN_BUTTONS / 4, Display.DISTANCE_BETWEEN_BUTTONS / 4);
+        hand.setBackground(Color.red);
     }
+
+    public void updateTileDrawn(Tile tileDrawn) {
+        TileGraphic graphic = tileDrawn.getGraphic();
+        hand.add(graphic);
+        graphic.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
+        graphic.setLocation(Display.DISTANCE_BETWEEN_BUTTONS, Display.DISTANCE_BETWEEN_BUTTONS);
+        graphic.setToolTipText("Press R to rotate clockwise\nShift + R to rotate anti-clockwise");
+    }
+
+//    public void updateFront() {
+//        JLabel oTemp = new JLabel();
+//        oTemp.setSize(this.getSize());
+//        oTemp.setIcon(new ImageIcon(graphicGamePanel.getContent()));
+//        this.add(oTemp);
+//        oTemp.setLocation(0,0);
+//    }
 
     public boolean isTwoPlayers() {
         return twoPlayers;
@@ -97,6 +122,7 @@ public class MainWindow extends JFrame {
     public void setGamePlayed(String gamePlayed) {
         this.gamePlayed = gamePlayed;
         this.graphicGameOptionMenu.setLabelGamePlayedText(gamePlayed);
+        this.setTitle(gamePlayed);
     }
 
     public Dimension getGridSize() {

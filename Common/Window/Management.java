@@ -1,4 +1,4 @@
-package Common;
+package Common.Window;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class WindowManagement {
+public class Management {
     private static final boolean debug = true;
 
     public static Container getMasterParentWindow(Container startContainer) {
@@ -22,9 +22,10 @@ public class WindowManagement {
             return;
         }
         BufferedImage bi = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        panel.paint(bi.getGraphics());
         try {
-            File outputfile = new File(outputName);
-            ImageIO.write(bi, "png", outputfile);
+            File outputFile = new File(outputName);
+            ImageIO.write(bi, "png", outputFile);
         } catch (IOException e) {
             e.printStackTrace();
         }

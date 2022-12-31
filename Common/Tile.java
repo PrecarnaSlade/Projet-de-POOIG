@@ -1,17 +1,18 @@
 package Common;
 
+import Graphic.TileGraphic;
 import MathFuncAndObj.Position;
 
 public abstract class Tile<E> extends InternalObject {
     private final Position position;
     private final Sides<E> sides;
-    private final Graphic.Tile graphic;
+    private final TileGraphic graphic;
     private boolean isUsed;
 
     public Tile(Position pos, Sides<E> pSides, String tileType) {
         super();
         this.position = pos;
-        this.graphic = new Graphic.Tile(tileType, pSides);
+        this.graphic = new TileGraphic(tileType, pSides);
         sides = pSides;
         isUsed = false;
     }
@@ -41,7 +42,7 @@ public abstract class Tile<E> extends InternalObject {
 
     public abstract String getGraphicalRepresentation();
 
-    public Graphic.Tile getGraphic() {
+    public TileGraphic getGraphic() {
         return graphic;
     }
 }

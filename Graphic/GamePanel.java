@@ -1,24 +1,26 @@
 package Graphic;
 
 import Common.*;
+import Common.Window.Display;
+import Common.Window.MainWindow;
+import Common.Window.Management;
 import MathFuncAndObj.Position;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements MouseListener, MouseMotionListener {
     private final Game game;
     private final MainWindow parent;
     private BufferedImage content;
-    private JPanel hand;
-
-    private ImageIcon imageEmpty = new ImageIcon(new ImageIcon(ImageIO.read(new File("./Graphic/Resources/Null1.png"))).getImage().getScaledInstance(Display.TILE_SIZE, Display.TILE_SIZE, Image.SCALE_SMOOTH));
+    private JPanel grid;
 
     private double zoomFactor = 1;
     private double prevZoomFactor = 1;
@@ -33,59 +35,36 @@ public class GamePanel extends JPanel {
 
     public GamePanel(Game game, MainWindow parent) throws IOException {
         this.game = game;
-        Grid grid = this.game.getGrid();
+        Common.Grid grid = this.game.getGrid();
         this.setSize(Display.TILE_SIZE * grid.getWidth(), Display.TILE_SIZE * grid.getHeight());
         this.setLayout(null);
         this.parent = parent;
+        this.grid = new GridGraphic(grid);
+        this.add(this.grid);
 
         grid.place(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2));
 
-        hand = new JPanel();
-        hand.setSize(Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS, Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS);
-        hand.setLayout(null);
-        hand.setLocation(Display.WIDTH - hand.getWidth(), Display.HEIGHT - hand.getHeight());
-        JLabel infoLabel = new JLabel("You drew this tile :");
-        hand.add(infoLabel);
-        infoLabel.setLocation(Display.DISTANCE_BETWEEN_BUTTONS / 4, Display.DISTANCE_BETWEEN_BUTTONS / 4);
-        this.add(hand);
+        addMouseMotionListener(this);
+        addMouseListener(this);
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     public void updateContent() {
-        Grid grid = this.game.getGrid();
-        JPanel oPanelTemp;
-        JLabel oLabelImage;
+        Common.Grid grid = this.game.getGrid();
 
-        for (int i = 0; i < grid.getWidth(); i++) {
-            for (int j = 0; j < grid.getHeight(); j++) {
-                oPanelTemp = new JPanel(null);
-                oPanelTemp.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
-                oPanelTemp.setBorder(new LineBorder(Color.BLACK));
 
-                if (grid.isEmpty(i, j)) {
-                    oLabelImage = new JLabel();
-                    oLabelImage.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
-                    // resize image
-                    oLabelImage.setIcon(imageEmpty);
-                    oPanelTemp.add(oLabelImage);
-                    oLabelImage.setLocation(0,0);
 
-                } else {
-                    oPanelTemp = this.game.getGrid().getTileByXY(i, j).getGraphic();
-                    WindowManagement.saveImageFromPanel(oPanelTemp, "domino" + (i+j) + ".png");
-                }
-
-                this.add(oPanelTemp);
-                oPanelTemp.setLocation(Display.TILE_SIZE * i, Display.TILE_SIZE * j);
-            }
-        }
         this.content = getScreenShot(this);
-        parent.updateFront();
+        repaint();
     }
 
     private BufferedImage getScreenShot(JPanel panel){
         BufferedImage bi = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_ARGB);
         panel.paint(bi.getGraphics());
-        WindowManagement.saveImageFromPanel(panel, "grid.png");
+        Management.saveImageFromPanel(panel, "grid.png");
         return bi;
     }
 
@@ -133,7 +112,49 @@ public class GamePanel extends JPanel {
 
         // All drawings go here
 
-        g2.drawImage(content, 0, 0, this);
+        g2.drawImage(content, -this.getWidth() / 2, -this.getHeight() / 2, this);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        Point curPoint = e.getLocationOnScreen();
+        xDiff = curPoint.x - startPoint.x;
+        yDiff = curPoint.y - startPoint.y;
+
+        dragger = true;
+        repaint();
 
     }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        released = false;
+        startPoint = MouseInfo.getPointerInfo().getLocation();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        released = true;
+        repaint();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
 }

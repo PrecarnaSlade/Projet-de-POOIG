@@ -1,8 +1,8 @@
 package Graphic.Menu;
 
-import Common.Display;
-import Common.MainWindow;
-import Common.WindowManagement;
+import Common.Window.Display;
+import Common.Window.MainWindow;
+import Common.Window.Management;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -70,7 +70,7 @@ public class MainMenu extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String sIdentifier = "";
         JButton buttonSource = (JButton) e.getSource();
-        MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
+        MainWindow parent = (MainWindow) Management.getMasterParentWindow(this);
 
         if (buttonSource == buttonPlay) {
             sIdentifier = MainWindow.PLAY_MENU;

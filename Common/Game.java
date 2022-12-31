@@ -1,5 +1,8 @@
 package Common;
 
+import Common.Window.MainWindow;
+import Graphic.GamePanel;
+
 import java.awt.*;
 
 public class Game<E> {
@@ -37,5 +40,10 @@ public class Game<E> {
         game.setGrid(grid);
 
         return game;
+    }
+
+    public void draw(MainWindow mainWindow) {
+        Tile tileDrawn = deck.draw();
+        mainWindow.updateTileDrawn(tileDrawn);
     }
 }

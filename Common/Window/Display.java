@@ -1,4 +1,4 @@
-package Common;
+package Common.Window;
 
 public class Display {
     public static int WIDTH = 600;

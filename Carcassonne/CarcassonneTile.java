@@ -1,7 +1,6 @@
 package Carcassonne;
 
 import Common.Sides;
-import Graphic.Tile;
 
 public class CarcassonneTile extends Common.Tile {
     boolean village, abbey;

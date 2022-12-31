@@ -1,8 +1,8 @@
 package Graphic.Menu;
 
-import Common.Display;
-import Common.MainWindow;
-import Common.WindowManagement;
+import Common.Window.Display;
+import Common.Window.MainWindow;
+import Common.Window.Management;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,7 +76,7 @@ public class OptionMenu extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String sIdentifier = "";
         JButton buttonSource = (JButton) e.getSource();
-        MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
+        MainWindow parent = (MainWindow) Management.getMasterParentWindow(this);
 
         if (buttonSource == buttonReturn) {
             sIdentifier = MainWindow.MAIN_MENU;

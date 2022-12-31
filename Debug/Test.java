@@ -1,12 +1,8 @@
 package Debug;
 
-import Common.Deck;
-import Common.MainWindow;
-import com.sun.tools.javac.Main;
+import Common.Window.MainWindow;
 
-import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.ParameterizedType;
 
 public class Test {
 

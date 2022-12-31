@@ -1,14 +1,14 @@
 package Graphic;
 
-import Common.Display;
+import Common.Window.Display;
 import Common.Sides;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class Tile extends JPanel {
+public class TileGraphic extends JPanel {
 
-    public Tile(String tileType, Sides sides) {
+    public TileGraphic(String tileType, Sides sides) {
         if (tileType.equals("Domino")) {
             Domino(sides);
         } else if (tileType.equals("Carcassonne")) {
