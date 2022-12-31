@@ -8,6 +8,7 @@ import Graphic.Menu.PlayMenu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class MainWindow extends JFrame {
     private final JPanel panelMain;
@@ -63,11 +64,14 @@ public class MainWindow extends JFrame {
     }
 
     public void createGameInterface() {
-        this.remove(panelMain);
-        graphicGamePanel = new GamePanel(Game.Create(this), this);
-        this.add(graphicGamePanel, GAME_PANEL);
-        graphicGamePanel.updateContent();
-        switchToMenu(GAME_PANEL);
+        try {
+            graphicGamePanel = new GamePanel(Game.Create(this), this);
+            this.remove(panelMain);
+            this.add(graphicGamePanel, GAME_PANEL);
+            graphicGamePanel.updateContent();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateFront() {

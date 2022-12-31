@@ -41,24 +41,24 @@ public class DominoTile extends Tile<int[]> {
         int[] aTempArray = new int[3];
         Random oRandom = new Random();
 
-        aTempArray[0] = oRandom.nextInt(max) - 1;
-        aTempArray[1] = oRandom.nextInt(max) - 1;
-        aTempArray[2] = oRandom.nextInt(max) - 1;
+        aTempArray[0] = oRandom.nextInt(max);
+        aTempArray[1] = oRandom.nextInt(max);
+        aTempArray[2] = oRandom.nextInt(max);
         getSides().setUpSide(aTempArray);
 
-        aTempArray[0] = oRandom.nextInt(max) - 1;
-        aTempArray[1] = oRandom.nextInt(max) - 1;
-        aTempArray[2] = oRandom.nextInt(max) - 1;
+        aTempArray[0] = oRandom.nextInt(max);
+        aTempArray[1] = oRandom.nextInt(max);
+        aTempArray[2] = oRandom.nextInt(max);
         getSides().setLeftSide(aTempArray);
 
-        aTempArray[0] = oRandom.nextInt(max) - 1;
-        aTempArray[1] = oRandom.nextInt(max) - 1;
-        aTempArray[2] = oRandom.nextInt(max) - 1;
+        aTempArray[0] = oRandom.nextInt(max);
+        aTempArray[1] = oRandom.nextInt(max);
+        aTempArray[2] = oRandom.nextInt(max);
         getSides().setDownSide(aTempArray);
 
-        aTempArray[0] = oRandom.nextInt(max) - 1;
-        aTempArray[1] = oRandom.nextInt(max) - 1;
-        aTempArray[2] = oRandom.nextInt(max) - 1;
+        aTempArray[0] = oRandom.nextInt(max);
+        aTempArray[1] = oRandom.nextInt(max);
+        aTempArray[2] = oRandom.nextInt(max);
         getSides().setRightSide(aTempArray);
     }
 

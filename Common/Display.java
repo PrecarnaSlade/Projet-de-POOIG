@@ -30,6 +30,6 @@ public class Display {
         DISTANCE_BETWEEN_BUTTONS = (WIDTH / 20);
         BUTTON_WIDTH = (PADDING_X * 2);
         BUTTON_HEIGHT = (PADDING_Y * 2);
-        TILE_SIZE = Math.min(WIDTH, HEIGHT) / 100;
+        TILE_SIZE = Math.min(WIDTH, HEIGHT) / 6;
     }
 }
