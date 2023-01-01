@@ -3,17 +3,13 @@ package Graphic;
 import Common.*;
 import Common.Window.Display;
 import Common.Window.MainWindow;
-import Common.Window.Management;
 import MathFuncAndObj.Position;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class GamePanel extends JPanel implements MouseListener, MouseMotionListener {
@@ -22,7 +18,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     private BufferedImage content;
     private GridGraphic grid;
 
-    private boolean dragger;
+    private boolean dragged;
     private boolean released;
     private double xOffset = 0;
     private double yOffset = 0;
@@ -64,22 +60,46 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
         Graphics2D g2 = (Graphics2D) g;
 
-        if (dragger) {
+        if (dragged) {
+            boolean bForceResetTop     = yOffset + yDiff > 0;
+            boolean bForceResetRight   = xOffset + xDiff < - Display.WIDTH;
+            boolean bForceResetBottom  = yOffset + yDiff < - Display.HEIGHT;
+            boolean bForceResetLeft    = xOffset + xDiff > 0;
             AffineTransform at = new AffineTransform();
+            if (bForceResetTop || bForceResetRight || bForceResetBottom || bForceResetLeft) {
+                if (bForceResetTop && bForceResetLeft || bForceResetBottom && bForceResetRight) {
+                    xDiff = 0;
+                    yDiff = 0;
+                }
+                if (bForceResetTop) {
+                    yDiff = 0;
+                }
+                if (bForceResetRight) {
+                    xDiff = 0;
+                }
+                if (bForceResetBottom) {
+                    yDiff = 0;
+                }
+                if (bForceResetLeft) {
+                    xDiff = 0;
+                }
+            }
+
             at.translate(xOffset + xDiff, yOffset + yDiff);
+            System.out.println((xOffset + xDiff) + " - " + (yOffset + yDiff));
             g2.transform(at);
 
             if (released) {
-                xOffset += xDiff;
-                yOffset += yDiff;
-                dragger = false;
+               xOffset += xDiff;
+               yOffset += yDiff;
+               dragged = false;
             }
 
         }
 
         // All drawings go here
 
-        g2.drawImage(content, -this.getWidth() / 2, -this.getHeight() / 2, this);
+        g2.drawImage(content, 0, 0, this);
     }
 
     @Override
@@ -88,7 +108,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         xDiff = curPoint.x - startPoint.x;
         yDiff = curPoint.y - startPoint.y;
 
-        dragger = true;
+        dragged = true;
         repaint();
 
     }
@@ -99,7 +119,12 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        Point location = e.getLocationOnScreen();
+        System.out.println((location.x - parent.getLocation().x + "  ####  " + (location.y - parent.getLocation().y)));
+        dragged = true;
+        xDiff = 0;
+        yDiff = 0;
+        repaint();
     }
 
     @Override

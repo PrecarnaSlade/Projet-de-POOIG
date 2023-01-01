@@ -89,6 +89,7 @@ public class MainWindow extends JFrame {
         hand.add(infoLabel);
         infoLabel.setLocation(Display.DISTANCE_BETWEEN_BUTTONS / 4, Display.DISTANCE_BETWEEN_BUTTONS / 4);
         hand.setBackground(Color.red);
+        hand.setLocation(Display.WIDTH - Display.TILE_SIZE - Display.DISTANCE_BETWEEN_BUTTONS, Display.HEIGHT - Display.TILE_SIZE - Display.DISTANCE_BETWEEN_BUTTONS);
     }
 
     public void updateTileDrawn(Tile tileDrawn) {

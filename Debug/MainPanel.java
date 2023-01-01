@@ -1,9 +1,6 @@
 package Debug;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.MouseInfo;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -43,8 +40,8 @@ public class MainPanel extends JPanel implements MouseWheelListener, MouseListen
     }
 
     @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void paint(Graphics g) {
+        super.paint(g);
 
         Graphics2D g2 = (Graphics2D) g;
 
@@ -67,14 +64,33 @@ public class MainPanel extends JPanel implements MouseWheelListener, MouseListen
         }
 
         if (dragger) {
+            boolean bForceReseta = false;
+            boolean bForceResetb = false;
             AffineTransform at = new AffineTransform();
-            at.translate(xOffset + xDiff, yOffset + yDiff);
+            if (xOffset + xDiff > 0 || yOffset + yDiff > 0 ) {
+                at.translate(0, 0);
+                bForceReseta = true;
+            } else if (xOffset + xDiff < - this.getWidth() || yOffset + yDiff < - this.getHeight() ) {
+                at.translate(- this.getWidth(), - this.getHeight());
+                bForceResetb = true;
+            } else {
+                at.translate(xOffset + xDiff, yOffset + yDiff);
+            }
+            System.out.println((xOffset + xDiff) + " - " + (yOffset + yDiff));
             at.scale(zoomFactor, zoomFactor);
             g2.transform(at);
 
             if (released) {
-                xOffset += xDiff;
-                yOffset += yDiff;
+                if (bForceReseta) {
+                    xOffset = 0;
+                    yOffset = 0;
+                } else if (bForceResetb) {
+                    xOffset = - this.getWidth();
+                    yOffset = - this.getHeight();
+                } else {
+                    xOffset += xDiff;
+                    yOffset += yDiff;
+                }
                 dragger = false;
             }
 
@@ -82,7 +98,7 @@ public class MainPanel extends JPanel implements MouseWheelListener, MouseListen
 
         // All drawings go here
 
-        g2.drawImage(image, 0, 0, this);
+        g2.drawImage(image, (int) 0, (int) 0, this);
 
     }
 
@@ -120,7 +136,10 @@ public class MainPanel extends JPanel implements MouseWheelListener, MouseListen
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        dragger = true;
+        xDiff = 0;
+        yDiff = 0;
+        repaint();
     }
 
     @Override
