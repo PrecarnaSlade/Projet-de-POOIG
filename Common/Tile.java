@@ -6,7 +6,8 @@ import MathFuncAndObj.Position;
 public abstract class Tile<E> extends InternalObject {
     private final Position position;
     private final Sides<E> sides;
-    private final TileGraphic graphic;
+    private final String tileType;
+    private TileGraphic graphic;
     private boolean isUsed;
 
     public Tile(Position pos, Sides<E> pSides, String tileType) {
@@ -15,6 +16,7 @@ public abstract class Tile<E> extends InternalObject {
         this.graphic = new TileGraphic(tileType, pSides);
         sides = pSides;
         isUsed = false;
+        this.tileType = tileType;
     }
 
     public boolean isUsed() {
@@ -31,6 +33,10 @@ public abstract class Tile<E> extends InternalObject {
 
     public Sides<E> getSides() {
         return sides;
+    }
+
+    public void updateGraphic() {
+        this.graphic = new TileGraphic(tileType, this.sides);
     }
 
     @Override

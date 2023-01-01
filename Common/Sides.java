@@ -1,55 +1,47 @@
 package Common;
 
 public class Sides<E> {
-    /*
-    content[0] = up
-    content[1] = right
-    content[2] = down
-    content[3] = left
-     */
-    private E[] content;
+    private E up;
+    private E right;
+    private E down;
+    private E left;
 
     public Sides(E pUp, E pRight, E pDown, E pLeft) {
-        content = (E[]) new Object[4];  //  UGLY but works
-        content[0] = pUp;
-        content[1] = pRight;
-        content[2] = pDown;
-        content[3] = pLeft;
+        up = pUp;
+        right = pRight;
+        down = pDown;
+        left = pLeft;
     }
 
     public E getUpSide() {
-        return content[0];
+        return up;
     }
 
     public E getRightSide() {
-        return content[1];
+        return right;
     }
 
     public E getDownSide() {
-        return content[2];
+        return down;
     }
 
     public E getLeftSide() {
-        return content[3];
+        return left;
     }
 
     public void setUpSide(E pContent) {
-        content[0] = pContent;
+        up = pContent;
     }
 
     public void setRightSide(E pContent) {
-        content[1] = pContent;
+        right = pContent;
     }
 
     public void setDownSide(E pContent) {
-        content[2] = pContent;
+        down = pContent;
     }
 
     public void setLeftSide(E pContent) {
-        content[3] = pContent;
-    }
-
-    public void setContent(E[] content) {
-        this.content = content;
+        left = pContent;
     }
 }

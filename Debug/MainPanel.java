@@ -13,11 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Thanasis1101
- * @version 1.0
- */
+
 public class MainPanel extends JPanel implements MouseWheelListener, MouseListener, MouseMotionListener {
 
     private final BufferedImage image;
@@ -47,8 +43,8 @@ public class MainPanel extends JPanel implements MouseWheelListener, MouseListen
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
 

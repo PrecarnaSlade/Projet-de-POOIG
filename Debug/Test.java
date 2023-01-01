@@ -1,7 +1,13 @@
 package Debug;
 
+import Common.Sides;
+import Common.Tile;
 import Common.Window.MainWindow;
+import Domino.DominoTile;
+import Graphic.Menu.MainMenu;
+import Graphic.TileGraphic;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Test {
@@ -14,15 +20,14 @@ public class Test {
 //        int[] right = {1,1,1};
 //        int[] down = {2,2,2};
 //        int[] left = {3,3,3};
-//        Tile tile = new Tile("domino", 600, 600, 0, new Sides<>(up,right,down,left), 0);
-//        win.add(tile);
-//        tile.setLocation(250, 250);
-//        MainMenu menu = new MainMenu(600, 600);
-//        win.add(menu);
+//        DominoTile tile = new DominoTile();
+//        TileGraphic graph = tile.getGraphic();
+//        win.add(graph);
+//        graph.setLocation(250, 250);
 //        win.setVisible(true);
 //        win.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        EventQueue.invokeLater(MainWindow::new);
+//
+          EventQueue.invokeLater(MainWindow::new);
 
     }
 }

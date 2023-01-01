@@ -46,20 +46,25 @@ public class DominoTile extends Tile<int[]> {
         aTempArray[2] = oRandom.nextInt(max);
         getSides().setUpSide(aTempArray);
 
+        aTempArray = new int[3];
         aTempArray[0] = oRandom.nextInt(max);
         aTempArray[1] = oRandom.nextInt(max);
         aTempArray[2] = oRandom.nextInt(max);
         getSides().setLeftSide(aTempArray);
 
+        aTempArray = new int[3];
         aTempArray[0] = oRandom.nextInt(max);
         aTempArray[1] = oRandom.nextInt(max);
         aTempArray[2] = oRandom.nextInt(max);
         getSides().setDownSide(aTempArray);
 
+        aTempArray = new int[3];
         aTempArray[0] = oRandom.nextInt(max);
         aTempArray[1] = oRandom.nextInt(max);
         aTempArray[2] = oRandom.nextInt(max);
         getSides().setRightSide(aTempArray);
+
+        this.updateGraphic();
     }
 
     @Override

@@ -2,6 +2,8 @@ package Graphic;
 
 import Common.Window.Display;
 import Common.Sides;
+import Common.Window.Management;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;

@@ -8,13 +8,16 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static Common.Window.Management.panelToBufferedImage;
+
 
 public class GridGraphic extends JPanel {
-    private Grid grid;
-    private ImageIcon imageEmpty = new ImageIcon(new ImageIcon(ImageIO.read(new File("./Graphic/Resources/Null1.png"))).getImage().getScaledInstance(Display.TILE_SIZE, Display.TILE_SIZE, Image.SCALE_SMOOTH));
+    private final Grid grid;
+    private final ImageIcon imageEmpty = new ImageIcon(new ImageIcon(ImageIO.read(new File("./Graphic/Resources/Null1.png"))).getImage().getScaledInstance(Display.TILE_SIZE, Display.TILE_SIZE, Image.SCALE_SMOOTH));
 
     public GridGraphic(Grid grid) throws IOException {
         this.grid = grid;
@@ -42,13 +45,21 @@ public class GridGraphic extends JPanel {
                     oLabelImage.setLocation(0, 0);
 
                 } else {
-                    oPanelTemp = grid.getTileByXY(i, j).getGraphic();
-                    Management.saveImageFromPanel(oPanelTemp, "domino" + (i * j) + ".png");
+                    oLabelImage = new JLabel();
+                    oLabelImage.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
+                    oLabelImage.setIcon(new ImageIcon(panelToBufferedImage(grid.getTileByXY(i, j).getGraphic())));
+                    oPanelTemp.add(oLabelImage);
+                    oLabelImage.setLocation(0, 0);
                 }
 
                 this.add(oPanelTemp);
                 oPanelTemp.setLocation(Display.TILE_SIZE * i, Display.TILE_SIZE * j);
             }
         }
+    }
+
+    public BufferedImage getImage() {
+        updateGraphic();
+        return panelToBufferedImage(this);
     }
 }

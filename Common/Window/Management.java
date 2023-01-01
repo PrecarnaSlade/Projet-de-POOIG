@@ -30,4 +30,28 @@ public class Management {
             e.printStackTrace();
         }
     }
+
+    public static BufferedImage panelToBufferedImage(JPanel panel) {
+        int nWidth = panel.getWidth();
+        int nHeight = panel.getHeight();
+        BufferedImage bi = new BufferedImage(nWidth, nHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = bi.createGraphics();
+        panel.setSize(nWidth, nHeight); // or panel.getPreferedSize()
+        layoutComponent(panel);
+        panel.print(g);
+        g.dispose();
+        return bi;
+    }
+
+    private static void layoutComponent(Component component) {
+        synchronized (component.getTreeLock()) {
+            component.doLayout();
+
+            if (component instanceof Container) {
+                for (Component child : ((Container) component).getComponents()) {
+                    layoutComponent(child);
+                }
+            }
+        }
+    }
 }

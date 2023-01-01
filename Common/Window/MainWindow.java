@@ -74,7 +74,7 @@ public class MainWindow extends JFrame {
             this.add(graphicGamePanel, GAME_PANEL);
             createHandDisplay();
             graphicGamePanel.getGame().draw(this);
-            graphicGamePanel.updateContent();
+            graphicGamePanel.updateImage();
         } catch (IOException e) {
             e.printStackTrace();
         }

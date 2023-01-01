@@ -22,9 +22,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     private BufferedImage content;
     private GridGraphic grid;
 
-    private double zoomFactor = 1;
-    private double prevZoomFactor = 1;
-    private boolean zoomer;
     private boolean dragger;
     private boolean released;
     private double xOffset = 0;
@@ -40,7 +37,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         this.setLayout(null);
         this.parent = parent;
         this.grid = new GridGraphic(grid);
-        this.add(this.grid);
+
 
         grid.place(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2), this.grid);
 
@@ -52,15 +49,9 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         return game;
     }
 
-    public void updateContent() {
-        this.content = getScreenShot(this);
-    }
-
-    private BufferedImage getScreenShot(JPanel panel){
-        BufferedImage bi = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        panel.paint(bi.getGraphics());
-        Management.saveImageFromPanel(panel, "grid.png");
-        return bi;
+    public void updateImage() {
+        this.grid.updateGraphic();
+        this.content = grid.getImage();
     }
 
     public BufferedImage getContent() {
@@ -73,28 +64,9 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
         Graphics2D g2 = (Graphics2D) g;
 
-        if (zoomer) {
-            AffineTransform at = new AffineTransform();
-
-            double xRel = MouseInfo.getPointerInfo().getLocation().getX() - getLocationOnScreen().getX();
-            double yRel = MouseInfo.getPointerInfo().getLocation().getY() - getLocationOnScreen().getY();
-
-            double zoomDiv = zoomFactor / prevZoomFactor;
-
-            xOffset = (zoomDiv) * (xOffset) + (1 - zoomDiv) * xRel;
-            yOffset = (zoomDiv) * (yOffset) + (1 - zoomDiv) * yRel;
-
-            at.translate(xOffset, yOffset);
-            at.scale(zoomFactor, zoomFactor);
-            prevZoomFactor = zoomFactor;
-            g2.transform(at);
-            zoomer = false;
-        }
-
         if (dragger) {
             AffineTransform at = new AffineTransform();
             at.translate(xOffset + xDiff, yOffset + yDiff);
-            at.scale(zoomFactor, zoomFactor);
             g2.transform(at);
 
             if (released) {
