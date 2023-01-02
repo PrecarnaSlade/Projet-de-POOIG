@@ -46,7 +46,6 @@ public class GridGraphic extends JPanel {
             for (int j = 0; j < grid.getHeight(); j++) {
                 oPanelTemp = new JPanel(null);
                 oPanelTemp.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
-                oPanelTemp.setBorder(new LineBorder(Color.BLACK));
 
                 if (grid.isEmpty(i, j)) {
                     oLabelImage = new JLabel();

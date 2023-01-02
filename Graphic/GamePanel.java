@@ -61,10 +61,17 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         Graphics2D g2 = (Graphics2D) g;
 
         if (dragged) {
+            Insets insets = parent.getInsets();
             boolean bForceResetTop     = yOffset + yDiff > 0;
-            boolean bForceResetRight   = xOffset + xDiff < - Display.WIDTH;
-            boolean bForceResetBottom  = yOffset + yDiff < - Display.HEIGHT;
+            boolean bForceResetRight   = xOffset + xDiff < - (Display.WIDTH - Display.WIDTH / 10. - insets.right - insets.left);
+            boolean bForceResetBottom  = yOffset + yDiff < - (Display.HEIGHT - Display.HEIGHT / 10. + insets.bottom);
             boolean bForceResetLeft    = xOffset + xDiff > 0;
+//            System.out.println("-----------------\nbForceResetTop    = " + bForceResetTop +
+//                                                "\nbForceResetRight  = " + bForceResetRight +
+//                                                "\nbForceResetBottom = " + bForceResetBottom +
+//                                                "\nbForceResetLeft   = " + bForceResetLeft +
+//                              "\n-----------------");
+            System.out.println("X = " + this.getX() + "\nY = "  + this.getY());
             AffineTransform at = new AffineTransform();
             if (bForceResetTop || bForceResetRight || bForceResetBottom || bForceResetLeft) {
                 if (bForceResetTop && bForceResetLeft || bForceResetBottom && bForceResetRight) {
@@ -72,15 +79,19 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
                     yDiff = 0;
                 }
                 if (bForceResetTop) {
+                    yOffset = 0;
                     yDiff = 0;
                 }
                 if (bForceResetRight) {
+                    xOffset = - (Display.WIDTH - Display.WIDTH / 10. - insets.right - insets.left);
                     xDiff = 0;
                 }
                 if (bForceResetBottom) {
+                    yOffset = - (Display.HEIGHT - Display.HEIGHT / 10. + insets.bottom);
                     yDiff = 0;
                 }
                 if (bForceResetLeft) {
+                    xOffset = 0;
                     xDiff = 0;
                 }
             }

@@ -114,6 +114,7 @@ public class DominoTile extends Tile<int[]> {
         getSides().setDownSide(aInvertedSide[1]);
         getSides().setRightSide(getSides().getUpSide());
         getSides().setUpSide(aInvertedSide[0]);
+        updateGraphic();
     }
 
     public void rotateAntiClockwise(){
@@ -123,5 +124,6 @@ public class DominoTile extends Tile<int[]> {
         getSides().setRightSide(aInvertedSide[1]);
         getSides().setDownSide(getSides().getLeftSide());
         getSides().setLeftSide(aInvertedSide[0]);
+        updateGraphic();
     }
 }

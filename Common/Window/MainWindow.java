@@ -34,6 +34,7 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         // window creation
         panelMain = new JPanel();
+        this.setResizable(false);
         this.setSize(Display.WIDTH, Display.HEIGHT);
         this.setLayout(new CardLayout());
         this.add(panelMain);
@@ -75,6 +76,8 @@ public class MainWindow extends JFrame {
             createHandDisplay();
             graphicGamePanel.getGame().draw(this);
             graphicGamePanel.updateImage();
+            Insets insets = this.getInsets();
+            graphicGamePanel.setLocation(insets.left, insets.top);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -159,6 +162,8 @@ public class MainWindow extends JFrame {
         Display.setWidth(width);
         Display.setHeight(height);
 
+        this.setResizable(true);
+
         this.setSize(width, height);
         this.panelMain.setSize(width, height);
         this.graphicMainMenu = new MainMenu();
@@ -170,5 +175,7 @@ public class MainWindow extends JFrame {
         this.panelMain.add(graphicOptionMenu, OPTION_MENU);
         this.panelMain.add(graphicGameOptionMenu, GAME_OPTION_MENU);
         cardLayout.show(panelMain, OPTION_MENU);
+
+        this.setResizable(false);
     }
 }
