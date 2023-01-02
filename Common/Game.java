@@ -11,7 +11,7 @@ public class Game<E> {
     private Deck<E> deck;
     private Grid<E> grid;
 
-    private Game(boolean twoPlayers){
+    protected Game(boolean twoPlayers){
         player1= new Player();
         if (twoPlayers) {
             player2= new Player();
