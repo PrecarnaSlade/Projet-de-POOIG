@@ -52,6 +52,10 @@ public class HandWindow extends JInternalFrame {
 
     }
 
+    public Tile getTileDrawn() {
+        return tileDrawn;
+    }
+
     public void setDrawnTile(Tile tile) {
         this.tileDrawn = tile;
         this.tileDrawnImage = panelToBufferedImage(tile.getGraphic());

@@ -2,6 +2,7 @@ package Common;
 
 import Carcassonne.CarcassonneTile;
 import Domino.DominoTile;
+import Exceptions.NoMoreTileInDeckException;
 
 import java.util.ArrayList;
 
@@ -28,12 +29,16 @@ public class Deck<E> extends InternalObject {
         rank = 0;
     }
 
-    public Common.Tile<E> draw() {
+    public Common.Tile<E> draw() throws NoMoreTileInDeckException {
         Tile tile;
         if (carcassonneDeck == null) {
             tile = dominoDeck[rank];
+            throw new NoMoreTileInDeckException("Deck empty");
         } else {
             tile = carcassonneDeck[rank];
+            if (rank + 1 >= this.carcassonneDeck.length) {
+                throw new NoMoreTileInDeckException("Deck empty");
+            }
         }
         rank++;
         return tile;

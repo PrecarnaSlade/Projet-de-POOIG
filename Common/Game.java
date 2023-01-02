@@ -1,6 +1,7 @@
 package Common;
 
 import Common.Window.MainWindow;
+import Exceptions.NoMoreTileInDeckException;
 import Graphic.GamePanel;
 
 import java.awt.*;
@@ -10,6 +11,7 @@ public class Game<E> {
     private final Player player2;
     private Deck<E> deck;
     private Grid<E> grid;
+    private Tile drawnTile;
 
     protected Game(boolean twoPlayers){
         player1= new Player();
@@ -26,6 +28,7 @@ public class Game<E> {
     public Grid<E> getGrid() {return grid;}
     public void setDeck(Deck<E> deck) {this.deck = deck;}
     public void setGrid(Grid<E> grid) {this.grid = grid;}
+    public Tile getDrawnTile() { return drawnTile;}
 
     public static Game Create(MainWindow mainWindow) {
         String gamePlayed = mainWindow.getGamePlayed();
@@ -42,8 +45,11 @@ public class Game<E> {
         return game;
     }
 
-    public void draw(MainWindow mainWindow) {
-        Tile tileDrawn = deck.draw();
-        mainWindow.updateTileDrawn(tileDrawn);
+    public void draw(MainWindow mainWindow) throws NoMoreTileInDeckException {
+        this.drawnTile = deck.draw();
+        while (!grid.canPlace(drawnTile)) {
+            this.drawnTile = deck.draw();
+        }
+        mainWindow.updateTileDrawn(this.drawnTile);
     }
 }

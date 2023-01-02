@@ -5,6 +5,7 @@ import Common.Window.Display;
 import Common.Window.HandWindow;
 import Common.Window.MainWindow;
 import Exceptions.InvalidMoveException;
+import Exceptions.NoMoreTileInDeckException;
 import MathFuncAndObj.Position;
 
 import javax.imageio.ImageIO;
@@ -40,7 +41,11 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         this.parent = parent;
         this.grid = new GridGraphic(grid, parent.getGamePlayed());
 
-        grid.forcePlace(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2), this.grid);
+        try {
+            grid.forcePlace(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2), this.grid);
+        } catch (NoMoreTileInDeckException e) {
+            e.printStackTrace();
+        }
 
         addMouseMotionListener(this);
         addMouseListener(this);
@@ -108,6 +113,12 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         g2.drawImage(content, 0, 0, this);
     }
 
+    public Position clickToPositionOnGrid(Point MouseLocation) {
+        int x = MouseLocation.x - parent.getLocation().x - this.getLocation().x - this.getX();
+        int y = MouseLocation.y - parent.getLocation().y - this.getLocation().y - this.getY();
+        return new Position(x / 100, y / 100);
+    }
+
     @Override
     public void mouseDragged(MouseEvent e) {
         Point curPoint = e.getLocationOnScreen();
@@ -125,11 +136,17 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Point location = e.getLocationOnScreen();
-        System.out.println((location.x - parent.getLocation().x - this.getX()) + "  ####  " + (location.y - parent.getLocation().y - this.getY()));
         dragged = true;
         xDiff = 0;
         yDiff = 0;
+        // adding tile if possible
+        Position gridPos = clickToPositionOnGrid(e.getLocationOnScreen());
+        Tile handTile = this.game.getDrawnTile();
+        try {
+            this.game.getGrid().place(handTile, gridPos, this.grid);
+        } catch (InvalidMoveException ex) {
+            ex.printStackTrace();
+        }
         repaint();
     }
 
@@ -143,7 +160,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     public void mouseReleased(MouseEvent e) {
         released = true;
         HandWindow handWindow = this.parent.getHandWindow();
-        handWindow.setLocation(0, 0);
+        handWindow.setLocation(handWindow.getX(), 0);
         repaint();
     }
 

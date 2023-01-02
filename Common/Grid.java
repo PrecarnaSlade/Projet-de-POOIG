@@ -55,13 +55,16 @@ public class Grid<E> extends InternalObject {
     }
 
     public boolean isLegalMove(Tile t, Position p){
-        int x= p.getX();
-        int y=p.getY();
+        return isLegalMove(t, p.getX(), p.getY());
+    }
 
+    public boolean isLegalMove(Tile t, int x, int y) {
         if (!topExist(x,y) && !rightExist(x,y) && !bottomExist(x,y) && !leftExist(x,y)) return false;
         if(!this.isEmpty(x,y)) return false;
         return matchSides(x,y);
     }
+
+
 
     public boolean isEmpty(int x,int y){
         return grid[x][y]==null;
@@ -106,7 +109,16 @@ public class Grid<E> extends InternalObject {
         return true;
     }
 
-    private boolean matchSide(E side1, E side2){
-        return side1 == side2;
+    public boolean canPlace(Tile tile) {
+        for (int i = 0; i < 4; i++) {
+            for (int x = 0; x < this.width; x++) {
+                for (int y = 0; y < this.height; y++) {
+                    if (isLegalMove(tile, x, y)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

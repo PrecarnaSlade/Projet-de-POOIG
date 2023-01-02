@@ -1,7 +1,9 @@
 package Common.Window;
 
 import Common.Game;
+import Common.Player;
 import Common.Tile;
+import Exceptions.NoMoreTileInDeckException;
 import Graphic.GamePanel;
 import Graphic.Menu.GameOptionMenu;
 import Graphic.Menu.MainMenu;
@@ -81,7 +83,11 @@ public class MainWindow extends JFrame implements InternalFrameListener {
             graphicGamePanel = new GamePanel(Game.Create(this), this);
             this.remove(panelMain);
             this.add(graphicGamePanel, GAME_PANEL);
-            graphicGamePanel.getGame().draw(this);
+            try {
+                graphicGamePanel.getGame().draw(this);
+            } catch (NoMoreTileInDeckException e) {
+                e.printStackTrace();
+            }
             graphicGamePanel.updateImage();
             Insets insets = this.getInsets();
             graphicGamePanel.setLocation(insets.left, insets.top);
