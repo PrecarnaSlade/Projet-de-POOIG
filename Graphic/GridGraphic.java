@@ -41,9 +41,7 @@ public class GridGraphic {
                 if (!grid.isEmpty(i, j)) {
                     if (gamePlayed.equals("Domino")) {
                         DominoTile dominoTile = (DominoTile) grid.getTileByXY(i, j);
-                        BufferedImage image = panelToBufferedImage(dominoTile.getGraphic());
-                        saveImageFromPanel(dominoTile.getGraphic(), "domino.png");
-                        imageToAdd = image;
+                        imageToAdd = panelToBufferedImage(dominoTile.getGraphic());
                     } else {
                         CarcassonneTile carcassonneTile = (CarcassonneTile) grid.getTileByXY(i, j);
                     }

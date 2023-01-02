@@ -21,7 +21,7 @@ public class HandWindow extends JInternalFrame {
     public HandWindow() throws IOException {
         this.setLayout(null);
         this.setTitle("Hand");
-        this.setSize(Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 4, Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 4);
+        Insets insets = this.getInsets();
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         this.tileDrawn = null;
@@ -36,7 +36,7 @@ public class HandWindow extends JInternalFrame {
         tileDrawnPanel.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
         tileDrawnPanel.setBackground(Color.RED);
         this.add(tileDrawnPanel);
-        tileDrawnPanel.setLocation(this.getWidth() / 2 - Display.TILE_SIZE / 2, this.getHeight() / 2 - Display.TILE_SIZE / 2);
+        tileDrawnPanel.setLocation(0, 0);
 
         JOptionPane.showMessageDialog(null,"Press R to rotate clockwise\nShift + R to rotate anti-clockwise", "Key bind",JOptionPane.INFORMATION_MESSAGE);
 
@@ -48,6 +48,7 @@ public class HandWindow extends JInternalFrame {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_DOWN_MASK), "rotateAntiClockwise");
         actionMap.put("rotateAntiClockwise", new RotationAntiClockwiseAction(this));
         this.setVisible(true);
+        this.setSize(Display.TILE_SIZE + insets.left + insets.right, Display.TILE_SIZE + insets.top + insets.bottom + Display.DISTANCE_BETWEEN_BUTTONS);
 
     }
 

@@ -76,6 +76,7 @@ public class MainWindow extends JFrame implements InternalFrameListener {
 
     public void createGameInterface() {
         try {
+
             createHandDisplay();
             graphicGamePanel = new GamePanel(Game.Create(this), this);
             this.remove(panelMain);

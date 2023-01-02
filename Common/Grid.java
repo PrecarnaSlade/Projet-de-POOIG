@@ -105,4 +105,8 @@ public class Grid<E> extends InternalObject {
         }
         return true;
     }
+
+    private boolean matchSide(E side1, E side2){
+        return side1 == side2;
+    }
 }

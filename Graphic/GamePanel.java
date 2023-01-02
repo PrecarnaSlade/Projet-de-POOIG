@@ -52,16 +52,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 
     public void updateImage() {
         this.content = grid.getImage();
-        try {
-            File outputFile = new File("GridUpdated.png");
-            ImageIO.write(this.content, "png", outputFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public BufferedImage getContent() {
-        return content;
     }
 
     @Override
@@ -76,11 +66,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
             boolean bForceResetRight   = xOffset + xDiff < - (Display.WIDTH - Display.WIDTH / 10. - insets.right - insets.left);
             boolean bForceResetBottom  = yOffset + yDiff < - (Display.HEIGHT - Display.HEIGHT / 10. + insets.bottom);
             boolean bForceResetLeft    = xOffset + xDiff > 0;
-//            System.out.println("-----------------\nbForceResetTop    = " + bForceResetTop +
-//                                                "\nbForceResetRight  = " + bForceResetRight +
-//                                                "\nbForceResetBottom = " + bForceResetBottom +
-//                                                "\nbForceResetLeft   = " + bForceResetLeft +
-//                              "\n-----------------");
             System.out.println("X = " + this.getX() + "\nY = "  + this.getY());
             AffineTransform at = new AffineTransform();
             if (bForceResetTop || bForceResetRight || bForceResetBottom || bForceResetLeft) {
@@ -141,7 +126,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     @Override
     public void mouseClicked(MouseEvent e) {
         Point location = e.getLocationOnScreen();
-        System.out.println((location.x - parent.getLocation().x + "  ####  " + (location.y - parent.getLocation().y)));
+        System.out.println((location.x - parent.getLocation().x - this.getX()) + "  ####  " + (location.y - parent.getLocation().y - this.getY()));
         dragged = true;
         xDiff = 0;
         yDiff = 0;
