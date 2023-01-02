@@ -13,10 +13,10 @@ public abstract class Tile<E> extends InternalObject {
     public Tile(Position pos, Sides<E> pSides, String tileType) {
         super();
         this.position = pos;
-        this.graphic = new TileGraphic(tileType, pSides);
         sides = pSides;
         isUsed = false;
         this.tileType = tileType;
+        this.graphic = new TileGraphic(tileType, pSides, this);
     }
 
     public boolean isUsed() {
@@ -36,7 +36,7 @@ public abstract class Tile<E> extends InternalObject {
     }
 
     public void updateGraphic() {
-        this.graphic = new TileGraphic(tileType, this.sides);
+        this.graphic = new TileGraphic(tileType, this.sides, this);
     }
 
     @Override
@@ -47,6 +47,10 @@ public abstract class Tile<E> extends InternalObject {
     }
 
     public abstract String getGraphicalRepresentation();
+
+    public abstract void rotateClockwise();
+
+    public abstract void rotateAntiClockwise();
 
     public TileGraphic getGraphic() {
         return graphic;

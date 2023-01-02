@@ -1,12 +1,20 @@
 package Common.Window;
 
+import Common.Tile;
+import Graphic.TileGraphic;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
+import static Common.Window.Management.panelToBufferedImage;
+import static Common.Window.Management.saveImageFromPanel;
 
 public class HandWindow extends JFrame {
     private JPanel tileDrawnPanel;
+    private BufferedImage tileDrawnImage;
+    private Tile tileDrawn;
 
     public HandWindow() {
         this.setLayout(null);
@@ -14,7 +22,17 @@ public class HandWindow extends JFrame {
         this.setSize(Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 4, Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 4);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-        tileDrawnPanel = new JPanel(null);
+        this.tileDrawn = null;
+        this.tileDrawnImage = null;
+        this.tileDrawnPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (tileDrawnImage != null) {
+                    g.drawImage(tileDrawnImage, 0, 0, this);
+                }
+            }
+        };
         tileDrawnPanel.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
         tileDrawnPanel.setBackground(Color.RED);
         this.add(tileDrawnPanel);
@@ -59,8 +77,55 @@ public class HandWindow extends JFrame {
             }
         });
 
+        InputMap inputMap = this.tileDrawnPanel.getInputMap();
+        ActionMap actionMap = this.tileDrawnPanel.getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0), "rotateClockwise");
+        actionMap.put("rotateClockwise", new RotationClockwiseAction(this));
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_DOWN_MASK), "rotateAntiClockwise");
+        actionMap.put("rotateAntiClockwise", new RotationAntiClockwiseAction(this));
         this.setVisible(true);
     }
 
+    public void setDrawnTile(Tile tile) {
+        this.tileDrawn = tile;
+        this.tileDrawnImage = panelToBufferedImage(tile.getGraphic());
+        this.tileDrawnPanel.repaint();
+    }
 
+    public void rotateClockwise() {
+        this.tileDrawn.rotateClockwise();
+        setDrawnTile(this.tileDrawn);
+    }
+
+    public void rotateAntiClockwise() {
+        this.tileDrawn.rotateAntiClockwise();
+        setDrawnTile(this.tileDrawn);
+    }
+
+    private static class RotationClockwiseAction extends AbstractAction {
+        private final HandWindow parentWindow;
+
+        public RotationClockwiseAction(HandWindow parentWindow) {
+            this.parentWindow = parentWindow;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            parentWindow.rotateClockwise();
+        }
+    }
+
+    private static class RotationAntiClockwiseAction extends AbstractAction {
+        private final HandWindow parentWindow;
+
+        public RotationAntiClockwiseAction(HandWindow parentWindow) {
+            this.parentWindow = parentWindow;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            parentWindow.rotateAntiClockwise();
+        }
+    }
 }

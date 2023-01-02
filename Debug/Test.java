@@ -9,8 +9,11 @@ import Graphic.Menu.MainMenu;
 import Graphic.TileGraphic;
 import com.sun.tools.javac.Main;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Test extends JFrame {
 
@@ -32,7 +35,15 @@ public class Test extends JFrame {
 //        win.setDefaultCloseOperation(EXIT_ON_CLOSE);
 //        System.out.println(tile.getGraphicalRepresentation());
 
-          EventQueue.invokeLater(MainWindow::new);
+
+          EventQueue.invokeLater(new Runnable() {
+              @Override
+              public void run() {
+                  HandWindow w = new HandWindow();
+                  DominoTile tile = new DominoTile();
+                  w.setDrawnTile(tile);
+              }
+          });
 
     }
 }

@@ -19,4 +19,14 @@ public class CarcassonneTile extends Common.Tile<SideType> {
     public String getGraphicalRepresentation() {
         return null;
     }
+
+    @Override
+    public void rotateClockwise() {
+
+    }
+
+    @Override
+    public void rotateAntiClockwise() {
+
+    }
 }

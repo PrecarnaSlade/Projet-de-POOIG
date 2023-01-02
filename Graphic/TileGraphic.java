@@ -1,5 +1,6 @@
 package Graphic;
 
+import Common.Tile;
 import Common.Window.Display;
 import Common.Sides;
 import Common.Window.Management;
@@ -9,15 +10,20 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class TileGraphic extends JPanel {
+    private final Tile tileLinked;
 
-    public TileGraphic(String tileType, Sides sides) {
+    public TileGraphic(String tileType, Sides sides, Tile tileLinked) {
         if (tileType.equals("Domino")) {
             Domino(sides);
         } else if (tileType.equals("Carcassonne")) {
             System.out.println("TBD");
         }
+        this.tileLinked = tileLinked;
     }
 
+    public Tile getTileLinked() {
+        return tileLinked;
+    }
 
     private void Domino(Sides<int[]> sides) {
         int nSize = Display.TILE_SIZE;
