@@ -10,7 +10,7 @@ import Graphic.TileGraphic;
 import javax.swing.*;
 import java.awt.*;
 
-public class Test {
+public class Test extends JFrame {
 
     public static void main(String[] args) {
 //        JFrame win = new JFrame();
@@ -22,11 +22,14 @@ public class Test {
 //        int[] left = {3,3,3};
 //        DominoTile tile = new DominoTile();
 //        TileGraphic graph = tile.getGraphic();
+//        JLabel label = new JLabel(new ImageIcon(Common.Window.Management.panelToBufferedImage(graph)));
+//        win.add(label);
 //        win.add(graph);
 //        graph.setLocation(250, 250);
 //        win.setVisible(true);
 //        win.setDefaultCloseOperation(EXIT_ON_CLOSE);
-//
+//        System.out.println(tile.getGraphicalRepresentation());
+
           EventQueue.invokeLater(MainWindow::new);
 
     }

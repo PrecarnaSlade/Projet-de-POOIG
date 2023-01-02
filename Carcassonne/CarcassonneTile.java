@@ -2,7 +2,7 @@ package Carcassonne;
 
 import Common.Sides;
 
-public class CarcassonneTile extends Common.Tile {
+public class CarcassonneTile extends Common.Tile<SideType> {
     boolean village, abbey;
     public CarcassonneTile(SideType top, SideType right, SideType bottom, SideType left, boolean village, boolean abbey){
         super(null, new Sides<>(top, right, bottom, left), "Carcassonne");

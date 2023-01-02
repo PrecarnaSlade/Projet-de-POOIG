@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         this.setSize(Display.TILE_SIZE * grid.getWidth(), Display.TILE_SIZE * grid.getHeight());
         this.setLayout(null);
         this.parent = parent;
-        this.grid = new GridGraphic(grid);
+        this.grid = new GridGraphic(grid, parent.getGamePlayed());
 
 
         grid.place(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2), this.grid);
