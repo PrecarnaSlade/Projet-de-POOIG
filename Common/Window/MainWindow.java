@@ -36,9 +36,9 @@ public class MainWindow extends JFrame {
         panelMain = new JPanel();
         this.setResizable(false);
         this.setSize(Display.WIDTH, Display.HEIGHT);
-        this.setLayout(new CardLayout());
+        this.setLayout(null);
         this.add(panelMain);
-        this.setTitle("Best game 2023");
+        this.setTitle("POO 2022/2023");
         cardLayout = new CardLayout();
         panelMain.setLayout(cardLayout);
         panelMain.setSize(Display.WIDTH, Display.HEIGHT);

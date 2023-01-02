@@ -3,13 +3,10 @@ package Graphic;
 import Carcassonne.CarcassonneTile;
 import Common.Grid;
 import Common.Window.Display;
-import Common.Window.MainWindow;
-import Common.Window.Management;
 import Domino.DominoTile;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

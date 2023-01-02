@@ -2,10 +2,12 @@ package Debug;
 
 import Common.Sides;
 import Common.Tile;
+import Common.Window.HandWindow;
 import Common.Window.MainWindow;
 import Domino.DominoTile;
 import Graphic.Menu.MainMenu;
 import Graphic.TileGraphic;
+import com.sun.tools.javac.Main;
 
 import javax.swing.*;
 import java.awt.*;
