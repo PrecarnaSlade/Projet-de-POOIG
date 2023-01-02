@@ -7,8 +7,8 @@ import Exceptions.NoMoreTileInDeckException;
 import java.util.ArrayList;
 
 public class Deck<E> extends InternalObject {
-    private DominoTile[] dominoDeck;
-    private CarcassonneTile[] carcassonneDeck;
+    private final DominoTile[] dominoDeck;
+    private final CarcassonneTile[] carcassonneDeck;
     private int rank;
 
     public Deck(int tileNumber, String gamePlayed) {
@@ -33,7 +33,9 @@ public class Deck<E> extends InternalObject {
         Tile tile;
         if (carcassonneDeck == null) {
             tile = dominoDeck[rank];
-            throw new NoMoreTileInDeckException("Deck empty");
+            if (rank + 1 >= this.dominoDeck.length) {
+                throw new NoMoreTileInDeckException("Deck empty");
+            }
         } else {
             tile = carcassonneDeck[rank];
             if (rank + 1 >= this.carcassonneDeck.length) {

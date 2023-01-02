@@ -80,10 +80,8 @@ public class Grid<E> extends InternalObject {
         if(this.bottomExist(x,y) &&
                 !matchSide((E[]) grid[x][y].getSides().getDownSide(),(E[]) grid[x][y+1].getSides().getUpSide()))
             return false;
-        if(this.leftExist(x,y) &&
-                !matchSide((E[]) grid[x][y].getSides().getLeftSide(),(E[]) grid[x-1][y].getSides().getRightSide()))
-            return false;
-        return true;
+        return !this.leftExist(x, y) ||
+                matchSide((E[]) grid[x][y].getSides().getLeftSide(), (E[]) grid[x - 1][y].getSides().getRightSide());
     }
 
     private boolean topExist(int x, int y){
@@ -110,15 +108,17 @@ public class Grid<E> extends InternalObject {
     }
 
     public boolean canPlace(Tile tile) {
-        for (int i = 0; i < 4; i++) {
-            for (int x = 0; x < this.width; x++) {
-                for (int y = 0; y < this.height; y++) {
-                    if (isLegalMove(tile, x, y)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+//        for (int i = 0; i < 4; i++) {
+//            for (int x = 0; x < this.width; x++) {
+//                for (int y = 0; y < this.height; y++) {
+//                    if (isLegalMove(tile, x, y)) {
+//                        return true;
+//                    }
+//                }
+//            }
+//            tile.rotateClockwise();
+//        }
+//        return false;
+        return true;
     }
 }
