@@ -6,33 +6,36 @@ import Domino.DominoTile;
 import java.util.ArrayList;
 
 public class Deck<E> extends InternalObject {
-    ArrayList<Tile> tiles;
+    private DominoTile[] dominoDeck;
+    private CarcassonneTile[] carcassonneDeck;
+    private int rank;
 
     public Deck(int tileNumber, String gamePlayed) {
         super();
-        tiles = new ArrayList<>(tileNumber);
         if (gamePlayed.equals("Domino")) {
+            dominoDeck = new DominoTile[tileNumber];
+            carcassonneDeck = null;
             for (int i = 0; i < tileNumber; i++) {
-                tiles.add(new DominoTile());
+                dominoDeck[i] = new DominoTile();
             }
         } else {
+            carcassonneDeck = new CarcassonneTile[tileNumber];
+            dominoDeck = null;
             for (int i = 0; i < tileNumber; i++) {
-                tiles.add(new CarcassonneTile());
+                carcassonneDeck[i] = new CarcassonneTile();
             }
         }
+        rank = 0;
     }
 
-    public boolean isEmpty() {
-        return tiles.isEmpty();
-    }
-
-    public Common.Tile draw() {
-        Tile t = tiles.iterator().next();
-//        tiles.iterator().remove();
-        return t;
-    }
-
-    public void put(Tile t) {
-        tiles.add(t);
+    public Common.Tile<E> draw() {
+        Tile tile;
+        if (carcassonneDeck == null) {
+            tile = dominoDeck[rank];
+        } else {
+            tile = carcassonneDeck[rank];
+        }
+        rank++;
+        return tile;
     }
 }

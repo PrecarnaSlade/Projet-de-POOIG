@@ -36,14 +36,16 @@ public class Test extends JFrame {
 //        System.out.println(tile.getGraphicalRepresentation());
 
 
-          EventQueue.invokeLater(new Runnable() {
-              @Override
-              public void run() {
-                  HandWindow w = new HandWindow();
-                  DominoTile tile = new DominoTile();
-                  w.setDrawnTile(tile);
-              }
-          });
+//          EventQueue.invokeLater(new Runnable() {
+//              @Override
+//              public void run() {
+//                  HandWindow w = new HandWindow();
+//                  DominoTile tile = new DominoTile();
+//                  w.setDrawnTile(tile);
+//              }
+//          });
+
+        EventQueue.invokeLater(MainWindow::new);
 
     }
 }

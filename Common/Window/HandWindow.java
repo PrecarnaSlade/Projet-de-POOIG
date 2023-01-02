@@ -3,34 +3,34 @@ package Common.Window;
 import Common.Tile;
 import Graphic.TileGraphic;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-import static Common.Window.Management.panelToBufferedImage;
-import static Common.Window.Management.saveImageFromPanel;
+import static Common.Window.Management.*;
 
-public class HandWindow extends JFrame {
+public class HandWindow extends JInternalFrame {
     private JPanel tileDrawnPanel;
     private BufferedImage tileDrawnImage;
     private Tile tileDrawn;
 
-    public HandWindow() {
+    public HandWindow() throws IOException {
         this.setLayout(null);
         this.setTitle("Hand");
         this.setSize(Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 4, Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 4);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         this.tileDrawn = null;
-        this.tileDrawnImage = null;
+        this.tileDrawnImage = Management.resize(ImageIO.read(new File("./Data/Resources/Null1.png")), Display.TILE_SIZE, Display.TILE_SIZE);
         this.tileDrawnPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                if (tileDrawnImage != null) {
-                    g.drawImage(tileDrawnImage, 0, 0, this);
-                }
+                g.drawImage(tileDrawnImage, 0, 0, this);
             }
         };
         tileDrawnPanel.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
@@ -40,43 +40,6 @@ public class HandWindow extends JFrame {
 
         JOptionPane.showMessageDialog(null,"Press R to rotate clockwise\nShift + R to rotate anti-clockwise", "Key bind",JOptionPane.INFORMATION_MESSAGE);
 
-        this.addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                JOptionPane.showMessageDialog(null, "You can't close this window ! If you want to exit the game, close the main window instead.", "windowClosingError", JOptionPane.ERROR_MESSAGE);
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-
-            }
-        });
-
         InputMap inputMap = this.tileDrawnPanel.getInputMap();
         ActionMap actionMap = this.tileDrawnPanel.getActionMap();
 
@@ -85,6 +48,7 @@ public class HandWindow extends JFrame {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_DOWN_MASK), "rotateAntiClockwise");
         actionMap.put("rotateAntiClockwise", new RotationAntiClockwiseAction(this));
         this.setVisible(true);
+
     }
 
     public void setDrawnTile(Tile tile) {

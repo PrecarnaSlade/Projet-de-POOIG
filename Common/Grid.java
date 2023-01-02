@@ -1,5 +1,6 @@
 package Common;
 
+import Exceptions.InvalidMoveException;
 import Graphic.GridGraphic;
 import MathFuncAndObj.Position;
 
@@ -37,18 +38,27 @@ public class Grid<E> extends InternalObject {
         return grid[x][y];
     }
 
-    public void place(Tile t, Position p, GridGraphic gridGraphic){
+    public void place(Tile t, Position p, GridGraphic gridGraphic) throws InvalidMoveException {
         if(isLegalMove(t,p)) {
             grid[p.getX()][p.getX()]=t;
             t.setUsed(true);
             gridGraphic.updateGraphic();
+        } else {
+            throw new InvalidMoveException("Invalid Move");
         }
+    }
+
+    public void forcePlace(Tile t, Position p, GridGraphic gridGraphic) {
+        grid[p.getX()][p.getX()]=t;
+        t.setUsed(true);
+        gridGraphic.updateGraphic();
     }
 
     public boolean isLegalMove(Tile t, Position p){
         int x= p.getX();
         int y=p.getY();
 
+        if (!topExist(x,y) && !rightExist(x,y) && !bottomExist(x,y) && !leftExist(x,y)) return false;
         if(!this.isEmpty(x,y)) return false;
         return matchSides(x,y);
     }

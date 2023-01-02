@@ -10,10 +10,12 @@ import Graphic.Menu.PlayMenu;
 import Graphic.TileGraphic;
 
 import javax.swing.*;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import java.awt.*;
 import java.io.IOException;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements InternalFrameListener {
     private final JPanel panelMain;
     private final CardLayout cardLayout;
     private MainMenu graphicMainMenu;
@@ -21,9 +23,9 @@ public class MainWindow extends JFrame {
     private OptionMenu graphicOptionMenu;
     private GameOptionMenu graphicGameOptionMenu;
     private GamePanel graphicGamePanel;
+    private HandWindow handWindow;
     private String gamePlayed;
     private Dimension gridSize;
-    private JPanel hand;
     private boolean twoPlayers;
     public static final String MAIN_MENU = "Main_Menu";
     public static final String PLAY_MENU = "Play_Menu";
@@ -68,12 +70,16 @@ public class MainWindow extends JFrame {
         twoPlayers = false;
     }
 
+    public HandWindow getHandWindow() {
+        return handWindow;
+    }
+
     public void createGameInterface() {
         try {
+            createHandDisplay();
             graphicGamePanel = new GamePanel(Game.Create(this), this);
             this.remove(panelMain);
             this.add(graphicGamePanel, GAME_PANEL);
-            createHandDisplay();
             graphicGamePanel.getGame().draw(this);
             graphicGamePanel.updateImage();
             Insets insets = this.getInsets();
@@ -84,23 +90,18 @@ public class MainWindow extends JFrame {
     }
 
     private void createHandDisplay() {
-        hand = new JPanel();
-        this.add(hand);
-        hand.setSize(Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 2, Display.TILE_SIZE + Display.DISTANCE_BETWEEN_BUTTONS * 2);
-        hand.setLayout(null);;
-        JLabel infoLabel = new JLabel("You drew this tile :");
-        hand.add(infoLabel);
-        infoLabel.setLocation(Display.DISTANCE_BETWEEN_BUTTONS / 4, Display.DISTANCE_BETWEEN_BUTTONS / 4);
-        hand.setBackground(Color.red);
-        hand.setLocation(Display.WIDTH - Display.TILE_SIZE - Display.DISTANCE_BETWEEN_BUTTONS, Display.HEIGHT - Display.TILE_SIZE - Display.DISTANCE_BETWEEN_BUTTONS);
+        try {
+            this.handWindow = new HandWindow();
+            this.add(handWindow);
+            this.handWindow.setVisible(true);
+            this.handWindow.setLayer(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateTileDrawn(Tile tileDrawn) {
-        TileGraphic graphic = tileDrawn.getGraphic();
-        hand.add(graphic);
-        graphic.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
-        graphic.setLocation(Display.DISTANCE_BETWEEN_BUTTONS, Display.DISTANCE_BETWEEN_BUTTONS);
-        graphic.setToolTipText("Press R to rotate clockwise\nShift + R to rotate anti-clockwise");
+        handWindow.setDrawnTile(tileDrawn);
     }
 
 //    public void updateFront() {
@@ -178,4 +179,32 @@ public class MainWindow extends JFrame {
 
         this.setResizable(false);
     }
+
+    public void internalFrameClosing(InternalFrameEvent e) {
+System.out.println("Internal frame closing");
+}
+
+        public void internalFrameClosed(InternalFrameEvent e) {
+System.out.println("Internal frame closed");
+}
+
+        public void internalFrameOpened(InternalFrameEvent e) {
+System.out.println("Internal frame opened");
+}
+
+        public void internalFrameIconified(InternalFrameEvent e) {
+System.out.println("Internal frame iconified");
+}
+
+        public void internalFrameDeiconified(InternalFrameEvent e) {
+System.out.println("Internal frame deiconified");
+}
+
+        public void internalFrameActivated(InternalFrameEvent e) {
+System.out.println("Internal frame activated");
+}
+
+        public void internalFrameDeactivated(InternalFrameEvent e) {
+System.out.println("Internal frame deactivated");
+}
 }

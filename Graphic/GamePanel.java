@@ -2,7 +2,9 @@ package Graphic;
 
 import Common.*;
 import Common.Window.Display;
+import Common.Window.HandWindow;
 import Common.Window.MainWindow;
+import Exceptions.InvalidMoveException;
 import MathFuncAndObj.Position;
 
 import javax.imageio.ImageIO;
@@ -38,8 +40,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         this.parent = parent;
         this.grid = new GridGraphic(grid, parent.getGamePlayed());
 
-
-        grid.place(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2), this.grid);
+        grid.forcePlace(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2), this.grid);
 
         addMouseMotionListener(this);
         addMouseListener(this);
@@ -156,6 +157,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     @Override
     public void mouseReleased(MouseEvent e) {
         released = true;
+        HandWindow handWindow = this.parent.getHandWindow();
+        handWindow.setLocation(0, 0);
         repaint();
     }
 
@@ -168,5 +171,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     public void mouseExited(MouseEvent e) {
 
     }
+
+
 
 }
