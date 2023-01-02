@@ -27,7 +27,6 @@ public class DominoTile extends Tile<int[]> {
 
     public DominoTile(int[] pUp, int[] pRight, int[] pDown, int[] pLeft, Position pPos) {
         super(pPos, new Sides<>(pUp, pRight, pDown, pLeft), "Domino");
-        Sides<int[]> sides = new Sides<>(pUp, pRight, pDown, pLeft);
     }
 
     public DominoTile(int[] pUp, int[] pRight, int[] pDown, int[] pLeft) {

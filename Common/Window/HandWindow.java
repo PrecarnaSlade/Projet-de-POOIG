@@ -1,6 +1,7 @@
 package Common.Window;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -14,6 +15,10 @@ public class HandWindow extends JFrame {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         tileDrawnPanel = new JPanel(null);
+        tileDrawnPanel.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
+        tileDrawnPanel.setBackground(Color.RED);
+        this.add(tileDrawnPanel);
+        tileDrawnPanel.setLocation(this.getWidth() / 2 - Display.TILE_SIZE / 2, this.getHeight() / 2 - Display.TILE_SIZE / 2);
 
         JOptionPane.showMessageDialog(null,"Press R to rotate clockwise\nShift + R to rotate anti-clockwise", "Key bind",JOptionPane.INFORMATION_MESSAGE);
 
@@ -56,4 +61,6 @@ public class HandWindow extends JFrame {
 
         this.setVisible(true);
     }
+
+
 }

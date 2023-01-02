@@ -60,12 +60,6 @@ public class MainMenu extends JPanel implements ActionListener {
         buttonExit.addActionListener(this);
     }
 
-    public void unloadMainMenu() {
-        buttonPlay.setVisible(false);
-        buttonOption.setVisible(false);
-        buttonExit.setVisible((false));
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         String sIdentifier = "";

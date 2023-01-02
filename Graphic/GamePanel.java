@@ -5,12 +5,16 @@ import Common.Window.Display;
 import Common.Window.MainWindow;
 import MathFuncAndObj.Position;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+
+import static Common.Window.Management.saveImageFromPanel;
 
 public class GamePanel extends JPanel implements MouseListener, MouseMotionListener {
     private final Game game;
@@ -46,8 +50,13 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     }
 
     public void updateImage() {
-        this.grid.updateGraphic();
         this.content = grid.getImage();
+        try {
+            File outputFile = new File("GridUpdated.png");
+            ImageIO.write(this.content, "png", outputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public BufferedImage getContent() {
