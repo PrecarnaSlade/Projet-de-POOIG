@@ -1,0 +1,17 @@
+letter position:
+1 - top
+2 - right
+3 - bottom
+4 - left
+5 - optional parameter
+
+letters :
+- c : castle
+- f : field
+- r : road
+
+5th letter (not alway present):
+- s : separated castle 
+- t : town in the center
+- v : village in the center
+- m : monastery in the center

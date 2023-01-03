@@ -22,8 +22,8 @@ import static Common.Window.Management.saveImageFromPanel;
 public class GamePanel extends JPanel implements MouseListener, MouseMotionListener {
     private final Game game;
     private final MainWindow parent;
+    private final GridGraphic grid;
     private BufferedImage content;
-    private GridGraphic grid;
 
     private boolean dragged;
     private boolean released;
@@ -144,13 +144,14 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         try {
             this.game.getGrid().place(handTile, gridPos, this.grid);
             this.game.nextTurn(parent);
+            HandWindow handWindow = this.parent.getHandWindow();
+            handWindow.setLocation(0, 0);
         } catch (InvalidMoveException ex) {
             JOptionPane.showMessageDialog(null, "You can't put a tile here.\nTry somewhere else, there must be a place to put it. :)", "invalidMove", JOptionPane.ERROR_MESSAGE);
         } catch (NoMoreTileInDeckException ex) {
             JOptionPane.showMessageDialog(null, "The deck is now empty. GG !\nThe game will now exit after you close this message.", "Game finished", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
-        System.out.println(gridPos.getX() + " - " + gridPos.getY());
         repaint();
     }
 
