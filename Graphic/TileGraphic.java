@@ -91,7 +91,13 @@ public class TileGraphic extends JPanel {
                 this.add(aValueRectangle[nIncrement]);
                 aValueRectangle[nIncrement].setLayout(new GridBagLayout());
                 aValueRectangle[nIncrement].setBorder(new LineBorder(Color.BLACK));
-                aValueRectangle[nIncrement].setBackground(new Color(255, 255, 255));
+                if (aSides[i][j] == 0) {
+                    aValueRectangle[nIncrement].setBackground(Color.GREEN);
+                } else {
+
+                    aValueRectangle[nIncrement].setBackground(Color.RED);
+                }
+//                aValueRectangle[nIncrement].setBackground(new Color(255, 255, 255));
                 aValueRectangle[nIncrement].setBounds(aCoordinates[i][0] + nBiasX, aCoordinates[i][1] + nBiasY, aRectangleSize[i % 2][0], aRectangleSize[i % 2][1]);
                 nIncrement++;
             }

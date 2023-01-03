@@ -1,5 +1,8 @@
 package Common;
 
+import Carcassonne.CarcassonneTile;
+import Carcassonne.SideType;
+import Domino.DominoTile;
 import Exceptions.InvalidMoveException;
 import Graphic.GridGraphic;
 import MathFuncAndObj.Position;
@@ -44,7 +47,7 @@ public class Grid<E> extends InternalObject {
 
     public void place(Tile t, Position p, GridGraphic gridGraphic) throws InvalidMoveException {
         if(isLegalMove(t,p)) {
-            grid[p.getX()][p.getX()]=t;
+            grid[p.getX()][p.getY()]=t;
             t.setUsed(true);
             gridGraphic.updateGraphic();
         } else {
@@ -62,7 +65,7 @@ public class Grid<E> extends InternalObject {
     }
 
     public void forcePlace(Tile t, Position p, GridGraphic gridGraphic) {
-        grid[p.getX()][p.getX()]=t;
+        grid[p.getX()][p.getY()]=t;
         t.setUsed(true);
         gridGraphic.updateGraphic();
     }
@@ -74,64 +77,80 @@ public class Grid<E> extends InternalObject {
     public boolean isLegalMove(Tile t, int x, int y) {
         if (!topExist(x,y) && !rightExist(x,y) && !bottomExist(x,y) && !leftExist(x,y)) return false;
         if(!this.isEmpty(x,y)) return false;
-        return matchSides(x,y);
+        if (t instanceof DominoTile) {
+            return matchSides(x, y, (DominoTile) t);
+        } else {
+          return matchSides(x, y, (CarcassonneTile) t) ;
+        }
     }
-
 
 
     public boolean isEmpty(int x,int y){
         return grid[x][y]==null;
     }
 
-    private boolean matchSides(int x, int y){
+    private boolean matchSides(int x, int y, DominoTile t){
+        if(this.topExist(x,y) && !matchSide(t.getSides().getUpSide(), (int[]) grid[x][y+1].getSides().getDownSide()))
+            return false;
+        if(this.rightExist(x,y) && !matchSide(t.getSides().getRightSide(), (int[]) grid[x+1][y].getSides().getLeftSide()))
+            return false;
+        if(this.bottomExist(x,y) &&  !matchSide(t.getSides().getDownSide(), (int[]) grid[x][y-1].getSides().getUpSide()))
+            return false;
+        return !this.leftExist(x, y) || matchSide(t.getSides().getLeftSide(), (int[]) grid[x - 1][y].getSides().getRightSide());
+    }
+
+    private boolean matchSides(int x, int y, CarcassonneTile t){
         if(this.topExist(x,y) &&
-                !matchSide((E[]) grid[x][y].getSides().getUpSide(),(E[]) grid[x][y-1].getSides().getDownSide()))
+                !matchSide(t.getSides().getUpSide(), (SideType) grid[x][y+1].getSides().getDownSide()))
             return false;
         if(this.rightExist(x,y) &&
-                !matchSide((E[]) grid[x][y].getSides().getRightSide(),(E[]) grid[x+1][y].getSides().getLeftSide()))
+                !matchSide(t.getSides().getRightSide(), (SideType) grid[x+1][y].getSides().getLeftSide()))
             return false;
         if(this.bottomExist(x,y) &&
-                !matchSide((E[]) grid[x][y].getSides().getDownSide(),(E[]) grid[x][y+1].getSides().getUpSide()))
+                !matchSide(t.getSides().getDownSide(), (SideType) grid[x][y-1].getSides().getUpSide()))
             return false;
         return !this.leftExist(x, y) ||
-                matchSide((E[]) grid[x][y].getSides().getLeftSide(), (E[]) grid[x - 1][y].getSides().getRightSide());
+                matchSide(t.getSides().getLeftSide(), (SideType) grid[x - 1][y].getSides().getRightSide());
     }
 
     private boolean topExist(int x, int y){
-        return y-1>=0 && grid[x][y]!=null;
+        return y+1<height && grid[x][y+1]!=null;
     }
 
     private boolean rightExist(int x, int y){
-        return x+1<width && grid[x][y]!=null;
+        return x+1<width && grid[x+1][y]!=null;
     }
 
     private boolean bottomExist(int x, int y){
-        return y+1<height && grid[x][y]!=null;
+        return y-1>=0 && grid[x][y-1]!=null;
     }
 
     private boolean leftExist(int x, int y){
-        return x-1>=0 && grid[x][y]!=null;
+        return x-1>=0 && grid[x-1][y]!=null;
     }
 
-    private boolean matchSide(E[] side1, E[] side2){
+    private boolean matchSide(int[] side1, int[] side2){
         for(int i=0; i<side1.length;i++){
-            if(!side1[i].equals(side2[i])) return false;
+            if(side1[i] != side2[i]) return false;
         }
         return true;
     }
 
+    private boolean matchSide(SideType side1, SideType side2){
+        return side1 == side2;
+    }
+
     public boolean canPlace(Tile tile) {
-//        for (int i = 0; i < 4; i++) {
-//            for (int x = 0; x < this.width; x++) {
-//                for (int y = 0; y < this.height; y++) {
-//                    if (isLegalMove(tile, x, y)) {
-//                        return true;
-//                    }
-//                }
-//            }
-//            tile.rotateClockwise();
-//        }
-//        return false;
-        return true;
+        for (int i = 0; i < 4; i++) {
+            for (int x = 0; x < this.width; x++) {
+                for (int y = 0; y < this.height; y++) {
+                    if (isLegalMove(tile, x, y)) {
+                        return true;
+                    }
+                }
+            }
+            tile.rotateClockwise();
+        }
+        return false;
     }
 }

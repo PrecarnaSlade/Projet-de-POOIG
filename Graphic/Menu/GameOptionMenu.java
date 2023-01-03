@@ -49,6 +49,7 @@ public class GameOptionMenu extends JPanel implements ActionListener {
 
         checkBox2Players = new JCheckBox();
         this.add(checkBox2Players);
+        checkBox2Players.setBackground(Color.RED);
         checkBox2Players.setText("vs AI");
         checkBox2Players.setLocation(Display.CENTER_X + Display.DISTANCE_BETWEEN_BUTTONS / 2, Display.CENTER_Y - Display.PADDING_Y - Display.DISTANCE_BETWEEN_BUTTONS - checkBox2Players.getHeight());
 

@@ -4,8 +4,6 @@ import Carcassonne.CarcassonneTile;
 import Domino.DominoTile;
 import Exceptions.NoMoreTileInDeckException;
 
-import java.util.ArrayList;
-
 public class Deck<E> extends InternalObject {
     private final DominoTile[] dominoDeck;
     private final CarcassonneTile[] carcassonneDeck;
