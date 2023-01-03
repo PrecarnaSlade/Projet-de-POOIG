@@ -68,32 +68,37 @@ public class TerminalDomino extends Game{
             this.askMove(domino);
             play(!player1);
         } catch(NoMoreTileInDeckException e){
-            System.out.println((this.getPlayer1().getPoints()>this.getPlayer2().getPoints()?"Le Joueur 1 a gagné!":"Le Joueur 2 a gagné!"));
-            System.out.println("Score:\nJ1: " + this.getPlayer1().getPoints() +"\nJ2: " + this.getPlayer2().getPoints());
+            endGame();
         }
-
     }
 
-    private void askMove(DominoTile domino) throws NoMoreTileInDeckException{
-        System.out.println("Choisissez une action: poser (p) / pivoter à gauche (g) / pivoter à droite (d) / ne rien faire (n) / arrêter (a)");
+    public void endGame(){
+        System.out.println((this.getPlayer1().getPoints()>this.getPlayer2().getPoints()?"Le Joueur 1 a gagné!":"Le Joueur 2 a gagné!"));
+        System.out.println("Score:\nJ1: " + this.getPlayer1().getPoints() +"\nJ2: " + this.getPlayer2().getPoints());
+        System.exit(0);
+    }
+
+    private void askMove(DominoTile domino){
+        System.out.println("Choisissez une action: poser (p) / rotation horaire (r) / rotation anti-horaire (ra) / ne rien faire (n) / arrêter (a)");
         switch(scan.next()){
             case "p":
                 askPlacement(domino);
                 break;
-            case "g":
-                domino.rotateAntiClockwise();
+            case "r":
+                domino.rotateClockwise();
                 System.out.println(domino.getGraphicalRepresentation());
                 askMove(domino);
                 break;
-            case "d":
-                domino.rotateClockwise();
+            case "ra":
+                domino.rotateAntiClockwise();
                 System.out.println(domino.getGraphicalRepresentation());
                 askMove(domino);
                 break;
             case "n":
                 break;
             case "a":
-                throw new NoMoreTileInDeckException("Player abandon");
+                endGame();
+                break;
             default: askMove(domino); break;
         }
     }
@@ -106,7 +111,7 @@ public class TerminalDomino extends Game{
         try{this.getGrid().place(domino,x,y);}
         catch (InvalidMoveException e){
             System.out.println("Ce placement n'est pas possible, veuillez réessayer.");
-            askPlacement(domino);
+            askMove(domino);
         }
     }
 
