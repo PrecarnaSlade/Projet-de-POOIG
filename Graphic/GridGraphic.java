@@ -33,10 +33,14 @@ public class GridGraphic {
     public void updateGraphic() {
         BufferedImage imageToAdd;
         Graphics2D newGridImage = this.gridImage.createGraphics();
+        int nWidth = grid.getWidth();
+        int nHeight = grid.getHeight();
+        int nActualY;
 
-        for (int i = 0; i < grid.getWidth(); i++) {
-            for (int j = 0; j < grid.getHeight(); j++) {
+        for (int i = 0; i < nWidth; i++) {
+            for (int j = 0; j < nHeight; j++) {
                 imageToAdd = imageEmpty;
+                nActualY = nHeight - j - 1;
 
                 if (!grid.isEmpty(i, j)) {
                     if (gamePlayed.equals("Domino")) {
@@ -47,7 +51,7 @@ public class GridGraphic {
                     }
                 }
 
-                newGridImage.drawImage(imageToAdd, Display.TILE_SIZE * i, Display.TILE_SIZE * j, null);
+                newGridImage.drawImage(imageToAdd, Display.TILE_SIZE * i, Display.TILE_SIZE * nActualY, null);
             }
         }
         newGridImage.dispose();

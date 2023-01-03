@@ -71,7 +71,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
             boolean bForceResetRight   = xOffset + xDiff < - (Display.WIDTH - Display.WIDTH / 10. - insets.right - insets.left);
             boolean bForceResetBottom  = yOffset + yDiff < - (Display.HEIGHT - Display.HEIGHT / 10. + insets.bottom);
             boolean bForceResetLeft    = xOffset + xDiff > 0;
-            System.out.println("X = " + this.getX() + "\nY = "  + this.getY());
             AffineTransform at = new AffineTransform();
             if (bForceResetTop || bForceResetRight || bForceResetBottom || bForceResetLeft) {
                 if (bForceResetTop && bForceResetLeft || bForceResetBottom && bForceResetRight) {
@@ -97,7 +96,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
             }
 
             at.translate(xOffset + xDiff, yOffset + yDiff);
-            System.out.println((xOffset + xDiff) + " - " + (yOffset + yDiff));
             g2.transform(at);
 
             if (released) {
@@ -114,9 +112,10 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
     }
 
     public Position clickToPositionOnGrid(Point MouseLocation) {
-        int x = MouseLocation.x - parent.getLocation().x - this.getLocation().x - this.getX();
-        int y = MouseLocation.y - parent.getLocation().y - this.getLocation().y - this.getY();
-        return new Position(x / 100, y / 100);
+        int x = (int) (MouseLocation.x - parent.getLocation().x - this.getLocation().x - this.getX() - xOffset);
+        int y = (int) (MouseLocation.y - parent.getLocation().y - this.getLocation().y - this.getY() - yOffset);
+        // inverting Y coordinates because the origin of the array is on bottom left and the origin of the window is on top left
+        return new Position(x / 100, (this.game.getGrid().getHeight() * 100 - y) / 100);
     }
 
     @Override
@@ -147,6 +146,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         } catch (InvalidMoveException ex) {
             ex.printStackTrace();
         }
+        System.out.println(gridPos.getX() + " - " + gridPos.getY());
         repaint();
     }
 
