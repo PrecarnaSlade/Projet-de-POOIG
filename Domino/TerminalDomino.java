@@ -79,10 +79,11 @@ public class TerminalDomino extends Game{
     }
 
     private void askMove(DominoTile domino){
-        System.out.println("Choisissez une action: poser (p) / rotation horaire (r) / rotation anti-horaire (ra) / ne rien faire (n) / arrêter (a)");
+        System.out.println("Choisissez une action: poser (p) / rotation horaire (r) / rotation anti-horaire (ra) / défausser (d) / arrêter (a)");
         switch(scan.next()){
             case "p":
                 askPlacement(domino);
+                this.afficher();
                 break;
             case "r":
                 domino.rotateClockwise();
@@ -94,7 +95,8 @@ public class TerminalDomino extends Game{
                 System.out.println(domino.getGraphicalRepresentation());
                 askMove(domino);
                 break;
-            case "n":
+            case "d":
+                this.getDeck().add(domino);
                 break;
             case "a":
                 endGame();
