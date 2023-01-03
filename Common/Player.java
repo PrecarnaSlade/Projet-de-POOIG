@@ -10,5 +10,13 @@ public class Player extends InternalObject {
         scanner = new Scanner(System.in);
         points = 0;
     }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void addPoints(int x){
+        points+=x;
+    }
 }
 

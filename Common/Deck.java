@@ -45,4 +45,8 @@ public class Deck<E> extends InternalObject {
         rank++;
         return tile;
     }
+
+    public boolean isEmpty(){
+        return true;
+    }
 }
