@@ -115,7 +115,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         int x = (int) (MouseLocation.x - parent.getLocation().x - this.getLocation().x - this.getX() - xOffset);
         int y = (int) (MouseLocation.y - parent.getLocation().y - this.getLocation().y - this.getY() - yOffset);
         // inverting Y coordinates because the origin of the array is on bottom left and the origin of the window is on top left
-        return new Position(x / 100, (this.game.getGrid().getHeight() * 100 - y) / 100);
+        return new Position(x / Display.TILE_SIZE, (this.game.getGrid().getHeight() * Display.TILE_SIZE - y) / Display.TILE_SIZE);
     }
 
     @Override
@@ -143,8 +143,12 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         Tile handTile = this.game.getDrawnTile();
         try {
             this.game.getGrid().place(handTile, gridPos, this.grid);
+            this.game.nextTurn(parent);
         } catch (InvalidMoveException ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "You can't put a tile here.\nTry somewhere else, there must be a place to put it. :)", "invalidMove", JOptionPane.ERROR_MESSAGE);
+        } catch (NoMoreTileInDeckException ex) {
+            JOptionPane.showMessageDialog(null, "The deck is now empty. GG !\nThe game will now exit after you close this message.", "Game finished", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
         }
         System.out.println(gridPos.getX() + " - " + gridPos.getY());
         repaint();

@@ -83,7 +83,7 @@ public class Grid<E> extends InternalObject {
             return false;
         if(this.bottomExist(x,y) &&  !matchSide(t.getSides().getDownSide(), (int[]) grid[x][y-1].getSides().getUpSide()))
             return false;
-        return !this.leftExist(x, y) || matchSide(t.getSides().getRightSide(), (int[]) grid[x - 1][y].getSides().getRightSide());
+        return !this.leftExist(x, y) || matchSide(t.getSides().getLeftSide(), (int[]) grid[x - 1][y].getSides().getRightSide());
     }
 
     private boolean matchSides(int x, int y, CarcassonneTile t){
@@ -128,17 +128,16 @@ public class Grid<E> extends InternalObject {
     }
 
     public boolean canPlace(Tile tile) {
-//        for (int i = 0; i < 4; i++) {
-//            for (int x = 0; x < this.width; x++) {
-//                for (int y = 0; y < this.height; y++) {
-//                    if (isLegalMove(tile, x, y)) {
-//                        return true;
-//                    }
-//                }
-//            }
-//            tile.rotateClockwise();
-//        }
-//        return false;
-        return true;
+        for (int i = 0; i < 4; i++) {
+            for (int x = 0; x < this.width; x++) {
+                for (int y = 0; y < this.height; y++) {
+                    if (isLegalMove(tile, x, y)) {
+                        return true;
+                    }
+                }
+            }
+            tile.rotateClockwise();
+        }
+        return false;
     }
 }

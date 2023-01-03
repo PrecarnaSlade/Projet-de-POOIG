@@ -12,6 +12,7 @@ public class Game<E> {
     private Deck<E> deck;
     private Grid<E> grid;
     private Tile drawnTile;
+    private boolean player1Turn;
 
     protected Game(boolean twoPlayers){
         player1= new Player();
@@ -20,10 +21,12 @@ public class Game<E> {
         } else {
             player2 = new IA();
         }
+        player1Turn = true;
     }
 
     public Player getPlayer1() {return player1;}
     public Player getPlayer2() {return player2;}
+    public boolean isPlayer1Turn() {return player1Turn;}
     public Deck<E> getDeck() {return deck;}
     public Grid<E> getGrid() {return grid;}
     public void setDeck(Deck<E> deck) {this.deck = deck;}
@@ -51,5 +54,10 @@ public class Game<E> {
             this.drawnTile = deck.draw();
         }
         mainWindow.updateTileDrawn(this.drawnTile);
+    }
+
+    public void nextTurn(MainWindow mainWindow) throws NoMoreTileInDeckException {
+        player1Turn = !player1Turn;
+        draw(mainWindow);
     }
 }
