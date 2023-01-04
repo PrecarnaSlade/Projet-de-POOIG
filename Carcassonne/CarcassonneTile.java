@@ -46,8 +46,6 @@ public class CarcassonneTile extends Common.Tile<SideType> {
 
         getPossibleNames(this.getSides());
 
-        Random rnd = new Random();
-
         String sFirstPossibleName = possibleNames[0];
 
         int nCityCount = StringManagement.countLetterInString(sFirstPossibleName, 'c');
@@ -124,11 +122,21 @@ public class CarcassonneTile extends Common.Tile<SideType> {
 
     @Override
     public void rotateClockwise() {
-
+        String sTemp = possibleNames[possibleNames.length - 1];
+        for (int i = 1; i < possibleNames.length - 1; i++) {
+            possibleNames[i + 1] = possibleNames[i];
+        }
+        possibleNames[0] = sTemp;
+        getFilePath();
     }
 
     @Override
     public void rotateAntiClockwise() {
-
+        String sTemp = possibleNames[0];
+        for (int i = possibleNames.length - 2; i > 0; i++) {
+            possibleNames[i - 1] = possibleNames[i];
+        }
+        possibleNames[possibleNames.length - 1] = sTemp;
+        getFilePath();
     }
 }
