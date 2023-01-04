@@ -149,8 +149,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         } catch (InvalidMoveException ex) {
             JOptionPane.showMessageDialog(null, "You can't put a tile here.\nTry somewhere else, there must be a place to put it. :)", "invalidMove", JOptionPane.ERROR_MESSAGE);
         } catch (NoMoreTileInDeckException ex) {
-            JOptionPane.showMessageDialog(null, "The deck is now empty. GG !\nThe game will now exit after you close this message.", "Game finished", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, "The deck is now empty. GG !\nThe game is finished.", "Game finished", JOptionPane.INFORMATION_MESSAGE);
         }
         repaint();
     }

@@ -6,4 +6,8 @@ public class NoMoreTileInDeckException extends Exception {
         printStackTrace();
     }
 
+    public NoMoreTileInDeckException() {
+        super();
+    }
+
 }

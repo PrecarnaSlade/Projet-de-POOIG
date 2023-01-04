@@ -32,12 +32,12 @@ public class Deck<E> extends InternalObject {
         if (carcassonneDeck == null) {
             tile = dominoDeck[rank];
             if (rank + 1 >= this.dominoDeck.length) {
-                throw new NoMoreTileInDeckException("Deck empty");
+                throw new NoMoreTileInDeckException();
             }
         } else {
             tile = carcassonneDeck[rank];
             if (rank + 1 >= this.carcassonneDeck.length) {
-                throw new NoMoreTileInDeckException("Deck empty");
+                throw new NoMoreTileInDeckException();
             }
         }
         rank++;

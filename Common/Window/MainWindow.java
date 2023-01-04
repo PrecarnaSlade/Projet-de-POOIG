@@ -98,8 +98,18 @@ public class MainWindow extends JFrame implements InternalFrameListener {
             graphicGamePanel = new GamePanel(Game.Create(this), this);
             this.remove(panelMain);
             this.add(graphicGamePanel, GAME_PANEL);
+            boolean bOnlyIA = true;
+            for (Player p: players) {
+                if (!p.isIA()) {
+                    bOnlyIA = false;
+                    break;
+                }
+            }
             try {
                 graphicGamePanel.getGame().draw(this);
+                if (bOnlyIA) {
+                    JOptionPane.showMessageDialog(null, "Because this game is made of IAs only, put the first tile somewhere suitable. Then let the magic happen !");
+                }
             } catch (NoMoreTileInDeckException e) {
                 e.printStackTrace();
             }
