@@ -159,4 +159,17 @@ public class Grid<E> extends InternalObject {
         }
         return aPositionAvailable;
     }
+
+    public int getAdjacentTileNb(Position pos) {
+        return getAdjacentTileNb(pos.getX(), pos.getY());
+    }
+
+    public int getAdjacentTileNb(int x, int y) {
+        int nSum = 0;
+        if (topExist(x, y)) nSum++;
+        if (rightExist(x, y)) nSum++;
+        if (bottomExist(x, y)) nSum++;
+        if (leftExist(x, y)) nSum++;
+        return nSum;
+    }
 }

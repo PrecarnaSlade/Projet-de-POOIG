@@ -4,6 +4,7 @@ import Common.*;
 import Common.Window.Display;
 import Common.Window.HandWindow;
 import Common.Window.MainWindow;
+import Domino.DominoTile;
 import Exceptions.InvalidMoveException;
 import Exceptions.NoMoreTileInDeckException;
 import Misc.Position;
@@ -149,7 +150,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         } catch (InvalidMoveException ex) {
             JOptionPane.showMessageDialog(null, "You can't put a tile here.\nTry somewhere else, there must be a place to put it. :)", "invalidMove", JOptionPane.ERROR_MESSAGE);
         } catch (NoMoreTileInDeckException ex) {
-            JOptionPane.showMessageDialog(null, "The deck is now empty. GG !\nThe game is finished.", "Game finished", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "The deck is now empty. The game is finished.\n" + game.getWinner().getName() + " has won !! GG !!", "Game finished", JOptionPane.INFORMATION_MESSAGE);
         }
         repaint();
     }

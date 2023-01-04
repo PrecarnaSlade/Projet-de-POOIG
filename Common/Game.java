@@ -50,6 +50,9 @@ public class Game<E> {
     }
 
     public void nextTurn(MainWindow mainWindow) throws NoMoreTileInDeckException {
+        Tile tilePlaced = this.drawnTile;
+        int nScored = grid.getAdjacentTileNb(tilePlaced.getPosition());
+        getCurrentPlayer().addPoints(nScored);
         playerTurn = (playerTurn + 1) % (players.length);
         draw(mainWindow);
         if (getCurrentPlayer().isIA()) {
@@ -61,5 +64,17 @@ public class Game<E> {
 
     public Player getCurrentPlayer() {
         return players[playerTurn];
+    }
+
+    public Player getWinner() {
+        int nMax = 0;
+        Player winner = players[0];
+        for (Player p : players) {
+            if (p.getPoints() > nMax) {
+                winner = p;
+                nMax = p.getPoints();
+            }
+        }
+        return winner;
     }
 }
