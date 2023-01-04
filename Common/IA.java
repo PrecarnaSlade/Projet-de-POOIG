@@ -2,8 +2,8 @@ package Common;
 
 public class IA extends Player {
 
-    public IA() {
-        super();
+    public IA(String name) {
+        super(name, true);
     }
 
     //  public void draw(){super.draw();}

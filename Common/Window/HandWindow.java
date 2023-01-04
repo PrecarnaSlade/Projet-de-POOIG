@@ -1,5 +1,6 @@
 package Common.Window;
 
+import Common.Player;
 import Common.Tile;
 import Graphic.TileGraphic;
 
@@ -56,7 +57,14 @@ public class HandWindow extends JInternalFrame {
         return tileDrawn;
     }
 
-    public void setDrawnTile(Tile tile) {
+    public void setDrawnTile(Tile tile, Player player) {
+        this.tileDrawn = tile;
+        this.setTitle(player.getName() + "'s hand");
+        this.tileDrawnImage = panelToBufferedImage(tile.getGraphic());
+        this.tileDrawnPanel.repaint();
+    }
+
+    private void setDrawnTile(Tile tile) {
         this.tileDrawn = tile;
         this.tileDrawnImage = panelToBufferedImage(tile.getGraphic());
         this.tileDrawnPanel.repaint();

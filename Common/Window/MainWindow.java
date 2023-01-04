@@ -5,10 +5,7 @@ import Common.Player;
 import Common.Tile;
 import Exceptions.NoMoreTileInDeckException;
 import Graphic.GamePanel;
-import Graphic.Menu.GameOptionMenu;
-import Graphic.Menu.MainMenu;
-import Graphic.Menu.OptionMenu;
-import Graphic.Menu.PlayMenu;
+import Graphic.Menu.*;
 import Graphic.TileGraphic;
 
 import javax.swing.*;
@@ -26,14 +23,16 @@ public class MainWindow extends JFrame implements InternalFrameListener {
     private GameOptionMenu graphicGameOptionMenu;
     private GamePanel graphicGamePanel;
     private HandWindow handWindow;
+    private PlayerSelectionMenu playerSelectionMenu;
     private String gamePlayed;
     private Dimension gridSize;
-    private boolean twoPlayers;
+    private Player[] players;
     public static final String MAIN_MENU = "Main_Menu";
     public static final String PLAY_MENU = "Play_Menu";
     public static final String OPTION_MENU = "Option_Menu";
     public static final String GAME_OPTION_MENU = "Game_Option_Menu";
     public static final String GAME_PANEL = "Game_Panel";
+    public static final String PLAYER_SELECTION_MENU = "Player_Selection_Menu";
 
     public MainWindow() {
         // window creation
@@ -63,17 +62,29 @@ public class MainWindow extends JFrame implements InternalFrameListener {
         graphicGameOptionMenu = new GameOptionMenu();
         panelMain.add(graphicGameOptionMenu, GAME_OPTION_MENU);
 
+        // PlayerSelectionMenu creation
+        playerSelectionMenu = new PlayerSelectionMenu();
+        panelMain.add(playerSelectionMenu, PLAYER_SELECTION_MENU);
+
         // basic operations for window
         cardLayout.show(panelMain, MAIN_MENU);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         gamePlayed = "";
         gridSize = null;
-        twoPlayers = false;
+        players = null;
     }
 
     public HandWindow getHandWindow() {
         return handWindow;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 
     public void createGameInterface() {
@@ -107,24 +118,8 @@ public class MainWindow extends JFrame implements InternalFrameListener {
         }
     }
 
-    public void updateTileDrawn(Tile tileDrawn) {
-        handWindow.setDrawnTile(tileDrawn);
-    }
-
-//    public void updateFront() {
-//        JLabel oTemp = new JLabel();
-//        oTemp.setSize(this.getSize());
-//        oTemp.setIcon(new ImageIcon(graphicGamePanel.getContent()));
-//        this.add(oTemp);
-//        oTemp.setLocation(0,0);
-//    }
-
-    public boolean isTwoPlayers() {
-        return twoPlayers;
-    }
-
-    public void setTwoPlayers(boolean twoPlayers) {
-        this.twoPlayers = twoPlayers;
+    public void updateTileDrawn(Tile tileDrawn, Player player) {
+        handWindow.setDrawnTile(tileDrawn, player);
     }
 
     public void setGridSize(Dimension gridSize) {
@@ -178,40 +173,29 @@ public class MainWindow extends JFrame implements InternalFrameListener {
         this.graphicPlayMenu = new PlayMenu();
         this.graphicOptionMenu = new OptionMenu();
         this.graphicGameOptionMenu = new GameOptionMenu();
+        this.playerSelectionMenu = new PlayerSelectionMenu();
         this.panelMain.add(graphicMainMenu, MAIN_MENU);
         this.panelMain.add(graphicPlayMenu, PLAY_MENU);
         this.panelMain.add(graphicOptionMenu, OPTION_MENU);
         this.panelMain.add(graphicGameOptionMenu, GAME_OPTION_MENU);
+        this.panelMain.add(playerSelectionMenu, PLAYER_SELECTION_MENU);
         cardLayout.show(panelMain, OPTION_MENU);
 
         this.setResizable(false);
     }
 
-    public void internalFrameClosing(InternalFrameEvent e) {
-System.out.println("Internal frame closing");
-}
-
-        public void internalFrameClosed(InternalFrameEvent e) {
-System.out.println("Internal frame closed");
-}
-
-        public void internalFrameOpened(InternalFrameEvent e) {
-System.out.println("Internal frame opened");
-}
-
-        public void internalFrameIconified(InternalFrameEvent e) {
-System.out.println("Internal frame iconified");
-}
-
-        public void internalFrameDeiconified(InternalFrameEvent e) {
-System.out.println("Internal frame deiconified");
-}
-
-        public void internalFrameActivated(InternalFrameEvent e) {
-System.out.println("Internal frame activated");
-}
-
-        public void internalFrameDeactivated(InternalFrameEvent e) {
-System.out.println("Internal frame deactivated");
-}
+    @Override
+    public void internalFrameOpened(InternalFrameEvent e) {}
+    @Override
+    public void internalFrameClosing(InternalFrameEvent e) {}
+    @Override
+    public void internalFrameClosed(InternalFrameEvent e) {}
+    @Override
+    public void internalFrameIconified(InternalFrameEvent e) {}
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent e) {}
+    @Override
+    public void internalFrameActivated(InternalFrameEvent e) {}
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent e) {}
 }

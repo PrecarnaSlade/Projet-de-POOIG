@@ -7,26 +7,20 @@ import Graphic.GamePanel;
 import java.awt.*;
 
 public class Game<E> {
-    private final Player player1;
-    private final Player player2;
+    private Player[] players;
     private Deck<E> deck;
     private Grid<E> grid;
     private Tile drawnTile;
-    private boolean player1Turn;
+    private int playerTurn;
 
-    protected Game(boolean twoPlayers){
-        player1= new Player();
-        if (twoPlayers) {
-            player2= new Player();
-        } else {
-            player2 = new IA();
-        }
-        player1Turn = true;
+    protected Game(Player[] players){
+        this.players = players;
+        playerTurn = 0;
     }
 
-    public Player getPlayer1() {return player1;}
-    public Player getPlayer2() {return player2;}
-    public boolean isPlayer1Turn() {return player1Turn;}
+    public Player[] getPlayers() {return players;}
+    public int getPlayerTurn() {return playerTurn;}
+    public void setPlayers(Player[] players) {this.players = players;}
     public Deck<E> getDeck() {return deck;}
     public Grid<E> getGrid() {return grid;}
     public void setDeck(Deck<E> deck) {this.deck = deck;}
@@ -37,9 +31,8 @@ public class Game<E> {
         String gamePlayed = mainWindow.getGamePlayed();
         Dimension gridDimension = mainWindow.getGridSize();
         int nDeckSize = gridDimension.width * gridDimension.height;
-        boolean twoPlayers = mainWindow.isTwoPlayers();
 
-        Game game = new Game<>(twoPlayers);
+        Game game = new Game<>(mainWindow.getPlayers());
         Deck deck = new Deck<>(nDeckSize, gamePlayed);
         Grid grid = new Grid<>(gridDimension);
         game.setDeck(deck);
@@ -53,11 +46,11 @@ public class Game<E> {
         while (!grid.canPlace(drawnTile)) {
             this.drawnTile = deck.draw();
         }
-        mainWindow.updateTileDrawn(this.drawnTile);
+        mainWindow.updateTileDrawn(this.drawnTile, players[playerTurn]);
     }
 
     public void nextTurn(MainWindow mainWindow) throws NoMoreTileInDeckException {
-        player1Turn = !player1Turn;
+        playerTurn = (playerTurn + 1) % (players.length - 1);
         draw(mainWindow);
     }
 }

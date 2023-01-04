@@ -2,13 +2,23 @@ package Domino;
 
 import Common.Deck;
 import Common.Game;
+import Common.IA;
+import Common.Player;
 
 import java.util.Scanner;
 
 public class TerminalDomino extends Game{
     private Scanner scan;
     public TerminalDomino(boolean twoPlayers, Scanner scanner){
-        super(twoPlayers);
+        super(null);
+        Player[] players = new Player[2];
+        players[0] = new Player("Player1");
+        if (twoPlayers) {
+            players[1] = new Player("Player2");
+        } else {
+            players[1] = new IA("Player2");
+        }
+        super.setPlayers(players);
         this.setGrid(new Common.Grid<DominoTile>(11,11));
         this.setDeck(new Deck(30, "Domino"));
 

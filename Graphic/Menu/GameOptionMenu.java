@@ -10,15 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameOptionMenu extends JPanel implements ActionListener {
-    private JButton buttonReturn, buttonPlay;
+    private JButton buttonReturn, buttonPlay, buttonOption;
     private JComboBox<String> comboBoxGridSize;
     private JLabel labelGamePlayed;
-    private JCheckBox checkBox2Players;
 
     public GameOptionMenu() {
         this.setSize(Display.WIDTH, Display.HEIGHT);
         this.setLayout(null);
-        this.setOpaque(false);
 
         Dimension buttonDimension = new Dimension(Display.BUTTON_WIDTH, Display.BUTTON_HEIGHT);
 
@@ -47,12 +45,6 @@ public class GameOptionMenu extends JPanel implements ActionListener {
         label.setSize(buttonDimension.width / 2, buttonDimension.height / 2);
         label.setLocation(Display.CENTER_X - (Display.BUTTON_WIDTH + Display.DISTANCE_BETWEEN_BUTTONS / 2), Display.CENTER_Y - Display.PADDING_Y - Display.DISTANCE_BETWEEN_BUTTONS - label.getHeight());
 
-        checkBox2Players = new JCheckBox();
-        this.add(checkBox2Players);
-        checkBox2Players.setBackground(Color.RED);
-        checkBox2Players.setText("vs AI");
-        checkBox2Players.setLocation(Display.CENTER_X + Display.DISTANCE_BETWEEN_BUTTONS / 2, Display.CENTER_Y - Display.PADDING_Y - Display.DISTANCE_BETWEEN_BUTTONS - checkBox2Players.getHeight());
-
         comboBoxGridSize = new JComboBox<>(aScreenSize);
         this.add(comboBoxGridSize);
         comboBoxGridSize.setSize(buttonDimension);
@@ -72,6 +64,13 @@ public class GameOptionMenu extends JPanel implements ActionListener {
         buttonReturn.setSize(buttonDimension);
         buttonReturn.setLocation(Display.WIDTH - (Display.BUTTON_WIDTH + Display.DISTANCE_BETWEEN_BUTTONS), Display.HEIGHT - (Display.BUTTON_HEIGHT + Display.DISTANCE_BETWEEN_BUTTONS * 2));
         buttonReturn.addActionListener(this);
+
+        buttonOption = new JButton();
+        this.add(buttonOption);
+        buttonOption.setText("Option");
+        buttonOption.setSize(buttonDimension);
+        buttonOption.setLocation(Display.DISTANCE_BETWEEN_BUTTONS, Display.HEIGHT - (Display.BUTTON_HEIGHT + Display.DISTANCE_BETWEEN_BUTTONS * 2));
+        buttonOption.addActionListener(this);
 
     }
 
@@ -100,13 +99,15 @@ public class GameOptionMenu extends JPanel implements ActionListener {
             int nHeight = Integer.parseInt(aSize[1]);
             Dimension oGridDimension = new Dimension(nWidth, nHeight);
             parent.setGridSize(oGridDimension);
-            if (checkBox2Players.isSelected()) {
-                parent.setTwoPlayers(false);
-            } else {
-                parent.setTwoPlayers(false);
-            }
+//            if (checkBox2Players.isSelected()) {
+//                parent.setTwoPlayers(false);
+//            } else {
+//                parent.setTwoPlayers(false);
+//            }
             parent.createGameInterface();
             sIdentifier = MainWindow.GAME_PANEL;
+        } else if (buttonSource == buttonOption) {
+            sIdentifier = MainWindow.PLAYER_SELECTION_MENU;
         }
 
         parent.switchToMenu(sIdentifier);
