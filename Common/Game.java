@@ -53,4 +53,8 @@ public class Game<E> {
         playerTurn = (playerTurn + 1) % (players.length - 1);
         draw(mainWindow);
     }
+
+    public Player getCurrentPlayer() {
+        return players[playerTurn];
+    }
 }

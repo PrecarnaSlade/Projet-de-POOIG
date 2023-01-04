@@ -1,8 +1,6 @@
 package Domino;
 
-import Common.Deck;
-import Common.Game;
-import Common.Sides;
+import Common.*;
 import Exceptions.InvalidMoveException;
 import Exceptions.NoMoreTileInDeckException;
 
@@ -10,8 +8,16 @@ import java.util.Scanner;
 
 public class TerminalDomino extends Game{
     private Scanner scan;
-    public TerminalDomino(boolean twoPlayers, Scanner scanner){
-        super(twoPlayers);
+    public TerminalDomino(int playerNumber, int IaNumber, Scanner scanner){
+        super(null);
+        Player[] players = new Player[playerNumber + IaNumber];
+        for (int i = 0; i < playerNumber; i++) {
+            players[i] = new Player("Player" + (i + 1));
+        }
+        for (int i = playerNumber; i < players.length; i++) {
+            players[i] = new IA("IA" + (i - playerNumber + 1));
+        }
+        super.setPlayers(players);
         this.setGrid(new Common.Grid<DominoTile>(11,11));
         this.setDeck(new Deck(30, "Domino"));
 
