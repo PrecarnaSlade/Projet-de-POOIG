@@ -1,4 +1,4 @@
-package MathFuncAndObj;
+package Misc;
 
 public class Position {
     private final int x;

@@ -5,7 +5,7 @@ import Carcassonne.SideType;
 import Domino.DominoTile;
 import Exceptions.InvalidMoveException;
 import Graphic.GridGraphic;
-import MathFuncAndObj.Position;
+import Misc.Position;
 
 import java.awt.*;
 

@@ -6,18 +6,14 @@ import Common.Window.HandWindow;
 import Common.Window.MainWindow;
 import Exceptions.InvalidMoveException;
 import Exceptions.NoMoreTileInDeckException;
-import MathFuncAndObj.Position;
+import Misc.Position;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
-import static Common.Window.Management.saveImageFromPanel;
 
 public class GamePanel extends JPanel implements MouseListener, MouseMotionListener {
     private final Game game;

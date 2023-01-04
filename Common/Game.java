@@ -50,7 +50,7 @@ public class Game<E> {
     }
 
     public void nextTurn(MainWindow mainWindow) throws NoMoreTileInDeckException {
-        playerTurn = (playerTurn + 1) % (players.length - 1);
+        playerTurn = (playerTurn + 1) % (players.length);
         draw(mainWindow);
     }
 

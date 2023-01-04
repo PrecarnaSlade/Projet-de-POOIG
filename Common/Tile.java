@@ -1,7 +1,7 @@
 package Common;
 
 import Graphic.TileGraphic;
-import MathFuncAndObj.Position;
+import Misc.Position;
 
 public abstract class Tile<E> extends InternalObject {
     private final Position position;

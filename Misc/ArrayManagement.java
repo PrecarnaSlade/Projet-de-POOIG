@@ -1,4 +1,4 @@
-package MathFuncAndObj;
+package Misc;
 
 import Common.Player;
 

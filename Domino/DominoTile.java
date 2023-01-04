@@ -2,35 +2,19 @@ package Domino;
 
 import Common.Sides;
 import Common.Tile;
-import MathFuncAndObj.Position;
+import Misc.Position;
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class DominoTile extends Tile<int[]> {
-    /*
-    Read left to right and up to down for the numbers, using the PDF example :
-            0  2  3                 upSide = {0, 2, 3}
-          0         1               rightSide = {1, 1, 4}
-          0         1               downSide = {2, 0, 4}
-          3         4               leftSide = {0, 0, 3}
-            2  0  4
-
-            0  2  3                 upSide = {0, 2, 3}
-          0         1               rightSide = {1, 1, 4}
-          0         1               downSide = {2, 0, 4}
-          3         4               leftSide = {0, 0, 3}
-            2  0  4
-
-         !!!!   DEPRECATED !!!!
-     */
 
     public DominoTile(int[] pUp, int[] pRight, int[] pDown, int[] pLeft, Position pPos) {
         super(pPos, new Sides<>(pUp, pRight, pDown, pLeft), "Domino");
     }
 
     public DominoTile(int[] pUp, int[] pRight, int[] pDown, int[] pLeft) {
-        super(null, new Sides<>(pUp, pRight, pDown, pLeft), "Domino");
+        this(pUp, pRight, pDown, pLeft, null);
     }
 
     public DominoTile() {

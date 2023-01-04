@@ -23,7 +23,7 @@ public class MainWindow extends JFrame implements InternalFrameListener {
     private GameOptionMenu graphicGameOptionMenu;
     private GamePanel graphicGamePanel;
     private HandWindow handWindow;
-    private PlayerSelectionMenu playerSelectionMenu;
+    private PlayerSelectionMenu graphicPlayerSelectionMenu;
     private String gamePlayed;
     private Dimension gridSize;
     private Player[] players;
@@ -62,9 +62,9 @@ public class MainWindow extends JFrame implements InternalFrameListener {
         graphicGameOptionMenu = new GameOptionMenu();
         panelMain.add(graphicGameOptionMenu, GAME_OPTION_MENU);
 
-        // PlayerSelectionMenu creation
-        playerSelectionMenu = new PlayerSelectionMenu();
-        panelMain.add(playerSelectionMenu, PLAYER_SELECTION_MENU);
+        // graphicPlayerSelectionMenu creation
+        PlayerSelectionMenu graphicPlayerSelectionMenu = new PlayerSelectionMenu();
+        panelMain.add(graphicPlayerSelectionMenu, PLAYER_SELECTION_MENU);
 
         // basic operations for window
         cardLayout.show(panelMain, MAIN_MENU);
@@ -173,12 +173,12 @@ public class MainWindow extends JFrame implements InternalFrameListener {
         this.graphicPlayMenu = new PlayMenu();
         this.graphicOptionMenu = new OptionMenu();
         this.graphicGameOptionMenu = new GameOptionMenu();
-        this.playerSelectionMenu = new PlayerSelectionMenu();
+        this.graphicPlayerSelectionMenu = new PlayerSelectionMenu();
         this.panelMain.add(graphicMainMenu, MAIN_MENU);
         this.panelMain.add(graphicPlayMenu, PLAY_MENU);
         this.panelMain.add(graphicOptionMenu, OPTION_MENU);
         this.panelMain.add(graphicGameOptionMenu, GAME_OPTION_MENU);
-        this.panelMain.add(playerSelectionMenu, PLAYER_SELECTION_MENU);
+        this.panelMain.add(graphicPlayerSelectionMenu, PLAYER_SELECTION_MENU);
         cardLayout.show(panelMain, OPTION_MENU);
 
         this.setResizable(false);

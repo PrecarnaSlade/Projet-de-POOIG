@@ -1,5 +1,7 @@
 package Graphic.Menu;
 
+import Common.IA;
+import Common.Player;
 import Common.Window.Display;
 import Common.Window.MainWindow;
 import Common.Window.Management;
@@ -99,11 +101,10 @@ public class GameOptionMenu extends JPanel implements ActionListener {
             int nHeight = Integer.parseInt(aSize[1]);
             Dimension oGridDimension = new Dimension(nWidth, nHeight);
             parent.setGridSize(oGridDimension);
-//            if (checkBox2Players.isSelected()) {
-//                parent.setTwoPlayers(false);
-//            } else {
-//                parent.setTwoPlayers(false);
-//            }
+            if (parent.getPlayers() == null) {
+                Player[] players = {new Player("Player1"), new IA("Player2")};
+                parent.setPlayers(players);
+            }
             parent.createGameInterface();
             sIdentifier = MainWindow.GAME_PANEL;
         } else if (buttonSource == buttonOption) {

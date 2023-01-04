@@ -1,6 +1,6 @@
 package Carcassonne;
 
-import MathFuncAndObj.Position;
+import Misc.Position;
 
 public class Miple {
     private CarcassonnePlayer player;

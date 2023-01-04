@@ -5,7 +5,7 @@ import Common.Player;
 import Common.Window.Display;
 import Common.Window.MainWindow;
 import Common.Window.Management;
-import MathFuncAndObj.ArrayManagement;
+import Misc.ArrayManagement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -112,6 +112,10 @@ public class PlayerSelectionMenu extends JPanel implements ActionListener {
         scrollPane.setLocation(Display.DISTANCE_BETWEEN_BUTTONS, Display.DISTANCE_BETWEEN_BUTTONS + buttonAdd.getX() + buttonAdd.getHeight());
         this.revalidate();
         this.repaint();
+    }
+
+    public Player[] getPlayersArray() {
+        return playersArray;
     }
 
     private int getPlayerByComboBox(JComboBox<String> comboBox) {
