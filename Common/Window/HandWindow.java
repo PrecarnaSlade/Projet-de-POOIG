@@ -1,8 +1,9 @@
 package Common.Window;
 
+import Carcassonne.CarcassonneTile;
 import Common.Player;
 import Common.Tile;
-import Graphic.TileGraphic;
+import Misc.WindowManagement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,10 +13,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static Common.Window.Management.*;
+import static Misc.WindowManagement.*;
 
 public class HandWindow extends JInternalFrame {
-    private JPanel tileDrawnPanel;
+    private final JPanel tileDrawnPanel;
     private BufferedImage tileDrawnImage;
     private Tile tileDrawn;
 
@@ -26,7 +27,7 @@ public class HandWindow extends JInternalFrame {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         this.tileDrawn = null;
-        this.tileDrawnImage = Management.resize(ImageIO.read(new File("./Data/Resources/Null1.png")), Display.TILE_SIZE, Display.TILE_SIZE);
+        this.tileDrawnImage = WindowManagement.resize(ImageIO.read(new File("./Data/Resources/Null1.png")), Display.TILE_SIZE, Display.TILE_SIZE);
         this.tileDrawnPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -53,20 +54,18 @@ public class HandWindow extends JInternalFrame {
 
     }
 
-    public Tile getTileDrawn() {
-        return tileDrawn;
-    }
-
     public void setDrawnTile(Tile tile, Player player) {
-        this.tileDrawn = tile;
         this.setTitle(player.getName() + "'s hand");
-        this.tileDrawnImage = panelToBufferedImage(tile.getGraphic());
-        this.tileDrawnPanel.repaint();
+        setDrawnTile(tile);
     }
 
     private void setDrawnTile(Tile tile) {
         this.tileDrawn = tile;
-        this.tileDrawnImage = panelToBufferedImage(tile.getGraphic());
+        if (tile instanceof CarcassonneTile) {
+            this.tileDrawnImage = ((CarcassonneTile) tile).getDisplay();
+        } else {
+            this.tileDrawnImage = panelToBufferedImage(tile.getGraphic());
+        }
         this.tileDrawnPanel.repaint();
     }
 

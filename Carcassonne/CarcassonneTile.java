@@ -1,15 +1,22 @@
 package Carcassonne;
 
 import Common.Sides;
+import Common.Tile;
+import Common.Window.Display;
 import Misc.RandomManagement;
 import Misc.StringManagement;
+import Misc.WindowManagement;
 
-import java.util.Random;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-public class CarcassonneTile extends Common.Tile<SideType> {
+public class CarcassonneTile extends Tile<SideType> {
     private boolean village, town, separated, monastery;
     private String[] correspondingFilePath;
     private String[] possibleNames;
+    private BufferedImage display;
 
 
     public CarcassonneTile(SideType top, SideType right, SideType bottom, SideType left, boolean village, boolean separated, boolean monastery, boolean town){
@@ -21,6 +28,7 @@ public class CarcassonneTile extends Common.Tile<SideType> {
         getPossibleNames(this.getSides());
         updateNames();
         getFilePath();
+        updateDisplay();
     }
 
     public CarcassonneTile(SideType top, SideType right, SideType bottom, SideType left) {
@@ -34,9 +42,9 @@ public class CarcassonneTile extends Common.Tile<SideType> {
         SideType bottom = SideType.randomSide();
         SideType left = SideType.randomSide();
 
-        this.getSides().setUpSide(top);
+        this.getSides().setTopSide(top);
         this.getSides().setRightSide(right);
-        this.getSides().setDownSide(bottom);
+        this.getSides().setBottomSide(bottom);
         this.getSides().setLeftSide(left);
 
         this.village   = false;
@@ -52,16 +60,31 @@ public class CarcassonneTile extends Common.Tile<SideType> {
         int nFieldCount = StringManagement.countLetterInString(sFirstPossibleName, 'f');
         int nRoadCount = StringManagement.countLetterInString(sFirstPossibleName, 'r');
 
-        if (nCityCount > 1) {
-            // if 2 or more city, then there is a chance that is becomes a field surrounded by cities (20%)
+        // Debug for non-existing tiles
+        if (nRoadCount == 3 && nCityCount > 0 || nRoadCount == 1 && nCityCount > 1) {
+            replaceOneSide('c', 'f');
+            nCityCount = 0;
+            nFieldCount = 3;
+            if (top == SideType.CITY) {
+                this.getSides().setTopSide(SideType.FIELD);
+            }
+            if (right == SideType.CITY) {
+                this.getSides().setRightSide(SideType.FIELD);
+            }
+            if (bottom == SideType.CITY) {
+                this.getSides().setBottomSide(SideType.FIELD);
+            }
+            if (left == SideType.CITY) {
+                this.getSides().setLeftSide(SideType.FIELD);
+            }
+        }
+
+        if (nCityCount % 2 == 0 && nCityCount != 0) {
+            // if 2 or 4 cities, then there is a chance that is becomes a field surrounded by cities (20%)
             this.separated = RandomManagement.isHappening(20);
         }
         if (nFieldCount == 4) {
             // if 4 fields, then there is a monastery in the center (100%)
-            this.monastery = true;
-        }
-        if (nRoadCount == 0) {
-            // if no road, then it's a monastery
             this.monastery = true;
         }
         if (nRoadCount == 1 && nFieldCount == 3) {
@@ -83,15 +106,21 @@ public class CarcassonneTile extends Common.Tile<SideType> {
 
         updateNames();
         getFilePath();
+        updateDisplay();
+    }
 
+    public void replaceOneSide(char oldSide, char newSide) {
+        for (int i = 0; i < possibleNames.length; i++) {
+            possibleNames[i] = possibleNames[i].replace(oldSide, newSide);
+        }
     }
 
     protected void getPossibleNames(Sides<SideType> sides) {
         possibleNames = new String[4];
-        possibleNames[0] = SideType.toString(sides.getUpSide()) + SideType.toString(sides.getRightSide()) + SideType.toString(sides.getDownSide()) + SideType.toString(sides.getLeftSide());
-        possibleNames[1] = SideType.toString(sides.getRightSide()) + SideType.toString(sides.getDownSide()) + SideType.toString(sides.getDownSide()) + SideType.toString(sides.getUpSide());
-        possibleNames[2] = SideType.toString(sides.getDownSide()) + SideType.toString(sides.getLeftSide()) + SideType.toString(sides.getUpSide()) + SideType.toString(sides.getRightSide());
-        possibleNames[3] = SideType.toString(sides.getLeftSide()) + SideType.toString(sides.getUpSide()) + SideType.toString(sides.getRightSide()) + SideType.toString(sides.getDownSide());
+        possibleNames[0] = SideType.toString(sides.getTopSide()) + SideType.toString(sides.getRightSide()) + SideType.toString(sides.getBottomSide()) + SideType.toString(sides.getLeftSide());
+        possibleNames[1] = SideType.toString(sides.getLeftSide()) + SideType.toString(sides.getTopSide()) + SideType.toString(sides.getRightSide()) + SideType.toString(sides.getBottomSide());
+        possibleNames[2] = SideType.toString(sides.getBottomSide()) + SideType.toString(sides.getLeftSide()) + SideType.toString(sides.getTopSide()) + SideType.toString(sides.getRightSide());
+        possibleNames[3] = SideType.toString(sides.getRightSide()) + SideType.toString(sides.getBottomSide()) + SideType.toString(sides.getLeftSide()) + SideType.toString(sides.getTopSide());
     }
 
     protected void updateNames() {
@@ -104,6 +133,20 @@ public class CarcassonneTile extends Common.Tile<SideType> {
     protected void addToNames(String letter) {
         for (int i = 0; i < possibleNames.length; i++) {
             possibleNames[i] += letter;
+        }
+    }
+
+    public BufferedImage getDisplay() {
+        return display;
+    }
+
+    public void updateDisplay() {
+        try {
+            this.display = WindowManagement.resize(ImageIO.read(new File(correspondingFilePath[0])), Display.TILE_SIZE, Display.TILE_SIZE);
+            updateGraphic();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("File name unavailable : " + correspondingFilePath[0]);
         }
     }
 
@@ -122,21 +165,56 @@ public class CarcassonneTile extends Common.Tile<SideType> {
 
     @Override
     public void rotateClockwise() {
-        String sTemp = possibleNames[possibleNames.length - 1];
-        for (int i = 1; i < possibleNames.length - 1; i++) {
-            possibleNames[i + 1] = possibleNames[i];
-        }
-        possibleNames[0] = sTemp;
-        getFilePath();
+        rotateSidesClockwise();
+        rotateArrayClockWise(possibleNames);
+        rotateArrayClockWise(correspondingFilePath);
+        updateDisplay();
     }
 
     @Override
     public void rotateAntiClockwise() {
-        String sTemp = possibleNames[0];
-        for (int i = possibleNames.length - 2; i > 0; i++) {
-            possibleNames[i - 1] = possibleNames[i];
+        rotateSidesAntiClockwise();
+        rotateArrayAntiClockWise(possibleNames);
+        rotateArrayAntiClockWise(correspondingFilePath);
+        updateDisplay();
+    }
+
+    private void rotateArrayClockWise(String[] array) {
+        String sLast = array[0];
+        String sTemp;
+        for (int i = 0; i < array.length; i++) {
+            sTemp = array[array.length - 1 - i];
+            array[array.length - 1 - i] = sLast;
+            sLast = sTemp;
         }
-        possibleNames[possibleNames.length - 1] = sTemp;
-        getFilePath();
+    }
+
+
+    private void rotateArrayAntiClockWise(String[] array) {
+        String sLast = array[array.length - 1];
+        String sTemp;
+        for (int i = 0; i < array.length; i++) {
+            sTemp = array[i];
+            array[i] = sLast;
+            sLast = sTemp;
+        }
+    }
+
+    private void rotateSidesClockwise() {
+        Sides<SideType> sides = this.getSides();
+        SideType sideTypeSave = sides.getTopSide();
+        sides.setTopSide(sides.getLeftSide());
+        sides.setLeftSide(sides.getBottomSide());
+        sides.setBottomSide(sides.getRightSide());
+        sides.setRightSide(sideTypeSave);
+    }
+
+    private void rotateSidesAntiClockwise() {
+        Sides<SideType> sides = this.getSides();
+        SideType sideTypeSave = sides.getLeftSide();
+        sides.setLeftSide(sides.getTopSide());
+        sides.setTopSide(sides.getRightSide());
+        sides.setRightSide(sides.getBottomSide());
+        sides.setLeftSide(sideTypeSave);
     }
 }

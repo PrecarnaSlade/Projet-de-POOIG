@@ -3,26 +3,19 @@ package Graphic;
 import Common.Tile;
 import Common.Window.Display;
 import Common.Sides;
-import Common.Window.Management;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class TileGraphic extends JPanel {
-    private final Tile tileLinked;
 
     public TileGraphic(String tileType, Sides sides, Tile tileLinked) {
         if (tileType.equals("Domino")) {
             Domino(sides);
         } else if (tileType.equals("Carcassonne")) {
-            System.out.println("TBD");
+            Carcassonne();
         }
-        this.tileLinked = tileLinked;
-    }
-
-    public Tile getTileLinked() {
-        return tileLinked;
     }
 
     private void Domino(Sides<int[]> sides) {
@@ -62,9 +55,9 @@ public class TileGraphic extends JPanel {
         int nSideSize = 2 * nQuarter;
         int nBiasX, nBiasY;
         JLabel oLabel;
-        aSides[0] = sides.getUpSide();
+        aSides[0] = sides.getTopSide();
         aSides[1] = sides.getRightSide();
-        aSides[2] = sides.getDownSide();
+        aSides[2] = sides.getBottomSide();
         aSides[3] = sides.getLeftSide();
         aCoordinates[0][0] = nQuarter;
         aCoordinates[0][1] = 0;
@@ -97,10 +90,17 @@ public class TileGraphic extends JPanel {
 
                     aValueRectangle[nIncrement].setBackground(Color.RED);
                 }
-//                aValueRectangle[nIncrement].setBackground(new Color(255, 255, 255));
                 aValueRectangle[nIncrement].setBounds(aCoordinates[i][0] + nBiasX, aCoordinates[i][1] + nBiasY, aRectangleSize[i % 2][0], aRectangleSize[i % 2][1]);
                 nIncrement++;
             }
         }
+    }
+
+    private void Carcassonne() {
+        // Setting up basic size and layout to null => can apply absolute coordinates
+        this.setSize(Display.TILE_SIZE, Display.TILE_SIZE);
+        this.setLayout(null);
+        this.setBorder(new LineBorder(Color.BLACK));
+        this.setBackground(new Color(0,0,0,0)); // alpha set to 0 so transparent
     }
 }

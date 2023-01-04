@@ -4,7 +4,7 @@ import Common.IA;
 import Common.Player;
 import Common.Window.Display;
 import Common.Window.MainWindow;
-import Common.Window.Management;
+import Misc.WindowManagement;
 import Misc.ArrayManagement;
 
 import javax.swing.*;
@@ -17,9 +17,8 @@ public class PlayerSelectionMenu extends JPanel implements ActionListener {
     private JComboBox<String>[] associatedComboBox;
     private JButton[] associatedButton;
     private JTextField[] associatedJTextField;
-    private JPanel listedPlayersPanel;
-    private JButton buttonDone;
-    private JButton buttonAdd;
+    private final JButton buttonDone;
+    private final JButton buttonAdd;
     private JScrollPane scrollPane;
     private int deletedPlayer;
 
@@ -62,7 +61,7 @@ public class PlayerSelectionMenu extends JPanel implements ActionListener {
         if (scrollPane != null) {
             this.remove(scrollPane);
         }
-        listedPlayersPanel = new JPanel();
+        JPanel listedPlayersPanel = new JPanel();
         listedPlayersPanel.setPreferredSize(new Dimension(Display.WIDTH - buttonDone.getWidth() * 2, Display.HEIGHT));
         listedPlayersPanel.setLayout(new GridBagLayout());
         associatedComboBox = new JComboBox[playersArray.length];
@@ -158,7 +157,7 @@ public class PlayerSelectionMenu extends JPanel implements ActionListener {
                 int playerNb = playersArray.length + 1 + deletedPlayer;
                 addPlayer("Player" + playerNb, false);
             } else if (buttonSource == buttonDone) {
-                MainWindow parent = (MainWindow) Management.getMasterParentWindow(this);
+                MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
                 parent.setPlayers(this.playersArray);
                 parent.switchToMenu(MainWindow.GAME_OPTION_MENU);
             } else {

@@ -4,7 +4,7 @@ import Graphic.TileGraphic;
 import Misc.Position;
 
 public abstract class Tile<E> extends InternalObject {
-    private final Position position;
+    private Position position;
     private final Sides<E> sides;
     private final String tileType;
     private TileGraphic graphic;
@@ -31,18 +31,22 @@ public abstract class Tile<E> extends InternalObject {
         return position;
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     public Sides<E> getSides() {
         return sides;
     }
 
     public E getUpSide(){
-        return this.getSides().getUpSide();
+        return this.getSides().getTopSide();
     }
     public E getRightSide(){
         return this.getSides().getRightSide();
     }
     public E getDownSide(){
-        return this.getSides().getDownSide();
+        return this.getSides().getBottomSide();
     }
     public E getLeftSide(){
         return this.getSides().getLeftSide();

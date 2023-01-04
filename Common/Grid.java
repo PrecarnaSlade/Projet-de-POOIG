@@ -10,9 +10,9 @@ import Misc.Position;
 import java.awt.*;
 
 public class Grid<E> extends InternalObject {
-    private Tile[][] grid;
-    private int width;
-    private int height;
+    private final Tile[][] grid;
+    private final int width;
+    private final int height;
 
     public Grid(int pWidth, int pHeight) {
         super();
@@ -49,6 +49,7 @@ public class Grid<E> extends InternalObject {
         if(isLegalMove(t,p)) {
             grid[p.getX()][p.getY()]=t;
             t.setUsed(true);
+            t.setPosition(p);
             gridGraphic.updateGraphic();
         } else {
             throw new InvalidMoveException();
@@ -59,6 +60,7 @@ public class Grid<E> extends InternalObject {
         if(isLegalMove(t,x,y)) {
             grid[x][y]=t;
             t.setUsed(true);
+            t.setPosition(new Position(x, y));
         } else {
             throw new InvalidMoveException();
         }
@@ -90,24 +92,24 @@ public class Grid<E> extends InternalObject {
     }
 
     private boolean matchSides(int x, int y, DominoTile t){
-        if(this.topExist(x,y) && !matchSide(t.getSides().getUpSide(), (int[]) grid[x][y+1].getSides().getDownSide()))
+        if(this.topExist(x,y) && !matchSide(t.getSides().getTopSide(), (int[]) grid[x][y+1].getSides().getBottomSide()))
             return false;
         if(this.rightExist(x,y) && !matchSide(t.getSides().getRightSide(), (int[]) grid[x+1][y].getSides().getLeftSide()))
             return false;
-        if(this.bottomExist(x,y) &&  !matchSide(t.getSides().getDownSide(), (int[]) grid[x][y-1].getSides().getUpSide()))
+        if(this.bottomExist(x,y) &&  !matchSide(t.getSides().getBottomSide(), (int[]) grid[x][y-1].getSides().getTopSide()))
             return false;
         return !this.leftExist(x, y) || matchSide(t.getSides().getLeftSide(), (int[]) grid[x - 1][y].getSides().getRightSide());
     }
 
     private boolean matchSides(int x, int y, CarcassonneTile t){
         if(this.topExist(x,y) &&
-                !matchSide(t.getSides().getUpSide(), (SideType) grid[x][y+1].getSides().getDownSide()))
+                !matchSide(t.getSides().getTopSide(), (SideType) grid[x][y+1].getSides().getBottomSide()))
             return false;
         if(this.rightExist(x,y) &&
                 !matchSide(t.getSides().getRightSide(), (SideType) grid[x+1][y].getSides().getLeftSide()))
             return false;
         if(this.bottomExist(x,y) &&
-                !matchSide(t.getSides().getDownSide(), (SideType) grid[x][y-1].getSides().getUpSide()))
+                !matchSide(t.getSides().getBottomSide(), (SideType) grid[x][y-1].getSides().getTopSide()))
             return false;
         return !this.leftExist(x, y) ||
                 matchSide(t.getSides().getLeftSide(), (SideType) grid[x - 1][y].getSides().getRightSide());

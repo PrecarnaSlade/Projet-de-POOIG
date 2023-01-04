@@ -6,21 +6,19 @@ import Common.Window.Display;
 import Domino.DominoTile;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static Common.Window.Management.*;
+import static Misc.WindowManagement.*;
 
 
 public class GridGraphic {
     private final Grid grid;
     private final BufferedImage imageEmpty = resize(ImageIO.read(new File("./Data/Resources/Null1.png")), Display.TILE_SIZE, Display.TILE_SIZE);
     private final String gamePlayed;
-    private BufferedImage gridImage;
+    private final BufferedImage gridImage;
 
     public GridGraphic(Grid grid, String gamePlayed) throws IOException {
         this.grid = grid;
@@ -48,6 +46,7 @@ public class GridGraphic {
                         imageToAdd = panelToBufferedImage(dominoTile.getGraphic());
                     } else {
                         CarcassonneTile carcassonneTile = (CarcassonneTile) grid.getTileByXY(i, j);
+                        imageToAdd = carcassonneTile.getDisplay();
                     }
                 }
 

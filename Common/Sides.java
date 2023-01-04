@@ -13,7 +13,7 @@ public class Sides<E> {
         left = pLeft;
     }
 
-    public E getUpSide() {
+    public E getTopSide() {
         return up;
     }
 
@@ -21,7 +21,7 @@ public class Sides<E> {
         return right;
     }
 
-    public E getDownSide() {
+    public E getBottomSide() {
         return down;
     }
 
@@ -29,7 +29,7 @@ public class Sides<E> {
         return left;
     }
 
-    public void setUpSide(E pContent) {
+    public void setTopSide(E pContent) {
         up = pContent;
     }
 
@@ -37,7 +37,7 @@ public class Sides<E> {
         right = pContent;
     }
 
-    public void setDownSide(E pContent) {
+    public void setBottomSide(E pContent) {
         down = pContent;
     }
 

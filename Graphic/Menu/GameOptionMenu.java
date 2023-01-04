@@ -4,7 +4,7 @@ import Common.IA;
 import Common.Player;
 import Common.Window.Display;
 import Common.Window.MainWindow;
-import Common.Window.Management;
+import Misc.WindowManagement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,9 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameOptionMenu extends JPanel implements ActionListener {
-    private JButton buttonReturn, buttonPlay, buttonOption;
-    private JComboBox<String> comboBoxGridSize;
-    private JLabel labelGamePlayed;
+    private final JButton buttonReturn, buttonPlay, buttonOption;
+    private final JComboBox<String> comboBoxGridSize;
+    private final JLabel labelGamePlayed;
 
     public GameOptionMenu() {
         this.setSize(Display.WIDTH, Display.HEIGHT);
@@ -84,7 +84,7 @@ public class GameOptionMenu extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String sIdentifier = "";
         JButton buttonSource = (JButton) e.getSource();
-        MainWindow parent = (MainWindow) Management.getMasterParentWindow(this);
+        MainWindow parent = (MainWindow) WindowManagement.getMasterParentWindow(this);
 
         if (buttonSource == buttonReturn) {
             sIdentifier = MainWindow.PLAY_MENU;

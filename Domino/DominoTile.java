@@ -27,7 +27,7 @@ public class DominoTile extends Tile<int[]> {
         aTempArray[0] = oRandom.nextInt(max);
         aTempArray[1] = oRandom.nextInt(max);
         aTempArray[2] = oRandom.nextInt(max);
-        getSides().setUpSide(aTempArray);
+        getSides().setTopSide(aTempArray);
 
         aTempArray = new int[3];
         aTempArray[0] = oRandom.nextInt(max);
@@ -39,7 +39,7 @@ public class DominoTile extends Tile<int[]> {
         aTempArray[0] = oRandom.nextInt(max);
         aTempArray[1] = oRandom.nextInt(max);
         aTempArray[2] = oRandom.nextInt(max);
-        getSides().setDownSide(aTempArray);
+        getSides().setBottomSide(aTempArray);
 
         aTempArray = new int[3];
         aTempArray[0] = oRandom.nextInt(max);
@@ -53,9 +53,9 @@ public class DominoTile extends Tile<int[]> {
     @Override
     public String toString() {
         return "Domino{" +
-                "upSide=" + Arrays.toString(getSides().getUpSide()) +
+                "upSide=" + Arrays.toString(getSides().getTopSide()) +
                 ", rightSide=" + Arrays.toString(getSides().getRightSide()) +
-                ", downSide=" + Arrays.toString(getSides().getDownSide()) +
+                ", downSide=" + Arrays.toString(getSides().getBottomSide()) +
                 ", leftSide=" + Arrays.toString(getSides().getLeftSide()) +
                 '}';
     }
@@ -67,8 +67,8 @@ public class DominoTile extends Tile<int[]> {
         String sides="";
 
         for(int i=0;i<3;i++){
-            up+="  "+this.getSides().getUpSide()[i];
-            down+="  "+this.getSides().getDownSide()[i];
+            up+="  "+this.getSides().getTopSide()[i];
+            down+="  "+this.getSides().getBottomSide()[i];
             sides+=this.getSides().getLeftSide()[i]+"         "+this.getSides().getRightSide()[i]+"\n";
         }
 
@@ -93,19 +93,19 @@ public class DominoTile extends Tile<int[]> {
     public void rotateClockwise(){
         int[][] aInvertedSide = invertArrays(getSides().getLeftSide(), getSides().getRightSide());
 
-        getSides().setLeftSide(getSides().getDownSide());
-        getSides().setDownSide(aInvertedSide[1]);
-        getSides().setRightSide(getSides().getUpSide());
-        getSides().setUpSide(aInvertedSide[0]);
+        getSides().setLeftSide(getSides().getBottomSide());
+        getSides().setBottomSide(aInvertedSide[1]);
+        getSides().setRightSide(getSides().getTopSide());
+        getSides().setTopSide(aInvertedSide[0]);
         updateGraphic();
     }
 
     public void rotateAntiClockwise(){
-        int[][] aInvertedSide = invertArrays(getSides().getUpSide(), getSides().getDownSide());
+        int[][] aInvertedSide = invertArrays(getSides().getTopSide(), getSides().getBottomSide());
 
-        getSides().setUpSide(getSides().getRightSide());
+        getSides().setTopSide(getSides().getRightSide());
         getSides().setRightSide(aInvertedSide[1]);
-        getSides().setDownSide(getSides().getLeftSide());
+        getSides().setBottomSide(getSides().getLeftSide());
         getSides().setLeftSide(aInvertedSide[0]);
         updateGraphic();
     }

@@ -1,4 +1,4 @@
-package Common.Window;
+package Misc;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Management {
+public class WindowManagement {
     private static final boolean debug = true;
 
     public static Container getMasterParentWindow(Container startContainer) {
