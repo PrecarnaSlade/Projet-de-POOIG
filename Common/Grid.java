@@ -51,7 +51,7 @@ public class Grid<E> extends InternalObject {
             t.setUsed(true);
             gridGraphic.updateGraphic();
         } else {
-            throw new InvalidMoveException("Invalid Move");
+            throw new InvalidMoveException();
         }
     }
 
@@ -60,7 +60,7 @@ public class Grid<E> extends InternalObject {
             grid[x][y]=t;
             t.setUsed(true);
         } else {
-            throw new InvalidMoveException("Invalid Move");
+            throw new InvalidMoveException();
         }
     }
 

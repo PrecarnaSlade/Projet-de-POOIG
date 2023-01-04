@@ -5,4 +5,8 @@ public class InvalidMoveException extends Exception{
         super(errMessage);
         printStackTrace();
     }
+
+    public InvalidMoveException() {
+        super();
+    }
 }

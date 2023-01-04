@@ -22,4 +22,12 @@ public class ArrayManagement {
         }
         return aNew;
     }
+
+    public static int sum(int[] array) {
+        int nSum = 0;
+        for (int i : array) {
+            nSum += i;
+        }
+        return nSum;
+    }
 }
