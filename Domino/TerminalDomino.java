@@ -2,30 +2,24 @@ package Domino;
 
 import Common.Deck;
 import Common.Game;
-import Common.IA;
-import Common.Player;
+import Common.Sides;
+import Exceptions.InvalidMoveException;
+import Exceptions.NoMoreTileInDeckException;
 
 import java.util.Scanner;
 
 public class TerminalDomino extends Game{
     private Scanner scan;
     public TerminalDomino(boolean twoPlayers, Scanner scanner){
-        super(null);
-        Player[] players = new Player[2];
-        players[0] = new Player("Player1");
-        if (twoPlayers) {
-            players[1] = new Player("Player2");
-        } else {
-            players[1] = new IA("Player2");
-        }
-        super.setPlayers(players);
+        super(twoPlayers);
         this.setGrid(new Common.Grid<DominoTile>(11,11));
         this.setDeck(new Deck(30, "Domino"));
 
         scan= scanner;
 
+        this.getGrid().setUp(new DominoTile());
         this.afficher();
-        this.play(true);
+        this.play();
     }
 
     public void afficher(){
@@ -52,11 +46,11 @@ public class TerminalDomino extends Game{
                         up+="  "+domino.getSides().getUpSide()[i];
                         down+="  "+domino.getSides().getDownSide()[i];
                     }
-                    up+="||";
-                    down+="||";
-                    side1= domino.getSides().getLeftSide()[0]+"         "+domino.getSides().getRightSide()[0]+"||";
-                    side2= domino.getSides().getLeftSide()[1]+"         "+domino.getSides().getRightSide()[1]+"||";
-                    side3= domino.getSides().getLeftSide()[2]+"         "+domino.getSides().getRightSide()[2]+"||";
+                    up+="  ||";
+                    down+="  ||";
+                    side1+= domino.getSides().getLeftSide()[0]+"         "+domino.getSides().getRightSide()[0]+"||";
+                    side2+= domino.getSides().getLeftSide()[1]+"         "+domino.getSides().getRightSide()[1]+"||";
+                    side3+= domino.getSides().getLeftSide()[2]+"         "+domino.getSides().getRightSide()[2]+"||";
                 }
                 separator+="=============";
             }
@@ -64,8 +58,90 @@ public class TerminalDomino extends Game{
         }
     }
 
-    public void play(boolean player1){
-        play(!player1);
+    public void play(){
+        try {
+            String player = (this.getCurrentPlayer()==this.getPlayer1()? "Joueur 1" : "Joueur 2");
+            System.out.println("/// Tour du " + player + " ///");
+            System.out.println("Score: " + (this.getCurrentPlayer().getPoints()));
+            System.out.println("Pièce actuelle:\n");
+            DominoTile domino = (DominoTile) this.getDeck().draw();
+            System.out.println(domino.getGraphicalRepresentation());
+            this.askMove(domino);
+            nextPlayer();
+            play();
+        } catch(NoMoreTileInDeckException e){
+            endGame();
+        }
+    }
+
+    public void endGame(){
+        System.out.println((this.getPlayer1().getPoints()>this.getPlayer2().getPoints()?"Le Joueur 1 a gagné!":"Le Joueur 2 a gagné!"));
+        System.out.println("Score:\nJ1: " + this.getPlayer1().getPoints() +"\nJ2: " + this.getPlayer2().getPoints());
+        System.exit(0);
+    }
+
+    private void askMove(DominoTile domino){
+        System.out.println("Choisissez une action: poser (p) / rotation horaire (r) / rotation anti-horaire (ra) / défausser (d) / arrêter (a)");
+        switch(scan.next()){
+            case "p":
+                askPlacement(domino);
+                this.afficher();
+                break;
+            case "r":
+                domino.rotateClockwise();
+                System.out.println(domino.getGraphicalRepresentation());
+                askMove(domino);
+                break;
+            case "ra":
+                domino.rotateAntiClockwise();
+                System.out.println(domino.getGraphicalRepresentation());
+                askMove(domino);
+                break;
+            case "d":
+                this.getDeck().add(domino);
+                break;
+            case "a":
+                endGame();
+                break;
+            default: askMove(domino); break;
+        }
+    }
+
+    private void askPlacement(DominoTile domino){
+        System.out.println("Donner la position en X: ");
+        int x= scan.nextInt();
+        System.out.println("Donner la position en Y: ");
+        int y= scan.nextInt();
+        try{
+            this.getGrid().place(domino,x,y);
+            this.countPoints(x,y);
+        }
+        catch (InvalidMoveException e){
+            System.out.println("Ce placement n'est pas possible, veuillez réessayer.");
+            askMove(domino);
+        }
+    }
+
+    private void countPoints(int x, int y){
+        int sum=0;
+        DominoTile downTile= (DominoTile) this.getGrid().getTileByXY(x,y-1);
+        if(downTile!=null) sum+= this.countPoints(downTile.getUpSide());
+        DominoTile leftTile= (DominoTile) this.getGrid().getTileByXY(x-1,y);
+        if(leftTile!=null) sum+= this.countPoints(leftTile.getRightSide());
+        DominoTile upTile= (DominoTile) this.getGrid().getTileByXY(x,y+1);
+        if(upTile!=null) sum+= this.countPoints(upTile.getDownSide());
+        DominoTile rightTile= (DominoTile) this.getGrid().getTileByXY(x+1,y);
+        if(rightTile!=null) sum+= this.countPoints(rightTile.getLeftSide());
+
+        this.getCurrentPlayer().addPoints(sum);
+    }
+
+    private int countPoints(int[] side){
+        int sum=0;
+        for(int i: side){
+            sum+=i;
+        }
+        return sum;
     }
 
     public static void main(String[] args) {

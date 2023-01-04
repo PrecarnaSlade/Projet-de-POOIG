@@ -29,5 +29,13 @@ public class Player extends InternalObject {
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void addPoints(int x){
+        points+=x;
+    }
 }
 

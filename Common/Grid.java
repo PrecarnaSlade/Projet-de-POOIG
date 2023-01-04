@@ -41,11 +41,24 @@ public class Grid<E> extends InternalObject {
         return grid[x][y];
     }
 
+    public void setUp(Tile firstTile){
+        grid[width/2][height/2]= firstTile;
+    }
+
     public void place(Tile t, Position p, GridGraphic gridGraphic) throws InvalidMoveException {
         if(isLegalMove(t,p)) {
             grid[p.getX()][p.getY()]=t;
             t.setUsed(true);
             gridGraphic.updateGraphic();
+        } else {
+            throw new InvalidMoveException("Invalid Move");
+        }
+    }
+
+    public void place(Tile t, int x, int y) throws InvalidMoveException {
+        if(isLegalMove(t,x,y)) {
+            grid[x][y]=t;
+            t.setUsed(true);
         } else {
             throw new InvalidMoveException("Invalid Move");
         }
