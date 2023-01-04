@@ -35,6 +35,19 @@ public abstract class Tile<E> extends InternalObject {
         return sides;
     }
 
+    public E getUpSide(){
+        return this.getSides().getUpSide();
+    }
+    public E getRightSide(){
+        return this.getSides().getRightSide();
+    }
+    public E getDownSide(){
+        return this.getSides().getDownSide();
+    }
+    public E getLeftSide(){
+        return this.getSides().getLeftSide();
+    }
+
     public void updateGraphic() {
         this.graphic = new TileGraphic(tileType, this.sides, this);
     }

@@ -9,6 +9,7 @@ import java.awt.*;
 public class Game<E> {
     private final Player player1;
     private final Player player2;
+    private Player currentPlayer;
     private Deck<E> deck;
     private Grid<E> grid;
     private Tile drawnTile;
@@ -22,10 +23,13 @@ public class Game<E> {
             player2 = new IA();
         }
         player1Turn = true;
+        currentPlayer= player1;
     }
 
     public Player getPlayer1() {return player1;}
     public Player getPlayer2() {return player2;}
+    public Player getCurrentPlayer(){return currentPlayer;}
+    public void nextPlayer(){currentPlayer=(currentPlayer==player1?player2:player1);};
     public boolean isPlayer1Turn() {return player1Turn;}
     public Deck<E> getDeck() {return deck;}
     public Grid<E> getGrid() {return grid;}

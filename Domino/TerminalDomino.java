@@ -2,6 +2,7 @@ package Domino;
 
 import Common.Deck;
 import Common.Game;
+import Common.Sides;
 import Exceptions.InvalidMoveException;
 import Exceptions.NoMoreTileInDeckException;
 
@@ -18,7 +19,7 @@ public class TerminalDomino extends Game{
 
         this.getGrid().setUp(new DominoTile());
         this.afficher();
-        this.play(true);
+        this.play();
     }
 
     public void afficher(){
@@ -57,16 +58,17 @@ public class TerminalDomino extends Game{
         }
     }
 
-    public void play(boolean player1){
+    public void play(){
         try {
-            String player = (player1 ? "Joueur 1" : "Joueur 2");
+            String player = (this.getCurrentPlayer()==this.getPlayer1()? "Joueur 1" : "Joueur 2");
             System.out.println("/// Tour du " + player + " ///");
-            System.out.println("Score: " + (player1 ? this.getPlayer1() : this.getPlayer2()).getPoints());
+            System.out.println("Score: " + (this.getCurrentPlayer().getPoints()));
             System.out.println("Pièce actuelle:\n");
             DominoTile domino = (DominoTile) this.getDeck().draw();
             System.out.println(domino.getGraphicalRepresentation());
             this.askMove(domino);
-            play(!player1);
+            nextPlayer();
+            play();
         } catch(NoMoreTileInDeckException e){
             endGame();
         }
@@ -110,11 +112,36 @@ public class TerminalDomino extends Game{
         int x= scan.nextInt();
         System.out.println("Donner la position en Y: ");
         int y= scan.nextInt();
-        try{this.getGrid().place(domino,x,y);}
+        try{
+            this.getGrid().place(domino,x,y);
+            this.countPoints(x,y);
+        }
         catch (InvalidMoveException e){
             System.out.println("Ce placement n'est pas possible, veuillez réessayer.");
             askMove(domino);
         }
+    }
+
+    private void countPoints(int x, int y){
+        int sum=0;
+        DominoTile downTile= (DominoTile) this.getGrid().getTileByXY(x,y-1);
+        if(downTile!=null) sum+= this.countPoints(downTile.getUpSide());
+        DominoTile leftTile= (DominoTile) this.getGrid().getTileByXY(x-1,y);
+        if(leftTile!=null) sum+= this.countPoints(leftTile.getRightSide());
+        DominoTile upTile= (DominoTile) this.getGrid().getTileByXY(x,y+1);
+        if(upTile!=null) sum+= this.countPoints(upTile.getDownSide());
+        DominoTile rightTile= (DominoTile) this.getGrid().getTileByXY(x+1,y);
+        if(rightTile!=null) sum+= this.countPoints(rightTile.getLeftSide());
+
+        this.getCurrentPlayer().addPoints(sum);
+    }
+
+    private int countPoints(int[] side){
+        int sum=0;
+        for(int i: side){
+            sum+=i;
+        }
+        return sum;
     }
 
     public static void main(String[] args) {
