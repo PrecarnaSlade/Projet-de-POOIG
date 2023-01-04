@@ -53,7 +53,7 @@ public class PlayerSelectionMenu extends JPanel implements ActionListener {
         } else {
             playerToAdd = new Player(name);
         }
-        playersArray = ArrayManagement.addPlayer(playersArray, playerToAdd);
+        playersArray = ArrayManagement.add(playersArray, playerToAdd);
         updateDisplay();
     }
 

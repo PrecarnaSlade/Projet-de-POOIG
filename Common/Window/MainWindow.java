@@ -87,6 +87,10 @@ public class MainWindow extends JFrame implements InternalFrameListener {
         return players;
     }
 
+    public GamePanel getGraphicGamePanel() {
+        return graphicGamePanel;
+    }
+
     public void createGameInterface() {
         try {
 

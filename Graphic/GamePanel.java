@@ -55,6 +55,10 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         this.content = grid.getImage();
     }
 
+    public GridGraphic getGrid() {
+        return grid;
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);

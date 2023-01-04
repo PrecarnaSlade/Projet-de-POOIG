@@ -5,6 +5,7 @@ import Carcassonne.SideType;
 import Domino.DominoTile;
 import Exceptions.InvalidMoveException;
 import Graphic.GridGraphic;
+import Misc.ArrayManagement;
 import Misc.Position;
 
 import java.awt.*;
@@ -56,11 +57,12 @@ public class Grid<E> extends InternalObject {
         }
     }
 
-    public void place(Tile t, int x, int y) throws InvalidMoveException {
+    public void place(Tile t, int x, int y, GridGraphic gridGraphic) throws InvalidMoveException {
         if(isLegalMove(t,x,y)) {
             grid[x][y]=t;
             t.setUsed(true);
             t.setPosition(new Position(x, y));
+            gridGraphic.updateGraphic();
         } else {
             throw new InvalidMoveException();
         }
@@ -142,17 +144,19 @@ public class Grid<E> extends InternalObject {
         return side1 == side2;
     }
 
-    public boolean canPlace(Tile tile) {
-        for (int i = 0; i < 4; i++) {
-            for (int x = 0; x < this.width; x++) {
-                for (int y = 0; y < this.height; y++) {
-                    if (isLegalMove(tile, x, y)) {
-                        return true;
-                    }
+    public boolean canPlaceHere(Tile t, int x, int y) {
+        return isLegalMove(t, x, y);
+    }
+
+    public Position[] getPositionsAvailable(Tile t) {
+        Position[] aPositionAvailable = new Position[0];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < this.height; y++) {
+                if (canPlaceHere(t, x, y)) {
+                    aPositionAvailable = ArrayManagement.add(aPositionAvailable, new Position(x, y));
                 }
             }
-            tile.rotateClockwise();
         }
-        return false;
+        return aPositionAvailable;
     }
 }

@@ -43,7 +43,7 @@ public class Game<E> {
 
     public void draw(MainWindow mainWindow) throws NoMoreTileInDeckException {
         this.drawnTile = deck.draw();
-        while (!grid.canPlace(drawnTile)) {
+        while (grid.getPositionsAvailable(this.drawnTile).length == 0) {
             this.drawnTile = deck.draw();
         }
         mainWindow.updateTileDrawn(this.drawnTile, players[playerTurn]);
@@ -52,6 +52,11 @@ public class Game<E> {
     public void nextTurn(MainWindow mainWindow) throws NoMoreTileInDeckException {
         playerTurn = (playerTurn + 1) % (players.length);
         draw(mainWindow);
+        if (getCurrentPlayer().isIA()) {
+            IA ia = (IA) players[playerTurn];
+            ia.playTurn(this.drawnTile, grid, mainWindow.getGraphicGamePanel().getGrid());
+            nextTurn(mainWindow);
+        }
     }
 
     public Player getCurrentPlayer() {

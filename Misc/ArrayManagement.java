@@ -3,8 +3,15 @@ package Misc;
 import Common.Player;
 
 public class ArrayManagement {
-    public static Player[] addPlayer(Player[] array, Player var) {
+    public static Player[] add(Player[] array, Player var) {
         Player[] aNew = new Player[array.length + 1];
+        System.arraycopy(array, 0, aNew, 0, array.length);
+        aNew[array.length] = var;
+        return aNew;
+    }
+
+    public static Position[] add(Position[] array, Position var) {
+        Position[] aNew = new Position[array.length + 1];
         System.arraycopy(array, 0, aNew, 0, array.length);
         aNew[array.length] = var;
         return aNew;
