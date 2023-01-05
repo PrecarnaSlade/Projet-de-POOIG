@@ -6,7 +6,6 @@ import Common.Tile;
 import Exceptions.NoMoreTileInDeckException;
 import Graphic.GamePanel;
 import Graphic.Menu.*;
-import Graphic.TileGraphic;
 
 import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;

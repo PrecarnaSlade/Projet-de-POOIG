@@ -1,21 +1,9 @@
-package Debug;
+package Launch;
 
-import Carcassonne.CarcassonneTile;
-import Common.Sides;
-import Common.Tile;
-import Common.Window.HandWindow;
 import Common.Window.MainWindow;
-import Domino.DominoTile;
-import Graphic.Menu.MainMenu;
-import Graphic.Menu.PlayerSelectionMenu;
-import Graphic.TileGraphic;
-import com.sun.tools.javac.Main;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class Test extends JFrame {
 
