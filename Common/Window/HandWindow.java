@@ -3,7 +3,7 @@ package Common.Window;
 import Carcassonne.CarcassonneTile;
 import Common.Player;
 import Common.Tile;
-import Misc.WindowManagement;
+import Graphic.Menu.ImageManagement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,8 +12,6 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import static Misc.WindowManagement.*;
 
 public class HandWindow extends JInternalFrame {
     private final JPanel tileDrawnPanel;
@@ -27,7 +25,7 @@ public class HandWindow extends JInternalFrame {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         this.tileDrawn = null;
-        this.tileDrawnImage = WindowManagement.resize(ImageIO.read(new File("./Data/Resources/Null1.png")), Display.TILE_SIZE, Display.TILE_SIZE);
+        this.tileDrawnImage = ImageManagement.resize(ImageIO.read(new File("./Data/Resources/Null1.png")), Display.TILE_SIZE, Display.TILE_SIZE);
         this.tileDrawnPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -64,7 +62,7 @@ public class HandWindow extends JInternalFrame {
         if (tile instanceof CarcassonneTile) {
             this.tileDrawnImage = ((CarcassonneTile) tile).getDisplay();
         } else {
-            this.tileDrawnImage = panelToBufferedImage(tile.getGraphic());
+            this.tileDrawnImage = ImageManagement.panelToBufferedImage(tile.getGraphic());
         }
         this.tileDrawnPanel.repaint();
     }

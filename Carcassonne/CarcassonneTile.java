@@ -3,9 +3,9 @@ package Carcassonne;
 import Common.Sides;
 import Common.Tile;
 import Common.Window.Display;
+import Graphic.Menu.ImageManagement;
 import Misc.RandomManagement;
 import Misc.StringManagement;
-import Misc.WindowManagement;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -142,7 +142,7 @@ public class CarcassonneTile extends Tile<SideType> {
 
     public void updateDisplay() {
         try {
-            this.display = WindowManagement.resize(ImageIO.read(new File(correspondingFilePath[0])), Display.TILE_SIZE, Display.TILE_SIZE);
+            this.display = ImageManagement.resize(ImageIO.read(new File(correspondingFilePath[0])), Display.TILE_SIZE, Display.TILE_SIZE);
             updateGraphic();
         } catch (IOException e) {
             e.printStackTrace();

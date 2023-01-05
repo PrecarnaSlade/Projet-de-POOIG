@@ -1,5 +1,6 @@
 package Graphic;
 
+import Carcassonne.SideType;
 import Common.*;
 import Common.Window.Display;
 import Common.Window.HandWindow;
@@ -148,7 +149,11 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
             HandWindow handWindow = this.parent.getHandWindow();
             handWindow.setLocation(0, 0);
         } catch (InvalidMoveException ex) {
-            JOptionPane.showMessageDialog(null, "You can't put a tile here.\nTry somewhere else, there must be a place to put it. :)", "invalidMove", JOptionPane.ERROR_MESSAGE);
+            if (this.parent.getGamePlayed().equals("Carcassonne") && !this.game.getGrid().isEmpty(gridPos.getX(), gridPos.getY())) {
+                SideType st;
+            } else {
+                JOptionPane.showMessageDialog(null, "You can't put a tile here.\nTry somewhere else, there must be a place to put it. :)", "invalidMove", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (NoMoreTileInDeckException ex) {
             JOptionPane.showMessageDialog(null, "The deck is now empty. The game is finished.\n" + game.getWinner().getName() + " has won !! GG !!", "Game finished", JOptionPane.INFORMATION_MESSAGE);
         }

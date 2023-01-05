@@ -8,10 +8,10 @@ Afin de lancer le projet vous devez d'abord le compiler :
 ```
 $ javac Play.java
 ```
-Ensuite vous avez deux choix :
+Ensuite, vous avez deux choix :
 - Lancer le jeu sous forme d'un terminal (fonctionne uniquement avec le domino) avec deux paramètres exactement (chiffre entier), avec : 
-  - PlayerNumber -> le nombre de joueur 
-  - IaNumber -> nombre d'IA
+  - PlayerNumber → le nombre de joueurs 
+  - IaNumber → nombre d'IA
   ```
   $ java -cp "." Play PlayerNumber IaNumber
   ```

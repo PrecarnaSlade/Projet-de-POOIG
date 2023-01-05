@@ -4,6 +4,7 @@ import Carcassonne.CarcassonneTile;
 import Common.Grid;
 import Common.Window.Display;
 import Domino.DominoTile;
+import Graphic.Menu.ImageManagement;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,12 +12,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static Misc.WindowManagement.*;
-
 
 public class GridGraphic {
     private final Grid grid;
-    private final BufferedImage imageEmpty = resize(ImageIO.read(new File("./Data/Resources/Null1.png")), Display.TILE_SIZE, Display.TILE_SIZE);
+    private final BufferedImage imageEmpty = ImageManagement.resize(ImageIO.read(new File("./Data/Resources/Null1.png")), Display.TILE_SIZE, Display.TILE_SIZE);
     private final String gamePlayed;
     private final BufferedImage gridImage;
 
@@ -43,7 +42,7 @@ public class GridGraphic {
                 if (!grid.isEmpty(i, j)) {
                     if (gamePlayed.equals("Domino")) {
                         DominoTile dominoTile = (DominoTile) grid.getTileByXY(i, j);
-                        imageToAdd = panelToBufferedImage(dominoTile.getGraphic());
+                        imageToAdd = ImageManagement.panelToBufferedImage(dominoTile.getGraphic());
                     } else {
                         CarcassonneTile carcassonneTile = (CarcassonneTile) grid.getTileByXY(i, j);
                         imageToAdd = carcassonneTile.getDisplay();
