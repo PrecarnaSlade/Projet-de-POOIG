@@ -129,7 +129,7 @@ public class MainWindow extends JFrame implements InternalFrameListener {
 
     private void createHandDisplay() {
         try {
-            this.handWindow = new HandWindow();
+            this.handWindow = new HandWindow(gamePlayed);
             this.add(handWindow);
             this.handWindow.setVisible(true);
             this.handWindow.setLayer(0);

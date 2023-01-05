@@ -13,14 +13,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static Misc.WindowManagement.getMasterParentWindow;
-
 public class HandWindow extends JInternalFrame {
     private final JPanel tileDrawnPanel;
     private BufferedImage tileDrawnImage;
     private Tile tileDrawn;
 
-    public HandWindow() throws IOException {
+    public HandWindow(String gamePlayed) throws IOException {
         this.setLayout(null);
         this.setTitle("Hand");
         Insets insets = this.getInsets();
@@ -41,7 +39,7 @@ public class HandWindow extends JInternalFrame {
         tileDrawnPanel.setLocation(0, 0);
         String sText = "Press R to rotate clockwise\nShift + R to rotate anti-clockwise.";
 
-        if (((MainWindow) getMasterParentWindow(this)).getGamePlayed().equals("Carcassonne")) {
+        if (gamePlayed.equals("Carcassonne")) {
             sText += "\nClick on a tile to place your miple.";
         }
 
