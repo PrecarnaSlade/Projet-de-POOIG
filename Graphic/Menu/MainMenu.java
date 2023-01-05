@@ -32,9 +32,8 @@ public class MainMenu extends JPanel implements ActionListener {
             this.add(oPicture);
             oPicture.setLocation(0,0);
 
-        } catch (IOException e) {
-            System.out.println("MainMenu : imagePath error");
-            e.printStackTrace();
+        } catch (IOException ignored) {
+
         }
         Dimension dimensionButtons = new Dimension(Display.BUTTON_WIDTH, Display.BUTTON_HEIGHT);
 
