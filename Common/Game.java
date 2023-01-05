@@ -4,6 +4,7 @@ import Common.Window.MainWindow;
 import Exceptions.NoMoreTileInDeckException;
 import Graphic.GamePanel;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class Game<E> {
@@ -51,8 +52,13 @@ public class Game<E> {
 
     public void nextTurn(MainWindow mainWindow) throws NoMoreTileInDeckException {
         Tile tilePlaced = this.drawnTile;
-        int nScored = grid.getAdjacentTileNb(tilePlaced.getPosition());
-        getCurrentPlayer().addPoints(nScored);
+        if (mainWindow!=null && mainWindow.getGamePlayed().equals("Domino")) {
+            int nScored = grid.getAdjacentTileNb(tilePlaced.getPosition());
+            getCurrentPlayer().addPoints(nScored);
+            if (!getCurrentPlayer().isIA()) {
+                JOptionPane.showMessageDialog(null, "You scored : " + nScored + " points !\n" + getCurrentPlayer().getName() + " will now play");
+            }
+        }
         playerTurn = (playerTurn + 1) % (players.length);
         if (mainWindow != null) draw(mainWindow);
         if (getCurrentPlayer().isIA()) {

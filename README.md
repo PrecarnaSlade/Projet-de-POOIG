@@ -17,7 +17,7 @@ Ensuite vous avez deux choix :
   ```
 - Lancer le jeu sans paramètre et profiter de l'expérience avec une interface graphique digne de window XP
   ```
-  $ java -cp "." Play PlayerNumber IaNumber
+  $ java -cp "." Play
     ```
 
 **Toutes les commandes considèrent que vous vous trouvez dans le dossier du projet !**

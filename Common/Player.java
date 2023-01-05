@@ -1,5 +1,7 @@
 package Common;
 
+import Carcassonne.Miple;
+
 import java.util.Scanner;
 
 public class Player extends InternalObject {
@@ -7,6 +9,7 @@ public class Player extends InternalObject {
     private int points;
     private String name;
     private boolean isIA;
+    private Miple[] miples;
 
     public Player(String name) {
         this(name,false);

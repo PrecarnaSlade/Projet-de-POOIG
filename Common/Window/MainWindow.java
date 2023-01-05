@@ -1,5 +1,7 @@
 package Common.Window;
 
+import Carcassonne.CarcassonneIA;
+import Carcassonne.CarcassonnePlayer;
 import Common.Game;
 import Common.Player;
 import Common.Tile;
@@ -79,6 +81,11 @@ public class MainWindow extends JFrame implements InternalFrameListener {
     }
 
     public void setPlayers(Player[] players) {
+        if (gamePlayed.equals("Carcassonne")) {
+            for (int i = 0; i < players.length; i++) {
+                players[i] = (players[i].isIA()) ? new CarcassonneIA(players[i].getName()) : new CarcassonnePlayer(players[i].getName());
+            }
+        }
         this.players = players;
     }
 

@@ -1,5 +1,6 @@
 package Common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class InternalObject {
@@ -21,6 +22,4 @@ public class InternalObject {
         return INTERNAL_OBJECT_LIST;
     }
 
-//    public static Object getObjectById()
-//    public static void removeObjectById()
 }
