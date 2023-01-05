@@ -10,17 +10,18 @@ import java.io.File;
 import java.io.IOException;
 
 public class ImageManagement {
-    private static final boolean debug = true;
     public static BufferedImage getRegionAroundClick(BufferedImage image, Position clickPosition, int range) {
         BufferedImage subImage = new BufferedImage(range * 2, range * 2, BufferedImage.TYPE_INT_ARGB);
-        saveImage("mainImage.png", image);
 
         for (int x = 0; x < range * 2; x++) {
             for (int y = 0; y < range * 2; y++) {
-                subImage.setRGB(x, y, image.getRGB(x + clickPosition.getX() - range, y + clickPosition.getY() - range));
+                try {
+                    subImage.setRGB(x, y, image.getRGB(x + clickPosition.getX() - range, y + clickPosition.getY() - range));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    subImage.setRGB(x, y, image.getRGB(clickPosition.getX(), clickPosition.getY()));
+                }
             }
         }
-        saveImage("subImage.png", subImage);
         return subImage;
     }
 
@@ -57,15 +58,6 @@ public class ImageManagement {
                 }
             }
         }
-    }
-
-    public static void saveImageFromPanel(JPanel panel, String outputName) {
-        if (!debug) {
-            return;
-        }
-        BufferedImage bi = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        panel.paint(bi.getGraphics());
-        saveImage(outputName, bi);
     }
 
     private static void saveImage(String outputName, BufferedImage bi) {

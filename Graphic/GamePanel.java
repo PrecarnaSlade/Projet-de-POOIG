@@ -1,11 +1,10 @@
 package Graphic;
 
-import Carcassonne.SideType;
+import Carcassonne.*;
 import Common.*;
 import Common.Window.Display;
 import Common.Window.HandWindow;
 import Common.Window.MainWindow;
-import Domino.DominoTile;
 import Exceptions.InvalidMoveException;
 import Exceptions.NoMoreTileInDeckException;
 import Misc.Position;
@@ -37,7 +36,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         this.setSize(Display.TILE_SIZE * grid.getWidth(), Display.TILE_SIZE * grid.getHeight());
         this.setLayout(null);
         this.parent = parent;
-        this.grid = new GridGraphic(grid, parent.getGamePlayed());
+        this.grid = new GridGraphic(grid, parent.getGamePlayed(), game);
 
         try {
             grid.forcePlace(this.game.getDeck().draw(), new Position((grid.getWidth()) / 2, (grid.getHeight()) / 2), this.grid);
@@ -113,11 +112,17 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         g2.drawImage(content, 0, 0, this);
     }
 
-    public Position clickToPositionOnGrid(Point MouseLocation) {
+    private Position clickToPositionOnGrid(Point MouseLocation) {
         int x = (int) (MouseLocation.x - parent.getLocation().x - this.getLocation().x - this.getX() - xOffset);
         int y = (int) (MouseLocation.y - parent.getLocation().y - this.getLocation().y - this.getY() - yOffset);
         // inverting Y coordinates because the origin of the array is on bottom left and the origin of the window is on top left
         return new Position(x / Display.TILE_SIZE, (this.game.getGrid().getHeight() * Display.TILE_SIZE - y) / Display.TILE_SIZE);
+    }
+
+    private Position getPositionOnTile(Point MouseLocation) {
+        int x = (int) (MouseLocation.x - parent.getLocation().x - this.getLocation().x - this.getX() - xOffset);
+        int y = (int) (MouseLocation.y - parent.getLocation().y - this.getLocation().y - this.getY() - yOffset);
+        return new Position(x % Display.TILE_SIZE, y % Display.TILE_SIZE);
     }
 
     @Override
@@ -141,7 +146,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
         xDiff = 0;
         yDiff = 0;
         // adding tile if possible
-        Position gridPos = clickToPositionOnGrid(e.getLocationOnScreen());
+        Point mousePoint = e.getLocationOnScreen();
+        Position gridPos = clickToPositionOnGrid(mousePoint);
         Tile handTile = this.game.getDrawnTile();
         try {
             this.game.getGrid().place(handTile, gridPos, this.grid);
@@ -150,7 +156,20 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
             handWindow.setLocation(0, 0);
         } catch (InvalidMoveException ex) {
             if (this.parent.getGamePlayed().equals("Carcassonne") && !this.game.getGrid().isEmpty(gridPos.getX(), gridPos.getY())) {
-                SideType st;
+                Position positionOnTile = getPositionOnTile(mousePoint);
+                SidePosition sideDesired = SidePosition.getSidePosFromXY(positionOnTile.getX(), positionOnTile.getY());
+                CarcassonneTile tile = (CarcassonneTile) this.game.getGrid().getTileByPos(gridPos);
+                SpecialType terrainType = tile.getPreciseSides()[SidePosition.toInt(sideDesired)];
+//                String sSide = SpecialType.toCompleteString(terrainType);
+//                int nResponse = JOptionPane.showOptionDialog(new JFrame(), "Do you want to put your miple on a " + sSide + " ?", "Miple Placement", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
+//                if (nResponse == JOptionPane.YES_OPTION) {
+
+                    int x = (int) (mousePoint.x - parent.getLocation().x - this.getLocation().x - this.getX() - xOffset);
+                    int y = (int) (mousePoint.y - parent.getLocation().y - this.getLocation().y - this.getY() - yOffset);
+                    CarcassonnePlayer player = (CarcassonnePlayer) this.game.getCurrentPlayer();
+                    tile.placeMiple(player.placeMiple(new Position(x, y), terrainType), terrainType, sideDesired);
+                    JOptionPane.showMessageDialog(null, "You placed a miple. It will be rendered at the end of your turn !", "Miple placed", JOptionPane.INFORMATION_MESSAGE);
+//                }
             } else {
                 JOptionPane.showMessageDialog(null, "You can't put a tile here.\nTry somewhere else, there must be a place to put it. :)", "invalidMove", JOptionPane.ERROR_MESSAGE);
             }

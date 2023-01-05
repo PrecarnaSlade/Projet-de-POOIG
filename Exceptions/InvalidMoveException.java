@@ -1,10 +1,6 @@
 package Exceptions;
 
-public class InvalidMoveException extends Exception{
-    public InvalidMoveException(String errMessage) {
-        super(errMessage);
-        printStackTrace();
-    }
+public class InvalidMoveException extends Exception {
 
     public InvalidMoveException() {
         super();

@@ -1,10 +1,15 @@
 package Graphic;
 
+import Carcassonne.CarcassonnePlayer;
 import Carcassonne.CarcassonneTile;
+import Carcassonne.Miple;
+import Common.Game;
 import Common.Grid;
+import Common.Player;
 import Common.Window.Display;
 import Domino.DominoTile;
 import Graphic.Menu.ImageManagement;
+import Misc.Position;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,10 +23,12 @@ public class GridGraphic {
     private final BufferedImage imageEmpty = ImageManagement.resize(ImageIO.read(new File("./Data/Resources/Null1.png")), Display.TILE_SIZE, Display.TILE_SIZE);
     private final String gamePlayed;
     private final BufferedImage gridImage;
+    private final Game game;
 
-    public GridGraphic(Grid grid, String gamePlayed) throws IOException {
+    public GridGraphic(Grid grid, String gamePlayed, Game game) throws IOException {
         this.grid = grid;
         this.gamePlayed = gamePlayed;
+        this.game = game;
         gridImage = new BufferedImage(Display.TILE_SIZE * grid.getWidth(), Display.TILE_SIZE * grid.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         updateGraphic();
@@ -52,6 +59,23 @@ public class GridGraphic {
                 newGridImage.drawImage(imageToAdd, Display.TILE_SIZE * i, Display.TILE_SIZE * nActualY, null);
             }
         }
+
+        if (gamePlayed.equals("Carcassonne")) {
+            Position miplePosition;
+            for(Player p : this.game.getPlayers()) {
+                if (p instanceof CarcassonnePlayer) {
+                    Miple[] miples =  ((CarcassonnePlayer) p).getMiples();
+                    for (Miple miple : miples) {
+                        miplePosition = miple.getPosition();
+                        if (miplePosition == null) {
+                            continue;
+                        }
+                        newGridImage.drawImage(miple.getSkin(), miplePosition.getX(), miplePosition.getY(), null);
+                    }
+                }
+            }
+        }
+
         newGridImage.dispose();
     }
 

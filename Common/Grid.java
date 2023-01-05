@@ -1,7 +1,7 @@
 package Common;
 
 import Carcassonne.CarcassonneTile;
-import Carcassonne.SideType;
+import Carcassonne.SpecialType;
 import Domino.DominoTile;
 import Exceptions.InvalidMoveException;
 import Graphic.GridGraphic;
@@ -109,16 +109,16 @@ public class Grid<E> extends InternalObject {
 
     private boolean matchSides(int x, int y, CarcassonneTile t){
         if(this.topExist(x,y) &&
-                !matchSide(t.getSides().getTopSide(), (SideType) grid[x][y+1].getSides().getBottomSide()))
+                !matchSide(t.getSides().getTopSide(), (SpecialType) grid[x][y+1].getSides().getBottomSide()))
             return false;
         if(this.rightExist(x,y) &&
-                !matchSide(t.getSides().getRightSide(), (SideType) grid[x+1][y].getSides().getLeftSide()))
+                !matchSide(t.getSides().getRightSide(), (SpecialType) grid[x+1][y].getSides().getLeftSide()))
             return false;
         if(this.bottomExist(x,y) &&
-                !matchSide(t.getSides().getBottomSide(), (SideType) grid[x][y-1].getSides().getTopSide()))
+                !matchSide(t.getSides().getBottomSide(), (SpecialType) grid[x][y-1].getSides().getTopSide()))
             return false;
         return !this.leftExist(x, y) ||
-                matchSide(t.getSides().getLeftSide(), (SideType) grid[x - 1][y].getSides().getRightSide());
+                matchSide(t.getSides().getLeftSide(), (SpecialType) grid[x - 1][y].getSides().getRightSide());
     }
 
     private boolean topExist(int x, int y){
@@ -144,7 +144,7 @@ public class Grid<E> extends InternalObject {
         return true;
     }
 
-    private boolean matchSide(SideType side1, SideType side2){
+    private boolean matchSide(SpecialType side1, SpecialType side2){
         return side1 == side2;
     }
 

@@ -1,20 +1,40 @@
 package Carcassonne;
 
+import Common.Window.Display;
+import Graphic.Menu.ImageManagement;
 import Misc.Position;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Miple {
-    private CarcassonnePlayer player;
+    private final CarcassonnePlayer player;
     private boolean used;
     private Position position;
-    private SideType terrainType;
+    private SpecialType terrainType;
     private BufferedImage skin;
+    private SidePosition sidePosition;
 
     public Miple(CarcassonnePlayer player){
         this.player= player;
         used= false;
         position= null;
+        sidePosition = null;
+        try {
+            skin = ImageManagement.resize(ImageIO.read(new File("./Data/Resources/Miples/meeple_road_template.png")), Display.MIPLE_SIZE, Display.MIPLE_SIZE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public SidePosition getSidePosition() {
+        return sidePosition;
+    }
+
+    public void setSidePosition(SidePosition sidePosition) {
+        this.sidePosition = sidePosition;
     }
 
     public CarcassonnePlayer getPlayer() {
@@ -29,9 +49,10 @@ public class Miple {
         return position;
     }
 
-    public void place(Position position){
+    public void place(Position position, SpecialType terrainType) {
         this.position= position;
         this.used= true;
+        this.terrainType = terrainType;
     }
 
     public void unPlace(){
@@ -43,11 +64,11 @@ public class Miple {
         return skin;
     }
 
-    public SideType getTerrainType() {
+    public SpecialType getTerrainType() {
         return terrainType;
     }
 
-    public void setTerrainType(SideType terrainType) {
+    public void setTerrainType(SpecialType terrainType) {
         this.terrainType = terrainType;
     }
 

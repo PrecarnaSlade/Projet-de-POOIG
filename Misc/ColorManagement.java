@@ -1,7 +1,5 @@
 package Misc;
 
-import Carcassonne.SideType;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -62,9 +60,7 @@ public class ColorManagement {
         // Filter out black, white and grays...... (tolerance within 10 pixels)
         int tolerance = 10;
         if (rgDiff > tolerance || rgDiff < -tolerance)
-            if (rbDiff > tolerance || rbDiff < -tolerance) {
-                return false;
-            }
+            return rbDiff <= tolerance && rbDiff >= -tolerance;
         return true;
     }
 }

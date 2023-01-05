@@ -12,45 +12,39 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class CarcassonneTile extends Tile<SideType> {
-    private boolean village, town, separated, monastery;
+public class CarcassonneTile extends Tile<SpecialType> {
+    private boolean village;
+    private boolean town;
+    private boolean separatedTown;
+    private boolean monastery;
     private String[] correspondingFilePath;
     private String[] possibleNames;
     private BufferedImage display;
-
-
-    public CarcassonneTile(SideType top, SideType right, SideType bottom, SideType left, boolean village, boolean separated, boolean monastery, boolean town){
-        super(null, new Sides<>(top, right, bottom, left), "Carcassonne");
-        this.village= village;
-        this.separated = separated;
-        this.monastery = monastery;
-        this.town = town;
-        getPossibleNames(this.getSides());
-        updateNames();
-        getFilePath();
-        updateDisplay();
-    }
-
-    public CarcassonneTile(SideType top, SideType right, SideType bottom, SideType left) {
-        this(top, right, bottom, left, false, false, false, false);
-    }
+    private SpecialType optionalType;
+    private int mipleCount;
+    private final Miple[] miples; //array in case of multiple miple on same tile
+    private final SpecialType[] preciseSides; // correspondingPos = {N, NE, NW, S, SE, SW, E, W, CENTER};
 
     public CarcassonneTile() {
         super(null, new Sides<>(null, null, null, null), "Carcassonne");
-        SideType top = SideType.randomSide();
-        SideType right = SideType.randomSide();
-        SideType bottom = SideType.randomSide();
-        SideType left = SideType.randomSide();
+        SpecialType top = SpecialType.randomSide();
+        SpecialType right = SpecialType.randomSide();
+        SpecialType bottom = SpecialType.randomSide();
+        SpecialType left = SpecialType.randomSide();
 
         this.getSides().setTopSide(top);
         this.getSides().setRightSide(right);
         this.getSides().setBottomSide(bottom);
         this.getSides().setLeftSide(left);
 
-        this.village   = false;
-        this.separated = false;
-        this.monastery = false;
-        this.town      = false;
+        this.village        = false;
+        this.separatedTown  = false;
+        this.monastery      = false;
+        this.town           = false;
+        this.mipleCount     = 0;
+        this.optionalType   = null;
+        this.miples         = new Miple[5]; // top, left, bottom, left, center
+        preciseSides        = new SpecialType[9];
 
         getPossibleNames(this.getSides());
 
@@ -65,23 +59,23 @@ public class CarcassonneTile extends Tile<SideType> {
             replaceOneSide('c', 'f');
             nCityCount = 0;
             nFieldCount = 3;
-            if (top == SideType.CITY) {
-                this.getSides().setTopSide(SideType.FIELD);
+            if (top == SpecialType.CITY) {
+                this.getSides().setTopSide(SpecialType.FIELD);
             }
-            if (right == SideType.CITY) {
-                this.getSides().setRightSide(SideType.FIELD);
+            if (right == SpecialType.CITY) {
+                this.getSides().setRightSide(SpecialType.FIELD);
             }
-            if (bottom == SideType.CITY) {
-                this.getSides().setBottomSide(SideType.FIELD);
+            if (bottom == SpecialType.CITY) {
+                this.getSides().setBottomSide(SpecialType.FIELD);
             }
-            if (left == SideType.CITY) {
-                this.getSides().setLeftSide(SideType.FIELD);
+            if (left == SpecialType.CITY) {
+                this.getSides().setLeftSide(SpecialType.FIELD);
             }
         }
 
         if (nCityCount % 2 == 0 && nCityCount != 0) {
             // if 2 or 4 cities, then there is a chance that is becomes a field surrounded by cities (20%)
-            this.separated = RandomManagement.isHappening(20);
+            this.separatedTown = RandomManagement.isHappening(20);
         }
         if (nFieldCount == 4) {
             // if 4 fields, then there is a monastery in the center (100%)
@@ -104,6 +98,9 @@ public class CarcassonneTile extends Tile<SideType> {
             this.village = RandomManagement.isHappening(30);
         }
 
+        if (!this.separatedTown || nRoadCount >= 2 || nCityCount == 1 && nRoadCount == 1 || this.town) {
+        }
+
         updateNames();
         getFilePath();
         updateDisplay();
@@ -115,25 +112,86 @@ public class CarcassonneTile extends Tile<SideType> {
         }
     }
 
-    protected void getPossibleNames(Sides<SideType> sides) {
+    public boolean hasOptionalType() {
+        return optionalType != null;
+    }
+
+    public SpecialType getOptionalType() {
+        return optionalType;
+    }
+
+    protected void getPossibleNames(Sides<SpecialType> sides) {
         possibleNames = new String[4];
-        possibleNames[0] = SideType.toString(sides.getTopSide()) + SideType.toString(sides.getRightSide()) + SideType.toString(sides.getBottomSide()) + SideType.toString(sides.getLeftSide());
-        possibleNames[1] = SideType.toString(sides.getLeftSide()) + SideType.toString(sides.getTopSide()) + SideType.toString(sides.getRightSide()) + SideType.toString(sides.getBottomSide());
-        possibleNames[2] = SideType.toString(sides.getBottomSide()) + SideType.toString(sides.getLeftSide()) + SideType.toString(sides.getTopSide()) + SideType.toString(sides.getRightSide());
-        possibleNames[3] = SideType.toString(sides.getRightSide()) + SideType.toString(sides.getBottomSide()) + SideType.toString(sides.getLeftSide()) + SideType.toString(sides.getTopSide());
+        possibleNames[0] = SpecialType.toString(sides.getTopSide()) + SpecialType.toString(sides.getRightSide()) + SpecialType.toString(sides.getBottomSide()) + SpecialType.toString(sides.getLeftSide());
+        possibleNames[1] = SpecialType.toString(sides.getLeftSide()) + SpecialType.toString(sides.getTopSide()) + SpecialType.toString(sides.getRightSide()) + SpecialType.toString(sides.getBottomSide());
+        possibleNames[2] = SpecialType.toString(sides.getBottomSide()) + SpecialType.toString(sides.getLeftSide()) + SpecialType.toString(sides.getTopSide()) + SpecialType.toString(sides.getRightSide());
+        possibleNames[3] = SpecialType.toString(sides.getRightSide()) + SpecialType.toString(sides.getBottomSide()) + SpecialType.toString(sides.getLeftSide()) + SpecialType.toString(sides.getTopSide());
     }
 
     protected void updateNames() {
-        if (this.village) addToNames("v");
-        if (this.separated) addToNames("s");
-        if (this.monastery) addToNames("m");
+        if (this.village) {
+            addToNames("v");
+            this.optionalType = SpecialType.VILLAGE;
+        }
+        if (this.separatedTown) addToNames("s");
+        if (this.monastery) {
+            addToNames("m");
+            this.optionalType = SpecialType.MONASTERY;
+        }
         if (this.town) addToNames("t");
+        updatePreciseSides();
+    }
+
+    protected void updatePreciseSides() {
+        for (int i = 0; i < 9; i++) {
+            preciseSides[i] = SpecialType.AMBIGUOUS;
+        }
+        String sName = possibleNames[0];
+        preciseSides[0] = SpecialType.toSpecialType(String.valueOf(sName.charAt(0)));
+        preciseSides[2] = SpecialType.toSpecialType(String.valueOf(sName.charAt(0)));
+        preciseSides[4] = SpecialType.toSpecialType(String.valueOf(sName.charAt(0)));
+        preciseSides[6] = SpecialType.toSpecialType(String.valueOf(sName.charAt(0)));
+        if (town) {
+            preciseSides[8] = SpecialType.CITY;
+        }
+        if (village) {
+            preciseSides[8] = SpecialType.VILLAGE;
+        }
+        if (monastery) {
+            preciseSides[8] = SpecialType.MONASTERY;
+        }
+        for (int i = 0; i < 4; i++) {
+            if (preciseSides[i] == SpecialType.CITY && preciseSides[i * 2] == SpecialType.CITY) {
+                if (i * 2 - 1 > 0) {
+                    if (separatedTown) {
+                        preciseSides[i * 2 - 1] = SpecialType.AMBIGUOUS;
+                    } else {
+                        preciseSides[i * 2 - 1] = SpecialType.CITY;
+                    }
+                }
+            }
+            if (preciseSides[i] == SpecialType.ROAD) {
+                if (i * 2 - 1 > 0) {
+                    preciseSides[i * 2 - 1] = SpecialType.FIELD;
+                }
+                preciseSides[i * 2 + 1] = SpecialType.FIELD;
+            }
+            if (i % 2 == 0) {
+                if (preciseSides[i] == SpecialType.CITY && preciseSides[i + 2] == SpecialType.CITY && !separatedTown) {
+                    preciseSides[8] = SpecialType.CITY;
+                }
+            }
+        }
     }
 
     protected void addToNames(String letter) {
         for (int i = 0; i < possibleNames.length; i++) {
             possibleNames[i] += letter;
         }
+    }
+
+    public SpecialType[] getPreciseSides() {
+        return preciseSides;
     }
 
     public BufferedImage getDisplay() {
@@ -201,20 +259,42 @@ public class CarcassonneTile extends Tile<SideType> {
     }
 
     private void rotateSidesClockwise() {
-        Sides<SideType> sides = this.getSides();
-        SideType sideTypeSave = sides.getTopSide();
+        Sides<SpecialType> sides = this.getSides();
+        SpecialType specialTypeSave = sides.getTopSide();
         sides.setTopSide(sides.getLeftSide());
         sides.setLeftSide(sides.getBottomSide());
         sides.setBottomSide(sides.getRightSide());
-        sides.setRightSide(sideTypeSave);
+        sides.setRightSide(specialTypeSave);
     }
 
     private void rotateSidesAntiClockwise() {
-        Sides<SideType> sides = this.getSides();
-        SideType sideTypeSave = sides.getLeftSide();
+        Sides<SpecialType> sides = this.getSides();
+        SpecialType specialTypeSave = sides.getLeftSide();
         sides.setLeftSide(sides.getTopSide());
         sides.setTopSide(sides.getRightSide());
         sides.setRightSide(sides.getBottomSide());
-        sides.setLeftSide(sideTypeSave);
+        sides.setLeftSide(specialTypeSave);
+    }
+
+    public boolean placeMiple(Miple miple, SpecialType typeGoal, SidePosition desiredPosition) {
+        if (miple == null) {
+            return false;
+        }
+        if(mipleCount == 0) {
+            this.miples[0] = miple;
+        } else {
+            for (Miple m : miples) {
+                if (m.getTerrainType() == typeGoal) {
+                    if (m.getSidePosition() == desiredPosition) {
+                        return false;
+                    }
+                }
+            }
+            this.miples[mipleCount] = miple;
+            miple.setSidePosition(desiredPosition);
+            miple.setTerrainType(typeGoal);
+        }
+        this.mipleCount++;
+        return true;
     }
 }

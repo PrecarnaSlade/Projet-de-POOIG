@@ -1,8 +1,8 @@
 package Common;
 
+import Carcassonne.CarcassonnePlayer;
 import Common.Window.MainWindow;
 import Exceptions.NoMoreTileInDeckException;
-import Graphic.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,6 +57,10 @@ public class Game<E> {
             getCurrentPlayer().addPoints(nScored);
             if (!getCurrentPlayer().isIA()) {
                 JOptionPane.showMessageDialog(null, "You scored : " + nScored + " points !\n" + getCurrentPlayer().getName() + " will now play");
+            }
+        } else {
+            for (Player p : players) {
+                ((CarcassonnePlayer) p).setHasPlacedMiple(false);
             }
         }
         playerTurn = (playerTurn + 1) % (players.length);

@@ -11,6 +11,8 @@ public class Display {
     public static int BUTTON_WIDTH = (PADDING_X * 2);
     public static int BUTTON_HEIGHT = (PADDING_Y * 2);
     public static int TILE_SIZE = WIDTH / 6;
+    public static int MIPLE_SIZE = WIDTH / 20;
+    public static int TILE_C_MIDDLE_RATIO = WIDTH / 14;
 
     public static void setWidth(int width) {
         Display.WIDTH = width;
@@ -31,5 +33,7 @@ public class Display {
         BUTTON_WIDTH = (PADDING_X * 2);
         BUTTON_HEIGHT = (PADDING_Y * 2);
         TILE_SIZE = Math.min(WIDTH, HEIGHT) / 6;
+        MIPLE_SIZE = Math.min(WIDTH, HEIGHT) / 20;
+        TILE_C_MIDDLE_RATIO = Math.min(WIDTH, HEIGHT) / 14;
     }
 }
