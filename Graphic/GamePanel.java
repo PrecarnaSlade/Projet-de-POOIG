@@ -167,8 +167,11 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
                     int x = (int) (mousePoint.x - parent.getLocation().x - this.getLocation().x - this.getX() - xOffset);
                     int y = (int) (mousePoint.y - parent.getLocation().y - this.getLocation().y - this.getY() - yOffset);
                     CarcassonnePlayer player = (CarcassonnePlayer) this.game.getCurrentPlayer();
-                    tile.placeMiple(player.placeMiple(new Position(x, y), terrainType), terrainType, sideDesired);
-                    JOptionPane.showMessageDialog(null, "You placed a miple. It will be rendered at the end of your turn !", "Miple placed", JOptionPane.INFORMATION_MESSAGE);
+                    Miple placeMiple = player.placeMiple(new Position(x, y), terrainType);
+                    tile.placeMiple(placeMiple, terrainType, sideDesired);
+                    if (placeMiple != null) {
+                        JOptionPane.showMessageDialog(null, "You placed a miple. It will be rendered at the end of your turn !", "Miple placed", JOptionPane.INFORMATION_MESSAGE);
+                    }
 //                }
             } else {
                 JOptionPane.showMessageDialog(null, "You can't put a tile here.\nTry somewhere else, there must be a place to put it. :)", "invalidMove", JOptionPane.ERROR_MESSAGE);

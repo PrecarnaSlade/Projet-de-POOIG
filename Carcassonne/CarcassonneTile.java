@@ -98,9 +98,6 @@ public class CarcassonneTile extends Tile<SpecialType> {
             this.village = RandomManagement.isHappening(30);
         }
 
-        if (!this.separatedTown || nRoadCount >= 2 || nCityCount == 1 && nRoadCount == 1 || this.town) {
-        }
-
         updateNames();
         getFilePath();
         updateDisplay();

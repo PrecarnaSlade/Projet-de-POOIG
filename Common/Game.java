@@ -1,5 +1,6 @@
 package Common;
 
+import Carcassonne.CarcassonneIA;
 import Carcassonne.CarcassonnePlayer;
 import Common.Window.MainWindow;
 import Exceptions.NoMoreTileInDeckException;
@@ -58,9 +59,11 @@ public class Game<E> {
             if (!getCurrentPlayer().isIA()) {
                 JOptionPane.showMessageDialog(null, "You scored : " + nScored + " points !\n" + getCurrentPlayer().getName() + " will now play");
             }
-        } else {
+        } else if (mainWindow!=null && mainWindow.getGamePlayed().equals("Carcassonne")) {
             for (Player p : players) {
-                ((CarcassonnePlayer) p).setHasPlacedMiple(false);
+                if (!p.isIA()) {
+                    ((CarcassonnePlayer) p).setHasPlacedMiple(false);
+                }
             }
         }
         playerTurn = (playerTurn + 1) % (players.length);
