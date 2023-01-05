@@ -156,10 +156,12 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
             handWindow.setLocation(0, 0);
         } catch (InvalidMoveException ex) {
             if (this.parent.getGamePlayed().equals("Carcassonne") && !this.game.getGrid().isEmpty(gridPos.getX(), gridPos.getY())) {
-                Position positionOnTile = getPositionOnTile(mousePoint);
-                SidePosition sideDesired = SidePosition.getSidePosFromXY(positionOnTile.getX(), positionOnTile.getY());
-                CarcassonneTile tile = (CarcassonneTile) this.game.getGrid().getTileByPos(gridPos);
-                SpecialType terrainType = tile.getPreciseSides()[SidePosition.toInt(sideDesired)];
+                int nResponse = JOptionPane.showOptionDialog(new JFrame(), "Do you want to place your miple ?", "Miple Placement", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
+                if (nResponse == JOptionPane.YES_OPTION) {
+                    Position positionOnTile = getPositionOnTile(mousePoint);
+                    SidePosition sideDesired = SidePosition.getSidePosFromXY(positionOnTile.getX(), positionOnTile.getY());
+                    CarcassonneTile tile = (CarcassonneTile) this.game.getGrid().getTileByPos(gridPos);
+                    SpecialType terrainType = tile.getPreciseSides()[SidePosition.toInt(sideDesired)];
 //                String sSide = SpecialType.toCompleteString(terrainType);
 //                int nResponse = JOptionPane.showOptionDialog(new JFrame(), "Do you want to put your miple on a " + sSide + " ?", "Miple Placement", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
 //                if (nResponse == JOptionPane.YES_OPTION) {
@@ -173,6 +175,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
                         JOptionPane.showMessageDialog(null, "You placed a miple. It will be rendered at the end of your turn !", "Miple placed", JOptionPane.INFORMATION_MESSAGE);
                     }
 //                }
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You can't put a tile here.\nTry somewhere else, there must be a place to put it. :)", "invalidMove", JOptionPane.ERROR_MESSAGE);
             }

@@ -13,6 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static Misc.WindowManagement.getMasterParentWindow;
+
 public class HandWindow extends JInternalFrame {
     private final JPanel tileDrawnPanel;
     private BufferedImage tileDrawnImage;
@@ -37,8 +39,13 @@ public class HandWindow extends JInternalFrame {
         tileDrawnPanel.setBackground(Color.RED);
         this.add(tileDrawnPanel);
         tileDrawnPanel.setLocation(0, 0);
+        String sText = "Press R to rotate clockwise\nShift + R to rotate anti-clockwise.";
 
-        JOptionPane.showMessageDialog(null,"Press R to rotate clockwise\nShift + R to rotate anti-clockwise", "Key bind",JOptionPane.INFORMATION_MESSAGE);
+        if (((MainWindow) getMasterParentWindow(this)).getGamePlayed().equals("Carcassonne")) {
+            sText += "\nClick on a tile to place your miple.";
+        }
+
+        JOptionPane.showMessageDialog(null, sText, "Key bind",JOptionPane.INFORMATION_MESSAGE);
 
         InputMap inputMap = this.tileDrawnPanel.getInputMap();
         ActionMap actionMap = this.tileDrawnPanel.getActionMap();

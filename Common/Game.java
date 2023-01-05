@@ -3,6 +3,7 @@ package Common;
 import Carcassonne.CarcassonneIA;
 import Carcassonne.CarcassonnePlayer;
 import Common.Window.MainWindow;
+import Domino.DominoTile;
 import Exceptions.NoMoreTileInDeckException;
 
 import javax.swing.*;
@@ -54,7 +55,7 @@ public class Game<E> {
     public void nextTurn(MainWindow mainWindow) throws NoMoreTileInDeckException {
         Tile tilePlaced = this.drawnTile;
         if (mainWindow!=null && mainWindow.getGamePlayed().equals("Domino")) {
-            int nScored = grid.getAdjacentTileNb(tilePlaced.getPosition());
+            int nScored = grid.getDominoScore((DominoTile) tilePlaced);
             getCurrentPlayer().addPoints(nScored);
             if (!getCurrentPlayer().isIA()) {
                 JOptionPane.showMessageDialog(null, "You scored : " + nScored + " points !\n" + getCurrentPlayer().getName() + " will now play");

@@ -176,4 +176,24 @@ public class Grid<E> extends InternalObject {
         if (leftExist(x, y)) nSum++;
         return nSum;
     }
+
+    public int getDominoScore(DominoTile tile) {
+        int nSum = 0;
+        int x = tile.getPosition().getX();
+        int y = tile.getPosition().getY();
+        if (topExist(x, y)) {
+            nSum += ArrayManagement.sum(tile.getUpSide());
+        }
+        if (rightExist(x, y)) {
+            nSum += ArrayManagement.sum(tile.getRightSide());
+        }
+        if (bottomExist(x, y)) {
+            nSum += ArrayManagement.sum(tile.getDownSide());
+        }
+        if (leftExist(x, y)){
+            nSum += ArrayManagement.sum(tile.getLeftSide());
+        }
+        return nSum;
+    }
+
 }
