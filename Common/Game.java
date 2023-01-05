@@ -54,12 +54,16 @@ public class Game<E> {
         int nScored = grid.getAdjacentTileNb(tilePlaced.getPosition());
         getCurrentPlayer().addPoints(nScored);
         playerTurn = (playerTurn + 1) % (players.length);
-        draw(mainWindow);
+        if (mainWindow != null) draw(mainWindow);
         if (getCurrentPlayer().isIA()) {
             IA ia = (IA) players[playerTurn];
-            ia.playTurn(this.drawnTile, grid, mainWindow.getGraphicGamePanel().getGrid());
+            if (mainWindow != null) ia.playTurn(this.drawnTile, grid, mainWindow.getGraphicGamePanel().getGrid());
             nextTurn(mainWindow);
         }
+    }
+
+    public void nextTurn() throws NoMoreTileInDeckException {
+        nextTurn(null);
     }
 
     public Player getCurrentPlayer() {
@@ -76,5 +80,14 @@ public class Game<E> {
             }
         }
         return winner;
+    }
+
+    public String getScoreText() {
+        String sBuffer = "";
+
+        for (Player p : players) {
+            sBuffer += p.getName() + " : " + p.getPoints() + "\n";
+        }
+        return sBuffer;
     }
 }

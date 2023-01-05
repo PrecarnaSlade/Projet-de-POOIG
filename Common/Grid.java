@@ -62,10 +62,14 @@ public class Grid<E> extends InternalObject {
             grid[x][y]=t;
             t.setUsed(true);
             t.setPosition(new Position(x, y));
-            gridGraphic.updateGraphic();
+            if (gridGraphic != null) gridGraphic.updateGraphic();
         } else {
             throw new InvalidMoveException();
         }
+    }
+
+    public void place(Tile t, int x, int y) throws InvalidMoveException {
+        place(t, x, y, null);
     }
 
     public void forcePlace(Tile t, Position p, GridGraphic gridGraphic) {

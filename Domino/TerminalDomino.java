@@ -49,8 +49,8 @@ public class TerminalDomino extends Game{
                 }
                 else{
                     for(int i=0;i<3;i++){
-                        up+="  "+domino.getSides().getUpSide()[i];
-                        down+="  "+domino.getSides().getDownSide()[i];
+                        up+="  "+domino.getSides().getTopSide()[i];
+                        down+="  "+domino.getSides().getBottomSide()[i];
                     }
                     up+="  ||";
                     down+="  ||";
@@ -66,14 +66,14 @@ public class TerminalDomino extends Game{
 
     public void play(){
         try {
-            String player = (this.getCurrentPlayer()==this.getPlayer1()? "Joueur 1" : "Joueur 2");
+            String player = this.getCurrentPlayer().getName();
             System.out.println("/// Tour du " + player + " ///");
             System.out.println("Score: " + (this.getCurrentPlayer().getPoints()));
             System.out.println("Pièce actuelle:\n");
             DominoTile domino = (DominoTile) this.getDeck().draw();
             System.out.println(domino.getGraphicalRepresentation());
             this.askMove(domino);
-            nextPlayer();
+            nextTurn();
             play();
         } catch(NoMoreTileInDeckException e){
             endGame();
@@ -81,8 +81,9 @@ public class TerminalDomino extends Game{
     }
 
     public void endGame(){
-        System.out.println((this.getPlayer1().getPoints()>this.getPlayer2().getPoints()?"Le Joueur 1 a gagné!":"Le Joueur 2 a gagné!"));
-        System.out.println("Score:\nJ1: " + this.getPlayer1().getPoints() +"\nJ2: " + this.getPlayer2().getPoints());
+        String sWinnerName = getWinner().getName();
+        System.out.println("Congratulations " + sWinnerName + " !\nYou won this game !!");
+        System.out.println("!! Score of players !!\n" + getScoreText());
         System.exit(0);
     }
 
@@ -149,17 +150,4 @@ public class TerminalDomino extends Game{
         }
         return sum;
     }
-
-//    public static void main(String[] args) {
-//        Scanner scan= new Scanner(System.in);
-//        System.out.println("/// Jeu de Domino ///");
-//        TerminalDomino domino;
-//
-//        boolean response= false;
-//        while(!response){
-//            System.out.println("Voulez-vous jouez seul ou à deux joueur? (1/2)");
-//            if(scan.nextInt()==1) {domino= new TerminalDomino(false, scan); response= true;}
-//            else if(scan.nextInt()==2) {domino= new TerminalDomino(true,scan); response= true;}
-//        }
-//    }
 }
