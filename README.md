@@ -19,3 +19,5 @@ Ensuite vous avez deux choix :
   ```
   $ java -cp "." Play PlayerNumber IaNumber
     ```
+
+**Toutes les commandes considèrent que vous vous trouvez dans le dossier du projet !**
