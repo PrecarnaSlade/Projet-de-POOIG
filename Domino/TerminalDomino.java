@@ -30,7 +30,7 @@ public class TerminalDomino extends Game{
 
     public void afficher(){
         System.out.println("===============================================================================================================================================");
-        for(int y=0; y<11; y++){
+        for(int y=11; y<0; y++){
             String up="";
             String down="";
             String side1="";
