@@ -69,7 +69,7 @@ public class TerminalDomino extends Game{
             String player = this.getCurrentPlayer().getName();
             System.out.println("/// " + player + "'s Turn ///");
             System.out.println("Score: " + (this.getCurrentPlayer().getPoints()));
-            System.out.println("Current Tile:\n");
+            System.out.println("Current Tile:");
             DominoTile domino = (DominoTile) this.getDeck().draw();
             System.out.println(domino.getGraphicalRepresentation());
             this.askMove(domino);
