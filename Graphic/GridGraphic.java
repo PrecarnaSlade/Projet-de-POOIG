@@ -8,7 +8,7 @@ import Common.Grid;
 import Common.Player;
 import Common.Window.Display;
 import Domino.DominoTile;
-import Graphic.Menu.ImageManagement;
+import Misc.ImageManagement;
 import Misc.Position;
 
 import javax.imageio.ImageIO;

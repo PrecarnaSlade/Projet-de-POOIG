@@ -3,7 +3,7 @@ package Carcassonne;
 import Common.Sides;
 import Common.Tile;
 import Common.Window.Display;
-import Graphic.Menu.ImageManagement;
+import Misc.ImageManagement;
 import Misc.RandomManagement;
 import Misc.StringManagement;
 

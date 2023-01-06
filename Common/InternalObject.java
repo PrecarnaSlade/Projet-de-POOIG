@@ -1,6 +1,5 @@
 package Common;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class InternalObject {
@@ -21,5 +20,6 @@ public class InternalObject {
     public static ArrayList<InternalObject> getObjectList() {
         return INTERNAL_OBJECT_LIST;
     }
+
 
 }

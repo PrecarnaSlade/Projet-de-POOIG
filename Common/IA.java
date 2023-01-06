@@ -4,8 +4,6 @@ import Exceptions.InvalidMoveException;
 import Graphic.GridGraphic;
 import Misc.Position;
 
-import java.io.IOException;
-
 public class IA extends Player {
 
     public IA(String name) {

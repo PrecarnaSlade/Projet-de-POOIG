@@ -1,8 +1,8 @@
 package Graphic;
 
+import Common.Sides;
 import Common.Tile;
 import Common.Window.Display;
-import Common.Sides;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

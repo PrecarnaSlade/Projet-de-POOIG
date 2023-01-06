@@ -1,6 +1,4 @@
-package Graphic.Menu;
-
-import Misc.Position;
+package Misc;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

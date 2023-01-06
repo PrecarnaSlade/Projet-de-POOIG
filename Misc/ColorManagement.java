@@ -40,7 +40,7 @@ public class ColorManagement {
 
     protected static int[] getMostCommonColour(Map map) {
         LinkedList list = new LinkedList(map.entrySet());
-        Collections.sort(list, (Comparator) (o1, o2) -> ((Comparable) ((Map.Entry) (o1)).getValue())
+        list.sort((Comparator) (o1, o2) -> ((Comparable) ((Map.Entry) (o1)).getValue())
                 .compareTo(((Map.Entry) (o2)).getValue()));
         Map.Entry me = (Map.Entry )list.get(list.size()-1);
          return getRGBArr((Integer)me.getKey());

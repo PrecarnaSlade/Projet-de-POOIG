@@ -1,7 +1,8 @@
 package Graphic;
 
 import Carcassonne.*;
-import Common.*;
+import Common.Game;
+import Common.Tile;
 import Common.Window.Display;
 import Common.Window.HandWindow;
 import Common.Window.MainWindow;
@@ -11,7 +12,9 @@ import Misc.Position;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;

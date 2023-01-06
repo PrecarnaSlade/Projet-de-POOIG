@@ -44,10 +44,6 @@ public class Deck<E> extends InternalObject {
         return tile;
     }
 
-    public boolean isEmpty(){
-        return true;
-    }
-
     public void add(Tile t){
         if (t instanceof DominoTile){ rank--; dominoDeck[rank]=(DominoTile) t;}
         else if (t instanceof CarcassonneTile){ rank--; carcassonneDeck[rank]=(CarcassonneTile) t;}

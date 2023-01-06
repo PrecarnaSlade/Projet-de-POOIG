@@ -1,6 +1,9 @@
 package Domino;
 
-import Common.*;
+import Common.Deck;
+import Common.Game;
+import Common.IA;
+import Common.Player;
 import Exceptions.InvalidMoveException;
 import Exceptions.NoMoreTileInDeckException;
 

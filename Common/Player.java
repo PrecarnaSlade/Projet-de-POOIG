@@ -5,17 +5,16 @@ import Carcassonne.Miple;
 import java.util.Scanner;
 
 public class Player extends InternalObject {
-    private final Scanner scanner;
     private int points;
     private String name;
-    private boolean isIA;
+    private final boolean isIA;
     private Miple[] miples;
 
     public Player(String name) {
         this(name,false);
     }
     public Player(String name, boolean isIA) {
-        scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         points = 0;
         this.name = name;
         this.isIA = isIA;

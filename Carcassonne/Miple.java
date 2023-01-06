@@ -1,7 +1,7 @@
 package Carcassonne;
 
 import Common.Window.Display;
-import Graphic.Menu.ImageManagement;
+import Misc.ImageManagement;
 import Misc.Position;
 
 import javax.imageio.ImageIO;

@@ -1,6 +1,5 @@
 package Common;
 
-import Carcassonne.CarcassonneIA;
 import Carcassonne.CarcassonnePlayer;
 import Common.Window.MainWindow;
 import Domino.DominoTile;

@@ -4,8 +4,8 @@ import Common.IA;
 import Common.Player;
 import Common.Window.Display;
 import Common.Window.MainWindow;
-import Misc.WindowManagement;
 import Misc.ArrayManagement;
+import Misc.WindowManagement;
 
 import javax.swing.*;
 import java.awt.*;
