@@ -7,7 +7,7 @@ import Exceptions.NoMoreTileInDeckException;
 import java.util.Scanner;
 
 public class TerminalDomino extends Game{
-    private Scanner scan;
+    private final Scanner scan;
     public TerminalDomino(int playerNumber, int IaNumber, Scanner scanner){
         super(null);
         Player[] players = new Player[playerNumber + IaNumber];
@@ -30,7 +30,7 @@ public class TerminalDomino extends Game{
 
     public void afficher(){
         System.out.println("===============================================================================================================================================");
-        for(int y=11; y<0; y++){
+        for(int y=0; y<11; y++){
             String up="";
             String down="";
             String side1="";
@@ -39,7 +39,7 @@ public class TerminalDomino extends Game{
             String separator="";
 
             for(int x=0; x<11; x++){
-                DominoTile domino= (DominoTile) this.getGrid().getTileByXY(x,y);
+                DominoTile domino= (DominoTile) this.getGrid().getTileByXY(x,10-y);
                 if(domino==null){
                     up+="           ||";
                     down+="           ||";
@@ -89,35 +89,31 @@ public class TerminalDomino extends Game{
 
     private void askMove(DominoTile domino){
         System.out.println("Choisissez une action: poser (p) / rotation horaire (r) / rotation anti-horaire (ra) / défausser (d) / arrêter (a)");
-        switch(scan.next()){
-            case "p":
+        switch (scan.next()) {
+            case "p" -> {
                 askPlacement(domino);
                 this.afficher();
-                break;
-            case "r":
+            }
+            case "r" -> {
                 domino.rotateClockwise();
                 System.out.println(domino.getGraphicalRepresentation());
                 askMove(domino);
-                break;
-            case "ra":
+            }
+            case "ra" -> {
                 domino.rotateAntiClockwise();
                 System.out.println(domino.getGraphicalRepresentation());
                 askMove(domino);
-                break;
-            case "d":
-                this.getDeck().add(domino);
-                break;
-            case "a":
-                endGame();
-                break;
-            default: askMove(domino); break;
+            }
+            case "d" -> this.getDeck().add(domino);
+            case "a" -> endGame();
+            default -> askMove(domino);
         }
     }
 
     private void askPlacement(DominoTile domino){
-        System.out.println("Donner la position en X: ");
+        System.out.println("Donner la position en X (base 0) : ");
         int x= scan.nextInt();
-        System.out.println("Donner la position en Y: ");
+        System.out.println("Donner la position en Y (base 0) : ");
         int y= scan.nextInt();
         try{
             this.getGrid().place(domino,x,y);

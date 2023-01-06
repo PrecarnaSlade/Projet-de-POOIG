@@ -1,6 +1,7 @@
 package Debug;
 
 import Carcassonne.SpecialType;
+import Domino.TerminalDomino;
 import Exceptions.UnknownCarcassonneTileException;
 import Graphic.Menu.ImageManagement;
 import Misc.ColorManagement;
@@ -10,12 +11,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) throws IOException, UnknownCarcassonneTileException {
-        BufferedImage image = ImageIO.read(new File("./Data/Resources/frfr.png"));
-        SpecialType st = SpecialType.colorToSideType(ColorManagement.getMainColor(ImageManagement.getRegionAroundClick(image, new Position(image.getWidth() / 2, image.getHeight() /2), image.getWidth() / 20)));
-        System.out.println(st);
+        new TerminalDomino(1, 1, new Scanner(System.in));
 
     }
 }
