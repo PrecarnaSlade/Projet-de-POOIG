@@ -67,9 +67,9 @@ public class TerminalDomino extends Game{
     public void play(){
         try {
             String player = this.getCurrentPlayer().getName();
-            System.out.println("/// Tour du " + player + " ///");
+            System.out.println("///" + player + "'s turn ///");
             System.out.println("Score: " + (this.getCurrentPlayer().getPoints()));
-            System.out.println("Pièce actuelle:\n");
+            System.out.println("Current domino :\n");
             DominoTile domino = (DominoTile) this.getDeck().draw();
             System.out.println(domino.getGraphicalRepresentation());
             this.askMove(domino);
@@ -88,7 +88,7 @@ public class TerminalDomino extends Game{
     }
 
     private void askMove(DominoTile domino){
-        System.out.println("Choisissez une action: poser (p) / rotation horaire (r) / rotation anti-horaire (ra) / défausser (d) / arrêter (a)");
+        System.out.println("Choose an action : place (p) / rotation clockwise (r) / rotation anti-clockwise (ra) / withdraw (d) / stop (a)");
         switch (scan.next()) {
             case "p" -> {
                 askPlacement(domino);
@@ -111,16 +111,16 @@ public class TerminalDomino extends Game{
     }
 
     private void askPlacement(DominoTile domino){
-        System.out.println("Donner la position en X (base 0) : ");
+        System.out.println("X position (base 0) : ");
         int x= scan.nextInt();
-        System.out.println("Donner la position en Y (base 0) : ");
+        System.out.println("Y position (base 0) : ");
         int y= scan.nextInt();
         try{
             this.getGrid().place(domino,x,y);
             this.countPoints(x,y);
         }
         catch (InvalidMoveException e){
-            System.out.println("Ce placement n'est pas possible, veuillez réessayer.");
+            System.out.println("Invalid placement");
             askMove(domino);
         }
     }
